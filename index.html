@@ -2,10 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
+
 <title>TAJ - Take a Ticket</title>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -26,25 +33,36 @@ body{
     display:flex;
 }
 
+/* =========================================================
+   16:9 LANDSCAPE KIOSK
+========================================================= */
+
 .kiosk{
     width:100vw;
     height:100vh;
     max-width:none;
     background:#fff;
+
     display:grid;
-    grid-template-rows:22vh 1fr 12vh 9vh;
+    grid-template-rows:
+        22vh
+        1fr
+        12vh
+        9vh;
+
     position:relative;
     overflow:hidden;
 }
 
 
-/* =========================
+/* =========================================================
    TOP BRANDING
-========================= */
+========================================================= */
 
 .hero{
     position:relative;
     overflow:hidden;
+
     background:
         linear-gradient(
             145deg,
@@ -52,16 +70,21 @@ body{
             #fff 56%,
             #e2f1f8 100%
         );
+
     padding:2.5vh 4vw;
 }
 
 .hero:after{
     content:"";
+
     position:absolute;
+
     width:42%;
     height:95%;
+
     right:-5%;
     top:-25%;
+
     background:
         linear-gradient(
             150deg,
@@ -71,32 +94,43 @@ body{
             #fed100 70% 78%,
             #009b3a 78%
         );
+
     transform:skewY(-8deg);
+
     border-radius:0 0 0 60%;
+
     opacity:.96;
 }
 
 .brand{
     position:relative;
     z-index:2;
+
     display:flex;
     align-items:center;
+
     gap:1.4vw;
+
     width:58%;
 }
 
 .taj-mark{
     font-size:clamp(54px,7vw,105px);
+
     font-weight:900;
     font-style:italic;
+
     letter-spacing:-6px;
+
     line-height:.8;
+
     color:#063b75;
 }
 
 .brand-line{
     width:4px;
     height:10vh;
+
     background:#0a4b82;
 }
 
@@ -106,107 +140,146 @@ body{
 
 .brand-text .tax{
     display:block;
+
     font-size:clamp(24px,3vw,45px);
+
     font-weight:800;
 }
 
 .brand-text .jamaica{
     display:block;
+
     font-size:clamp(23px,2.8vw,42px);
+
     font-weight:800;
+
     color:#f5bd00;
 }
 
 .tagline{
     position:relative;
     z-index:2;
+
     margin-top:1.5vh;
+
     font-size:clamp(12px,1.25vw,20px);
+
     letter-spacing:.28em;
+
     font-weight:bold;
+
     color:#07356b;
 }
 
 .serving{
     position:absolute;
     z-index:2;
+
     right:8%;
     bottom:3vh;
+
     text-align:center;
+
     font-family:Georgia,serif;
     font-style:italic;
+
     transform:rotate(-7deg);
+
     color:#07356b;
+
     font-size:clamp(22px,2.7vw,42px);
+
     line-height:.9;
 }
 
 
-/* =========================
+/* =========================================================
    SERVICE AREA
-========================= */
+========================================================= */
 
 .service-area{
     min-height:0;
+
     background:
         linear-gradient(
             135deg,
             #005392,
             #002d62 75%
         );
+
     padding:2vh 3vw 2.2vh;
+
     display:flex;
     flex-direction:column;
 }
 
 .heading{
     color:#fff;
+
     text-align:center;
+
     margin-bottom:1.8vh;
 }
 
 .heading h1{
     font-size:clamp(30px,3.4vw,54px);
+
     font-weight:900;
+
     line-height:1;
 }
 
 .heading p{
     font-size:clamp(16px,1.7vw,27px);
+
     font-style:italic;
+
     margin-top:.7vh;
 }
 
 
-/* =========================
-   THREE LANDSCAPE BUTTONS
-========================= */
+/* =========================================================
+   SERVICE BUTTONS
+========================================================= */
 
 .buttons{
     flex:1;
     min-height:0;
+
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+
+    grid-template-columns:
+        repeat(3,1fr);
+
     gap:1.8vw;
 }
 
 .service-button{
     min-width:0;
+
     border:none;
+
     border-radius:28px;
+
     padding:2vh 1.6vw;
 
     display:grid;
-    grid-template-rows:32% 1fr 18%;
+
+    grid-template-rows:
+        32%
+        1fr
+        18%;
 
     align-items:center;
     justify-items:center;
 
     cursor:pointer;
+
     color:#062d5c;
 
     box-shadow:
-        0 7px 18px rgba(0,0,0,.18);
+        0 7px 18px
+        rgba(0,0,0,.18);
 
     text-align:center;
 }
@@ -246,12 +319,12 @@ body{
     width:100%;
     height:100%;
 
-    border-right:none;
-
     border-bottom:
-        2px solid rgba(6,45,92,.25);
+        2px solid
+        rgba(6,45,92,.25);
 
     display:flex;
+
     justify-content:center;
     align-items:center;
 
@@ -262,14 +335,19 @@ body{
     width:clamp(68px,6vw,100px);
     height:clamp(68px,6vw,100px);
 
-    border:6px solid #063b75;
+    border:
+        6px solid #063b75;
+
     border-radius:15px;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
-    font-size:clamp(38px,3.5vw,55px);
+    font-size:
+        clamp(38px,3.5vw,55px);
+
     font-weight:900;
 
     color:#063b75;
@@ -277,114 +355,164 @@ body{
 
 .service-copy{
     text-align:center;
-    padding:1.2vh .5vw 0;
+
+    padding:
+        1.2vh .5vw 0;
 }
 
 .service-title{
     display:block;
-    font-size:clamp(22px,2.2vw,36px);
+
+    font-size:
+        clamp(22px,2.2vw,36px);
+
     line-height:1;
+
     font-weight:900;
 }
 
 .service-description{
     display:block;
-    font-size:clamp(14px,1.25vw,20px);
+
+    font-size:
+        clamp(14px,1.25vw,20px);
+
     line-height:1.15;
+
     margin-top:1.2vh;
 }
 
 .arrow{
-    font-size:clamp(42px,4vw,68px);
+    font-size:
+        clamp(42px,4vw,68px);
+
     font-weight:300;
+
     text-align:center;
+
     line-height:.8;
 }
 
 
-/* =========================
-   INFORMATION
-========================= */
+/* =========================================================
+   INFORMATION PANEL
+========================================================= */
 
 .info-panel{
     min-height:0;
+
     background:#eef8ff;
-    padding:1.3vh 4vw;
+
+    padding:
+        1.3vh 4vw;
 
     display:grid;
-    grid-template-columns:8% 1fr 30%;
+
+    grid-template-columns:
+        8%
+        1fr
+        30%;
+
     align-items:center;
 
     color:#062d5c;
 }
 
 .info-icon{
-    width:clamp(48px,4vw,68px);
-    height:clamp(48px,4vw,68px);
+    width:
+        clamp(48px,4vw,68px);
 
-    border:4px solid #063b75;
+    height:
+        clamp(48px,4vw,68px);
+
+    border:
+        4px solid #063b75;
+
     border-radius:50%;
 
     display:flex;
+
     justify-content:center;
     align-items:center;
 
-    font-family:Georgia,serif;
+    font-family:
+        Georgia,serif;
 
-    font-size:clamp(30px,2.7vw,45px);
+    font-size:
+        clamp(30px,2.7vw,45px);
+
     font-weight:bold;
 }
 
 .info-copy{
-    font-size:clamp(13px,1.25vw,20px);
+    font-size:
+        clamp(13px,1.25vw,20px);
+
     padding-right:2vw;
 }
 
 .info-copy strong{
     display:block;
-    font-size:clamp(15px,1.4vw,22px);
+
+    font-size:
+        clamp(15px,1.4vw,22px);
 }
 
 .info-right{
-    border-left:2px solid #0a4b82;
+    border-left:
+        2px solid #0a4b82;
+
     padding-left:3vw;
 
-    font-size:clamp(13px,1.25vw,20px);
+    font-size:
+        clamp(13px,1.25vw,20px);
+
     line-height:1.25;
 }
 
 
-/* =========================
+/* =========================================================
    FOOTER
-========================= */
+========================================================= */
 
 .footer{
     min-height:0;
 
     background:#00366b;
+
     color:#fff;
 
     display:flex;
-    justify-content:space-between;
+
+    justify-content:
+        space-between;
+
     align-items:center;
 
-    padding:1.2vh 4vw;
+    padding:
+        1.2vh 4vw;
 }
 
 .website{
-    font-size:clamp(15px,1.5vw,24px);
+    font-size:
+        clamp(15px,1.5vw,24px);
+
     font-weight:bold;
 }
 
 .footer-message{
-    font-size:clamp(14px,1.35vw,22px);
+    font-size:
+        clamp(14px,1.35vw,22px);
+
     font-weight:bold;
+
     line-height:1.05;
 }
 
 .jamaica-line{
     width:100%;
     height:5px;
+
     margin-top:6px;
 
     background:
@@ -397,21 +525,28 @@ body{
 }
 
 
-/* =========================
-   LANDSCAPE TICKET SCREEN
-========================= */
+/* =========================================================
+   TICKET CONFIRMATION SCREEN
+========================================================= */
 
 .ticket-screen{
     position:absolute;
+
     inset:0;
+
     z-index:100;
 
     background:#f5fbff;
 
     display:none;
 
-    grid-template-columns:42% 58%;
-    grid-template-rows:18vh 1fr;
+    grid-template-columns:
+        42%
+        58%;
+
+    grid-template-rows:
+        18vh
+        1fr;
 
     text-align:center;
 }
@@ -430,6 +565,7 @@ body{
         10px solid #fed100;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
@@ -437,7 +573,8 @@ body{
 }
 
 .ticket-header h2{
-    font-size:clamp(32px,3.5vw,55px);
+    font-size:
+        clamp(32px,3.5vw,55px);
 }
 
 .success{
@@ -451,15 +588,18 @@ body{
     height:110px;
 
     background:#009b3a;
+
     color:#fff;
 
     border-radius:50%;
 
     display:flex;
+
     justify-content:center;
     align-items:center;
 
     font-size:65px;
+
     font-weight:bold;
 
     margin-top:6vh;
@@ -473,7 +613,8 @@ body{
 
     padding:0 3vw;
 
-    font-size:clamp(22px,2.4vw,36px);
+    font-size:
+        clamp(22px,2.4vw,36px);
 
     color:#555;
 }
@@ -486,7 +627,8 @@ body{
 
     margin-top:6vh;
 
-    font-size:clamp(22px,2vw,32px);
+    font-size:
+        clamp(22px,2vw,32px);
 
     font-weight:bold;
 }
@@ -497,11 +639,13 @@ body{
 
     align-self:center;
 
-    font-size:clamp(110px,13vw,220px);
+    font-size:
+        clamp(110px,13vw,220px);
 
     color:#003b73;
 
     font-weight:900;
+
     line-height:1;
 }
 
@@ -514,7 +658,8 @@ body{
 
     margin-bottom:12vh;
 
-    padding:1.6vh 2.5vw;
+    padding:
+        1.6vh 2.5vw;
 
     border-radius:18px;
 
@@ -523,7 +668,8 @@ body{
     border:
         3px solid #fed100;
 
-    font-size:clamp(16px,1.5vw,24px);
+    font-size:
+        clamp(16px,1.5vw,24px);
 }
 
 .wait{
@@ -539,7 +685,8 @@ body{
 
     padding:0 3vw;
 
-    font-size:clamp(16px,1.5vw,24px);
+    font-size:
+        clamp(16px,1.5vw,24px);
 
     line-height:1.3;
 }
@@ -553,13 +700,16 @@ body{
     border:none;
 
     background:#003b73;
+
     color:#fff;
 
     font-weight:bold;
 
-    font-size:clamp(20px,1.8vw,30px);
+    font-size:
+        clamp(20px,1.8vw,30px);
 
-    padding:1.5vh 5vw;
+    padding:
+        1.5vh 5vw;
 
     border-radius:60px;
 
@@ -570,10 +720,165 @@ body{
     transform:scale(.97);
 }
 
+
+/* =========================================================
+   PRINT TICKET
+   Hidden during normal kiosk use
+========================================================= */
+
+#printTicket{
+    display:none;
+}
+
+
+/* =========================================================
+   PRINT MODE
+========================================================= */
+
+@media print{
+
+    @page{
+        size:auto;
+        margin:12mm;
+    }
+
+    html,
+    body{
+        width:auto;
+        height:auto;
+
+        overflow:visible;
+
+        background:#fff;
+    }
+
+    .kiosk{
+        display:none !important;
+    }
+
+    #printTicket{
+        display:block !important;
+
+        width:80mm;
+
+        margin:0 auto;
+
+        padding:7mm;
+
+        background:#fff;
+
+        color:#000;
+
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif;
+
+        text-align:center;
+
+        border:
+            2px dashed #000;
+    }
+
+    .print-logo{
+        font-size:18pt;
+
+        font-weight:900;
+
+        line-height:1.05;
+
+        margin-bottom:3mm;
+    }
+
+    .print-tagline{
+        font-size:8pt;
+
+        letter-spacing:.12em;
+
+        margin-bottom:5mm;
+    }
+
+    .print-divider{
+        border-top:
+            1px solid #000;
+
+        margin:4mm 0;
+    }
+
+    .print-service-label{
+        font-size:9pt;
+
+        font-weight:bold;
+
+        margin-bottom:2mm;
+    }
+
+    #printService{
+        font-size:15pt;
+
+        font-weight:900;
+
+        line-height:1.1;
+    }
+
+    .print-number-label{
+        margin-top:7mm;
+
+        font-size:10pt;
+
+        font-weight:bold;
+    }
+
+    #printNumber{
+        font-size:46pt;
+
+        font-weight:900;
+
+        line-height:1;
+
+        margin:
+            3mm 0 5mm;
+    }
+
+    #printDateTime{
+        font-size:9pt;
+
+        margin-bottom:5mm;
+    }
+
+    .print-message{
+        font-size:10pt;
+
+        line-height:1.35;
+
+        margin-top:5mm;
+    }
+
+    .print-thanks{
+        font-size:11pt;
+
+        font-weight:bold;
+
+        margin-top:7mm;
+    }
+
+    .print-website{
+        font-size:8pt;
+
+        margin-top:5mm;
+    }
+}
+
 </style>
 </head>
 
+
 <body>
+
+
+<!-- =====================================================
+     KIOSK SCREEN
+===================================================== -->
 
 <div class="kiosk">
 
@@ -586,12 +891,14 @@ body{
             TAJ
         </div>
 
-        <div class="brand-line"></div>
+        <div class="brand-line">
+        </div>
 
         <div class="brand-text">
 
             <span class="tax">
-                Tax<br>Administration
+                Tax<br>
+                Administration
             </span>
 
             <span class="jamaica">
@@ -616,6 +923,7 @@ body{
 </section>
 
 
+
 <section class="service-area">
 
     <div class="heading">
@@ -636,7 +944,10 @@ body{
 
         <button
             class="service-button traffic"
-            onclick="takeTicket('T','Traffic Ticket Payments')"
+            onclick="takeTicket(
+                'T',
+                'Traffic Ticket Payments'
+            )"
         >
 
             <div class="service-icon">
@@ -669,9 +980,13 @@ body{
         </button>
 
 
+
         <button
             class="service-button licence"
-            onclick="takeTicket('L','Motor Vehicle License Renewal')"
+            onclick="takeTicket(
+                'L',
+                'Motor Vehicle License Renewal'
+            )"
         >
 
             <div class="service-icon">
@@ -704,9 +1019,13 @@ body{
         </button>
 
 
+
         <button
             class="service-button fitness"
-            onclick="takeTicket('F','Motor Vehicle Fitness Examination')"
+            onclick="takeTicket(
+                'F',
+                'Motor Vehicle Fitness Examination'
+            )"
         >
 
             <div class="service-icon">
@@ -744,6 +1063,7 @@ body{
 </section>
 
 
+
 <section class="info-panel">
 
     <div class="info-icon">
@@ -774,6 +1094,7 @@ body{
 </section>
 
 
+
 <footer class="footer">
 
     <div class="website">
@@ -786,12 +1107,18 @@ body{
         Service Today<br>
         A Stronger Tomorrow
 
-        <div class="jamaica-line"></div>
+        <div class="jamaica-line">
+        </div>
 
     </div>
 
 </footer>
 
+
+
+<!-- =====================================================
+     ON-SCREEN CONFIRMATION
+===================================================== -->
 
 <section
     id="ticketScreen"
@@ -815,7 +1142,8 @@ body{
     <div
         id="ticketService"
         class="ticket-service"
-    ></div>
+    >
+    </div>
 
 
     <div class="your-number">
@@ -832,14 +1160,14 @@ body{
 
 
     <div class="printing">
-        🖨️ Your ticket is being printed
+        🖨️ Your ticket is ready to print
     </div>
 
 
     <div class="wait">
 
-        Please take your ticket and wait for your number
-        to be called on the display screens.
+        Please take your ticket and wait for your
+        number to be called on the display screens.
 
     </div>
 
@@ -857,16 +1185,105 @@ body{
 </div>
 
 
+
+<!-- =====================================================
+     PHYSICAL PRINT TICKET
+===================================================== -->
+
+<div id="printTicket">
+
+    <div class="print-logo">
+
+        TAX ADMINISTRATION<br>
+        JAMAICA
+
+    </div>
+
+
+    <div class="print-tagline">
+
+        TOGETHER WE BUILD A STRONGER JAMAICA
+
+    </div>
+
+
+    <div class="print-divider">
+    </div>
+
+
+    <div class="print-service-label">
+        SERVICE
+    </div>
+
+
+    <div id="printService">
+
+        Traffic Ticket Payments
+
+    </div>
+
+
+    <div class="print-number-label">
+        YOUR NUMBER
+    </div>
+
+
+    <div id="printNumber">
+
+        T001
+
+    </div>
+
+
+    <div id="printDateTime">
+    </div>
+
+
+    <div class="print-divider">
+    </div>
+
+
+    <div class="print-message">
+
+        Please keep this ticket and wait for your
+        number to be called on the display screens.
+
+    </div>
+
+
+    <div class="print-thanks">
+
+        THANK YOU
+
+    </div>
+
+
+    <div class="print-website">
+
+        www.jamaicatax.gov.jm
+
+    </div>
+
+</div>
+
+
+
 <script>
+
+/* =========================================================
+   TICKET COUNTERS
+========================================================= */
 
 function getCounter(prefix){
 
-    const key="taj_ticket_"+prefix;
+    const key =
+        "taj_ticket_" + prefix;
 
-    let current=parseInt(
-        localStorage.getItem(key)||"0",
-        10
-    );
+    let current =
+        parseInt(
+            localStorage.getItem(key) || "0",
+            10
+        );
 
     current++;
 
@@ -879,40 +1296,125 @@ function getCounter(prefix){
 }
 
 
+/* =========================================================
+   FORMAT T001 / L001 / F001
+========================================================= */
+
 function formatTicket(prefix,number){
 
-    return prefix+
+    return prefix +
         String(number).padStart(3,"0");
 
 }
 
 
+/* =========================================================
+   DATE AND TIME
+========================================================= */
+
+function getTicketDateTime(){
+
+    const now =
+        new Date();
+
+    return now.toLocaleString(
+        "en-JM",
+        {
+            year:"numeric",
+            month:"short",
+            day:"numeric",
+            hour:"numeric",
+            minute:"2-digit"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   TAKE A TICKET
+========================================================= */
+
 function takeTicket(prefix,service){
 
-    const number=
+    const number =
         getCounter(prefix);
 
-    const ticket=
+    const ticket =
         formatTicket(
             prefix,
             number
         );
 
+    const dateTime =
+        getTicketDateTime();
+
+
+    /* ON SCREEN */
+
     document
         .getElementById("ticketNumber")
-        .textContent=ticket;
+        .textContent = ticket;
 
     document
         .getElementById("ticketService")
-        .textContent=service;
+        .textContent = service;
+
+
+    /* PRINTED TICKET */
+
+    document
+        .getElementById("printNumber")
+        .textContent = ticket;
+
+    document
+        .getElementById("printService")
+        .textContent = service;
+
+    document
+        .getElementById("printDateTime")
+        .textContent = dateTime;
+
+
+    /* SHOW CONFIRMATION */
 
     document
         .getElementById("ticketScreen")
         .classList.add("show");
 
+
+    /* START RETURN TIMER */
+
     startReturnTimer();
+
+
+    /*
+       Give the confirmation screen a moment
+       to appear before Windows print opens.
+    */
+
+    setTimeout(
+        printPhysicalTicket,
+        700
+    );
+
 }
 
+
+/* =========================================================
+   OPEN WINDOWS PRINT DIALOG
+========================================================= */
+
+function printPhysicalTicket(){
+
+    window.print();
+
+}
+
+
+/* =========================================================
+   RETURN HOME
+========================================================= */
 
 function returnHome(){
 
@@ -921,8 +1423,13 @@ function returnHome(){
         .classList.remove("show");
 
     clearTimeout(returnTimer);
+
 }
 
+
+/* =========================================================
+   25 SECOND AUTOMATIC RETURN
+========================================================= */
 
 let returnTimer;
 
@@ -931,14 +1438,16 @@ function startReturnTimer(){
 
     clearTimeout(returnTimer);
 
-    returnTimer=setTimeout(
-        returnHome,
-        25000
-    );
+    returnTimer =
+        setTimeout(
+            returnHome,
+            25000
+        );
 
 }
 
 </script>
+
 
 </body>
 </html>
