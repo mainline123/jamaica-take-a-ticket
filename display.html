@@ -6,7 +6,7 @@
 <meta name="viewport"
 content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
-<title>TAJ Queue Display</title>
+<title>TAJ - Now Serving</title>
 
 <style>
 
@@ -16,995 +16,1206 @@ content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no
     padding:0;
     -webkit-user-select:none;
     user-select:none;
+    -webkit-touch-callout:none;
+    -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
+html,
+body{
     width:100%;
     height:100%;
     overflow:hidden;
-    background:#001f3f;
+    background:#001b38;
     font-family:Arial,Helvetica,sans-serif;
 }
 
-#stage{
-    position:fixed;
-    inset:0;
+body{
+    color:#fff;
+}
+
+.screen{
+    position:relative;
     width:100vw;
     height:100vh;
-    overflow:hidden;
-    background:#002d5c;
-}
-
-#screen{
-    position:absolute;
-    left:50%;
-    top:50%;
-
-    width:1920px;
-    height:1080px;
-
-    transform-origin:center center;
 
     display:grid;
-    grid-template-columns:420px 900px 600px;
-    grid-template-rows:170px 730px 180px;
+    grid-template-columns:28% 44% 28%;
+    grid-template-rows:82% 18%;
 
     overflow:hidden;
 
     background:
         linear-gradient(
             135deg,
-            #e9f7ff 0%,
-            #ffffff 38%,
-            #e7f7ee 100%
-        );
-
-    color:#062c5c;
-}
-
-
-/* ================================================
-   LEFT BRAND AREA
-================================================ */
-
-.brand{
-    grid-column:1;
-    grid-row:1 / 3;
-
-    position:relative;
-
-    padding:55px 35px;
-
-    background:
-        linear-gradient(
-            160deg,
-            #ffffff 0%,
-            #e6f7ff 50%,
-            #dff3e5 100%
-        );
-
-    overflow:hidden;
-}
-
-.brand:after{
-    content:"";
-
-    position:absolute;
-
-    left:-120px;
-    bottom:-100px;
-
-    width:620px;
-    height:300px;
-
-    transform:rotate(-12deg);
-
-    background:
-        linear-gradient(
-            135deg,
-            #009b3a 0 33%,
-            #fed100 33% 43%,
-            #000000 43% 68%,
-            #fed100 68% 78%,
-            #009b3a 78%
-        );
-
-    opacity:.96;
-}
-
-.taj{
-    position:relative;
-    z-index:2;
-
-    font-size:110px;
-    font-weight:900;
-    font-style:italic;
-    letter-spacing:-8px;
-
-    color:#063b75;
-}
-
-.tax{
-    position:relative;
-    z-index:2;
-
-    margin-top:15px;
-
-    font-size:38px;
-    line-height:1.05;
-    font-weight:800;
-}
-
-.jamaica{
-    position:relative;
-    z-index:2;
-
-    margin-top:6px;
-
-    font-size:47px;
-    font-weight:900;
-
-    color:#e6ad00;
-}
-
-.brand-rule{
-    position:relative;
-    z-index:2;
-
-    width:270px;
-    height:7px;
-
-    margin-top:28px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #009b3a 0 33%,
-            #fed100 33% 66%,
-            #000 66%
+            #dff6ff 0%,
+            #69c9ef 26%,
+            #e9f8ff 27%,
+            #d8f3e4 55%,
+            #1d7a43 100%
         );
 }
 
-.brand-message{
+/* ==============================================
+   LEFT SIDE
+============================================== */
+
+.left{
     position:relative;
-    z-index:2;
 
-    margin-top:45px;
+    padding:3.5vh 2.5vw;
 
-    font-size:31px;
-    line-height:1.2;
-
-    font-weight:800;
-}
-
-.brand-message span{
-    display:block;
-
-    margin-top:15px;
-
-    color:#009b3a;
-
-    font-family:Georgia,serif;
-    font-style:italic;
-
-    font-size:39px;
-}
-
-
-/* ================================================
-   NOW SERVING HEADER
-================================================ */
-
-.now-header{
-    grid-column:2;
-    grid-row:1;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    padding:20px 30px;
-
-    background:#00396f;
-}
-
-.now-title{
-    width:100%;
-    height:120px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:25px;
+    color:#052d5c;
 
     background:
         linear-gradient(
             180deg,
-            #ffe249,
-            #ffc900
+            rgba(255,255,255,.96),
+            rgba(210,242,255,.88) 45%,
+            rgba(14,143,94,.86)
         );
 
-    color:#062653;
-
-    font-size:72px;
-    font-weight:900;
-
-    letter-spacing:2px;
-
-    box-shadow:
-        0 7px 18px
-        rgba(0,0,0,.25);
+    overflow:hidden;
 }
 
+.brand{
+    position:relative;
+    z-index:2;
+}
 
-/* ================================================
-   DATE / TIME
-================================================ */
+.brand-top{
+    font-size:2.2vw;
+    font-weight:900;
+    line-height:1;
+}
 
-.clock-panel{
-    grid-column:3;
-    grid-row:1;
+.brand-jamaica{
+    margin-top:.5vh;
+
+    font-size:3.3vw;
+    line-height:1;
+
+    font-weight:900;
+    font-style:italic;
+
+    color:#009b3a;
+}
+
+.brand-line{
+    width:85%;
+    height:.7vh;
+
+    margin-top:1.2vh;
+
+    border-radius:20px;
 
     background:
         linear-gradient(
-            135deg,
-            #006c3b,
-            #003e2a
+            90deg,
+            #009b3a 0 38%,
+            #fed100 38% 66%,
+            #003b73 66% 100%
         );
+}
+
+.tagline{
+    margin-top:1.2vh;
+
+    font-size:.95vw;
+    font-weight:800;
+    letter-spacing:.06vw;
+}
+
+.left-message{
+    position:absolute;
+
+    left:2.6vw;
+    right:2.6vw;
+    bottom:9vh;
+
+    text-align:center;
 
     color:#fff;
 
-    display:flex;
-    flex-direction:column;
+    text-shadow:
+        0 2px 5px rgba(0,0,0,.4);
+}
 
+.left-message .script{
+    font-size:2.5vw;
+    font-weight:800;
+    font-style:italic;
+}
+
+.left-message .together{
+    margin-top:.5vh;
+
+    color:#fed100;
+
+    font-size:3vw;
+    font-weight:900;
+    font-style:italic;
+}
+
+/* ==============================================
+   CENTER NOW SERVING
+============================================== */
+
+.center{
+    position:relative;
+
+    display:flex;
     align-items:center;
     justify-content:center;
 
-    border-left:
-        8px solid #fed100;
+    padding:4vh 1.2vw;
 }
 
-#date{
-    font-size:27px;
-    font-weight:bold;
+.now-card{
+    width:100%;
+    height:86%;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    padding:2vh 2vw;
+
+    border-radius:2.2vw;
+
+    background:
+        linear-gradient(
+            145deg,
+            #003d75,
+            #001f49
+        );
+
+    box-shadow:
+        0 1vh 2.5vh rgba(0,0,0,.28);
+
+    border:.18vw solid rgba(255,255,255,.15);
 }
 
-#time{
-    margin-top:6px;
+.now-title{
+    width:94%;
 
-    font-size:58px;
+    padding:1.4vh 1vw;
+
+    border-radius:1.3vw;
+
+    text-align:center;
+
+    background:#fed100;
+
+    color:#001c49;
+
+    font-size:3.8vw;
+    line-height:1;
+    font-weight:900;
+}
+
+.number-row{
+    width:100%;
+
+    flex:1;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:1.5vw;
+}
+
+.speaker{
+    color:#fed100;
+
+    font-size:5vw;
+
+    line-height:1;
+}
+
+#currentNumber{
+    font-size:9.8vw;
+    line-height:1;
+
+    font-weight:900;
+
+    letter-spacing:-.35vw;
+
+    color:#fff;
+
+    text-shadow:
+        0 .3vh .5vh rgba(0,0,0,.35);
+}
+
+.teller-box{
+    min-width:68%;
+
+    padding:1.2vh 2vw;
+
+    border-radius:1.2vw;
+
+    background:#fed100;
+
+    color:#001c49;
+
+    text-align:center;
+
+    font-size:3.1vw;
     line-height:1;
 
     font-weight:900;
 }
 
+.instruction{
+    margin-top:1.8vh;
 
-/* ================================================
-   MAIN NUMBER PANEL
-================================================ */
-
-.main-call{
-    grid-column:2;
-    grid-row:2;
-
-    position:relative;
-
-    margin:25px 25px 30px;
-
-    border-radius:35px;
-
-    overflow:hidden;
-
-    background:
-        linear-gradient(
-            145deg,
-            #07568e,
-            #002d61 75%
-        );
-
-    box-shadow:
-        0 12px 30px
-        rgba(0,0,0,.28);
-
-    color:#fff;
-
-    display:flex;
-    flex-direction:column;
-
-    align-items:center;
-    justify-content:center;
-}
-
-.main-call:before{
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    opacity:.08;
-
-    background:
-        repeating-linear-gradient(
-            135deg,
-            transparent 0,
-            transparent 45px,
-            #ffffff 46px,
-            transparent 48px
-        );
-}
-
-.speaker{
-    position:absolute;
-
-    left:65px;
-    top:245px;
-
-    font-size:100px;
-
-    color:#fed100;
-
-    z-index:2;
-}
-
-#currentNumber{
-    position:relative;
-    z-index:2;
-
-    font-size:250px;
-    line-height:.9;
-
-    font-weight:900;
-
-    letter-spacing:-10px;
-
-    text-shadow:
-        0 8px 12px
-        rgba(0,0,0,.25);
-}
-
-#currentTeller{
-    position:relative;
-    z-index:2;
-
-    min-width:600px;
-
-    margin-top:45px;
-    padding:20px 50px;
-
-    border-radius:30px;
-
-    text-align:center;
-
-    background:
-        linear-gradient(
-            180deg,
-            #ffe249,
-            #ffc900
-        );
-
-    color:#062653;
-
-    font-size:65px;
-
-    font-weight:900;
-
-    box-shadow:
-        0 8px 18px
-        rgba(0,0,0,.25);
-}
-
-.proceed{
-    position:relative;
-    z-index:2;
-
-    margin-top:25px;
-
-    font-size:28px;
+    font-size:1.25vw;
 
     font-style:italic;
 
     color:#fff;
 }
 
+/* ==============================================
+   RIGHT SIDE
+============================================== */
 
-/* ================================================
-   RECENTLY CALLED
-================================================ */
+.right{
+    padding:2.2vh 1.3vw 2.2vh 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(0,88,45,.93),
+            rgba(8,94,50,.88)
+        );
+}
+
+.date-time{
+    height:13%;
+
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    justify-content:center;
+
+    padding-right:.5vw;
+}
+
+#date{
+    font-size:1.05vw;
+    font-weight:700;
+}
+
+#time{
+    margin-top:.4vh;
+
+    font-size:2.5vw;
+    font-weight:900;
+}
 
 .recent-panel{
-    grid-column:3;
-    grid-row:2;
-
-    margin:25px 25px 30px 0;
-
-    border-radius:30px;
+    height:87%;
 
     overflow:hidden;
 
-    background:#b7dc63;
+    border-radius:1.6vw;
 
-    box-shadow:
-        0 10px 25px
-        rgba(0,0,0,.25);
+    background:#cbea78;
+
+    border:.15vw solid rgba(255,255,255,.7);
 }
 
 .recent-title{
-    height:100px;
+    height:14%;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
-    background:
-        linear-gradient(
-            180deg,
-            #007340,
-            #00552e
-        );
+    background:#006b37;
 
     color:#fff;
 
-    font-size:43px;
-
+    font-size:1.8vw;
     font-weight:900;
 }
 
-.table-head{
-    height:55px;
+.column-headings{
+    height:9%;
 
     display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
+    grid-template-columns:50% 50%;
 
     align-items:center;
 
     text-align:center;
 
-    color:#005b35;
+    color:#00602f;
 
-    font-size:25px;
-
+    font-size:1.15vw;
     font-weight:900;
 }
 
-.recent-list{
-    height:520px;
+.history{
+    height:77%;
 
     display:grid;
+    grid-template-rows:repeat(6,1fr);
 
-    grid-template-rows:
-        repeat(6,1fr);
+    gap:.35vh;
 
-    gap:5px;
-
-    padding:
-        0 10px 10px;
+    padding:.3vh .4vw 1vh;
 }
 
-.recent-row{
+.history-row{
     display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
+    grid-template-columns:50% 50%;
 
     align-items:center;
 
-    background:
-        linear-gradient(
-            180deg,
-            #f5fbff,
-            #e4f4ff
-        );
+    background:#edf9ff;
 
-    border-radius:22px;
+    color:#001c49;
 
-    color:#082a59;
+    border-radius:1vw;
 
-    font-weight:900;
+    overflow:hidden;
 }
 
-.recent-number{
+.history-number{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
     height:100%;
 
+    font-size:2.25vw;
+    font-weight:900;
+
+    border-right:.1vw solid #82b9b0;
+}
+
+.history-teller{
     display:flex;
     align-items:center;
     justify-content:center;
 
-    border-right:
-        2px solid
-        #8ebbc3;
+    height:100%;
 
-    font-size:49px;
+    font-size:1.45vw;
+    font-weight:900;
 }
 
-.recent-teller{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:34px;
-}
-
-
-/* ================================================
-   BOTTOM INSTRUCTION BAR
-================================================ */
+/* ==============================================
+   BOTTOM INSTRUCTIONS
+============================================== */
 
 .bottom{
     grid-column:1 / 4;
-    grid-row:3;
-
-    background:
-        linear-gradient(
-            110deg,
-            #003d59,
-            #002b50
-        );
-
-    color:#fff;
 
     display:grid;
-
     grid-template-columns:
         1fr 1fr 1fr 1fr;
 
     align-items:center;
 
-    padding:
-        20px 35px;
+    padding:1.5vh 2.2vw;
+
+    background:#003b4d;
+
+    border-top:.3vh solid rgba(255,255,255,.4);
 }
 
 .step{
-    height:120px;
-
-    display:grid;
-
-    grid-template-columns:
-        90px 1fr;
-
-    align-items:center;
-
-    padding:
-        0 25px;
-
-    border-right:
-        2px solid
-        rgba(255,255,255,.25);
-}
-
-.step:last-child{
-    border-right:none;
-}
-
-.step-icon{
-    width:70px;
-    height:70px;
-
-    border:
-        3px solid #fff;
-
-    border-radius:50%;
+    position:relative;
 
     display:flex;
-
     align-items:center;
-    justify-content:center;
 
-    font-size:36px;
+    min-width:0;
 
-    font-weight:bold;
+    padding:0 1vw;
 }
 
-.step-title{
-    font-size:24px;
+.step:not(:last-child)::after{
+    content:"›";
+
+    position:absolute;
+
+    right:-.4vw;
+
+    color:#fed100;
+
+    font-size:4vw;
+
     font-weight:900;
 }
 
-.step-copy{
-    margin-top:8px;
+.step-icon{
+    width:4.4vw;
+    height:4.4vw;
 
-    font-size:19px;
+    flex:none;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin-right:1vw;
+
+    border:.15vw solid #fff;
+
+    border-radius:50%;
+
+    font-size:2.1vw;
+}
+
+.step-text{
+    min-width:0;
+}
+
+.step-title{
+    font-size:1vw;
+    font-weight:900;
+}
+
+.step-sub{
+    margin-top:.4vh;
+
+    font-size:.82vw;
 
     line-height:1.2;
 }
 
-.yellow{
-    color:#fed100;
-}
+/* ==============================================
+   CONNECTION INDICATOR
+============================================== */
 
-
-/* ================================================
-   TEST CONTROL
-   Hidden on NoviSign unless keyboard is used.
-================================================ */
-
-.test-note{
+#connection{
     position:absolute;
 
-    left:450px;
-    bottom:185px;
+    left:50%;
+    bottom:18.5%;
 
-    z-index:50;
+    transform:translateX(-50%);
 
-    color:rgba(255,255,255,.35);
+    z-index:20;
 
-    font-size:13px;
+    padding:.5vh 1vw;
+
+    border-radius:20px;
+
+    background:rgba(0,0,0,.6);
+
+    color:#fff;
+
+    font-size:.7vw;
+
+    opacity:0;
+
+    transition:opacity .3s;
+}
+
+#connection.offline{
+    opacity:1;
+}
+
+/* ==============================================
+   CALL FLASH
+============================================== */
+
+.flash{
+    animation:callFlash .65s ease-in-out 3;
+}
+
+@keyframes callFlash{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.06);
+        filter:brightness(1.25);
+    }
+
+    100%{
+        transform:scale(1);
+    }
 }
 
 </style>
 </head>
 
-
 <body>
 
-<div id="stage">
+<div class="screen">
 
-<div id="screen">
+    <section class="left">
 
+        <div class="brand">
 
-<!-- ================================================
-     LEFT BRAND
-================================================ -->
-
-<section class="brand">
-
-    <div class="taj">
-        TAJ
-    </div>
-
-    <div class="tax">
-        TAX<br>
-        ADMINISTRATION
-    </div>
-
-    <div class="jamaica">
-        JAMAICA
-    </div>
-
-    <div class="brand-rule"></div>
-
-    <div class="brand-message">
-
-        Serving You.<br>
-        Building Jamaica.
-
-        <span>
-            Together We Build<br>
-            a Stronger Jamaica
-        </span>
-
-    </div>
-
-</section>
-
-
-
-<!-- ================================================
-     NOW SERVING
-================================================ -->
-
-<header class="now-header">
-
-    <div class="now-title">
-        NOW SERVING
-    </div>
-
-</header>
-
-
-
-<!-- ================================================
-     CLOCK
-================================================ -->
-
-<section class="clock-panel">
-
-    <div id="date">
-        Saturday, September 26, 2026
-    </div>
-
-    <div id="time">
-        2:15 PM
-    </div>
-
-</section>
-
-
-
-<!-- ================================================
-     CURRENT NUMBER
-================================================ -->
-
-<main class="main-call">
-
-    <div class="speaker">
-        🔊
-    </div>
-
-    <div id="currentNumber">
-        T006
-    </div>
-
-    <div id="currentTeller">
-        TELLER 3
-    </div>
-
-    <div class="proceed">
-        Please proceed to the indicated teller.
-    </div>
-
-</main>
-
-
-
-<!-- ================================================
-     RECENTLY CALLED
-================================================ -->
-
-<aside class="recent-panel">
-
-    <div class="recent-title">
-        RECENTLY CALLED
-    </div>
-
-    <div class="table-head">
-
-        <div>
-            NUMBER
-        </div>
-
-        <div>
-            TELLER
-        </div>
-
-    </div>
-
-
-    <div
-        id="recentList"
-        class="recent-list">
-
-        <div class="recent-row">
-
-            <div class="recent-number">
-                T005
+            <div class="brand-top">
+                TAX ADMINISTRATION
             </div>
 
-            <div class="recent-teller">
-                TELLER 1
+            <div class="brand-jamaica">
+                JAMAICA
+            </div>
+
+            <div class="brand-line"></div>
+
+            <div class="tagline">
+                SERVING YOU • BUILDING JAMAICA
+            </div>
+
+        </div>
+
+        <div class="left-message">
+
+            <div class="script">
+                Jamaica Moves Forward
+            </div>
+
+            <div class="together">
+                Together
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <main class="center">
+
+        <div
+            id="nowCard"
+            class="now-card">
+
+            <div class="now-title">
+                NOW SERVING
+            </div>
+
+            <div class="number-row">
+
+                <div class="speaker">
+                    🔊
+                </div>
+
+                <div id="currentNumber">
+                    ---
+                </div>
+
+            </div>
+
+            <div
+                id="currentTeller"
+                class="teller-box">
+
+                WAITING
+
+            </div>
+
+            <div class="instruction">
+                Please proceed to the indicated teller.
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <aside class="right">
+
+        <div class="date-time">
+
+            <div id="date">
+                Loading...
+            </div>
+
+            <div id="time">
+                --:--
             </div>
 
         </div>
 
 
-        <div class="recent-row">
+        <div class="recent-panel">
 
-            <div class="recent-number">
-                L003
+            <div class="recent-title">
+                RECENTLY CALLED
             </div>
 
-            <div class="recent-teller">
-                TELLER 4
+            <div class="column-headings">
+
+                <div>
+                    NUMBER
+                </div>
+
+                <div>
+                    TELLER
+                </div>
+
+            </div>
+
+
+            <div
+                id="history"
+                class="history">
+
+                <div class="history-row">
+                    <div class="history-number">---</div>
+                    <div class="history-teller">---</div>
+                </div>
+
+                <div class="history-row">
+                    <div class="history-number">---</div>
+                    <div class="history-teller">---</div>
+                </div>
+
+                <div class="history-row">
+                    <div class="history-number">---</div>
+                    <div class="history-teller">---</div>
+                </div>
+
+                <div class="history-row">
+                    <div class="history-number">---</div>
+                    <div class="history-teller">---</div>
+                </div>
+
+                <div class="history-row">
+                    <div class="history-number">---</div>
+                    <div class="history-teller">---</div>
+                </div>
+
+                <div class="history-row">
+                    <div class="history-number">---</div>
+                    <div class="history-teller">---</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <footer class="bottom">
+
+        <div class="step">
+
+            <div class="step-icon">
+                👥
+            </div>
+
+            <div class="step-text">
+
+                <div class="step-title">
+                    TAKE A TICKET
+                </div>
+
+                <div class="step-sub">
+                    Use one of our self-service kiosks
+                </div>
+
             </div>
 
         </div>
 
 
-        <div class="recent-row">
+        <div class="step">
 
-            <div class="recent-number">
-                F002
+            <div class="step-icon">
+                🪑
             </div>
 
-            <div class="recent-teller">
-                TELLER 2
-            </div>
+            <div class="step-text">
 
-        </div>
+                <div class="step-title">
+                    WATCH THE DISPLAY
+                </div>
 
+                <div class="step-sub">
+                    Your number will be called
+                </div>
 
-        <div class="recent-row">
-
-            <div class="recent-number">
-                T004
-            </div>
-
-            <div class="recent-teller">
-                TELLER 3
             </div>
 
         </div>
 
 
-        <div class="recent-row">
+        <div class="step">
 
-            <div class="recent-number">
-                L002
+            <div class="step-icon">
+                👤
             </div>
 
-            <div class="recent-teller">
-                TELLER 1
-            </div>
+            <div class="step-text">
 
-        </div>
+                <div class="step-title">
+                    GO TO YOUR TELLER
+                </div>
 
+                <div class="step-sub">
+                    Proceed to the indicated teller
+                </div>
 
-        <div class="recent-row">
-
-            <div class="recent-number">
-                F001
-            </div>
-
-            <div class="recent-teller">
-                TELLER 5
             </div>
 
         </div>
 
+
+        <div class="step">
+
+            <div class="step-icon">
+                ✓
+            </div>
+
+            <div class="step-text">
+
+                <div class="step-title">
+                    WE'RE HERE TO HELP
+                </div>
+
+                <div class="step-sub">
+                    Thank you for your patience
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <div id="connection">
+        Connecting to live queue...
     </div>
-
-</aside>
-
-
-
-<!-- ================================================
-     BOTTOM BAR
-================================================ -->
-
-<footer class="bottom">
-
-
-    <div class="step">
-
-        <div class="step-icon">
-            1
-        </div>
-
-        <div>
-
-            <div class="step-title">
-                TAKE A TICKET
-            </div>
-
-            <div class="step-copy">
-                Select your service at
-                a self-service kiosk
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="step">
-
-        <div class="step-icon">
-            2
-        </div>
-
-        <div>
-
-            <div class="step-title">
-                WATCH THE DISPLAY
-            </div>
-
-            <div class="step-copy">
-                Your ticket number
-                will be called
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="step">
-
-        <div class="step-icon">
-            3
-        </div>
-
-        <div>
-
-            <div class="step-title">
-                GO TO YOUR TELLER
-            </div>
-
-            <div class="step-copy">
-                Proceed to the
-                indicated teller
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="step">
-
-        <div class="step-icon">
-            ✓
-        </div>
-
-        <div>
-
-            <div class="step-title yellow">
-                WE'RE HERE TO HELP
-            </div>
-
-            <div class="step-copy">
-                Thank you for
-                your patience
-            </div>
-
-        </div>
-
-    </div>
-
-
-</footer>
-
-
-</div>
 
 </div>
 
 
 
-<script>
+<script type="module">
 
 /* =====================================================
-   SCALE 1920 x 1080 TO NOVISIGN SCREEN
+   FIREBASE
 ===================================================== */
 
-function scaleDisplay(){
-
-    const screen =
-        document.getElementById("screen");
-
-    const scaleX =
-        window.innerWidth / 1920;
-
-    const scaleY =
-        window.innerHeight / 1080;
-
-    screen.style.transform =
-        "translate(-50%, -50%) scale(" +
-        scaleX +
-        "," +
-        scaleY +
-        ")";
+import {
+    initializeApp
 }
+from
+"https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 
-scaleDisplay();
+import {
+    getDatabase,
+    ref,
+    onValue,
+    query,
+    limitToLast
+}
+from
+"https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
-window.addEventListener(
-    "load",
-    scaleDisplay
+
+const firebaseConfig = {
+
+    apiKey:
+    "AIzaSyCJAEZ-MD-W6SQZfUS5BkD-4NpT11vItHE",
+
+    authDomain:
+    "jamaica-take-a-ticket.firebaseapp.com",
+
+    databaseURL:
+    "https://jamaica-take-a-ticket-default-rtdb.firebaseio.com",
+
+    projectId:
+    "jamaica-take-a-ticket",
+
+    storageBucket:
+    "jamaica-take-a-ticket.firebasestorage.app",
+
+    messagingSenderId:
+    "1093598545752",
+
+    appId:
+    "1:1093598545752:web:7fa81726e2bcc5fdfb072d"
+
+};
+
+
+const app =
+    initializeApp(
+        firebaseConfig
+    );
+
+
+const db =
+    getDatabase(app);
+
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const currentNumber =
+    document.getElementById(
+        "currentNumber"
+    );
+
+
+const currentTeller =
+    document.getElementById(
+        "currentTeller"
+    );
+
+
+const historyElement =
+    document.getElementById(
+        "history"
+    );
+
+
+const nowCard =
+    document.getElementById(
+        "nowCard"
+    );
+
+
+const connection =
+    document.getElementById(
+        "connection"
+    );
+
+
+
+/* =====================================================
+   CONNECTION STATUS
+===================================================== */
+
+const connectedRef =
+    ref(
+        db,
+        ".info/connected"
+    );
+
+
+onValue(
+    connectedRef,
+    function(snapshot){
+
+        if(
+            snapshot.val() === true
+        ){
+
+            connection.classList.remove(
+                "offline"
+            );
+
+            connection.textContent =
+                "Live queue connected";
+
+        }
+        else{
+
+            connection.classList.add(
+                "offline"
+            );
+
+            connection.textContent =
+                "Connecting to live queue...";
+
+        }
+
+    }
 );
 
-window.addEventListener(
-    "resize",
-    function(){
 
-        setTimeout(
-            scaleDisplay,
-            100
+
+/* =====================================================
+   CURRENT NUMBER
+===================================================== */
+
+let lastCallSignature = "";
+
+
+const currentRef =
+    ref(
+        db,
+        "display/current"
+    );
+
+
+onValue(
+    currentRef,
+    function(snapshot){
+
+        const data =
+            snapshot.val();
+
+
+        if(
+            !data ||
+            !data.number
+        ){
+
+            currentNumber.textContent =
+                "---";
+
+
+            currentTeller.textContent =
+                "WAITING";
+
+
+            return;
+
+        }
+
+
+        currentNumber.textContent =
+            data.number;
+
+
+        currentTeller.textContent =
+            "TELLER " +
+            data.teller;
+
+
+        const signature =
+            data.number +
+            "-" +
+            data.teller +
+            "-" +
+            (
+                data.recalledAt ||
+                data.calledAt ||
+                ""
+            );
+
+
+        if(
+            signature !==
+            lastCallSignature
+        ){
+
+            lastCallSignature =
+                signature;
+
+
+            flashCurrentCall();
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   RECENT CALL HISTORY
+===================================================== */
+
+const historyRef =
+    query(
+        ref(
+            db,
+            "display/history"
+        ),
+        limitToLast(6)
+    );
+
+
+onValue(
+    historyRef,
+    function(snapshot){
+
+        const calls = [];
+
+
+        snapshot.forEach(
+            function(child){
+
+                const data =
+                    child.val();
+
+
+                if(
+                    data &&
+                    data.number
+                ){
+
+                    calls.push(
+                        data
+                    );
+
+                }
+
+            }
+        );
+
+
+        calls.sort(
+            function(a,b){
+
+                const timeA =
+                    a.recalledAt ||
+                    a.calledAt ||
+                    0;
+
+
+                const timeB =
+                    b.recalledAt ||
+                    b.calledAt ||
+                    0;
+
+
+                return timeB - timeA;
+
+            }
+        );
+
+
+        renderHistory(
+            calls
         );
 
     }
 );
 
 
+
 /* =====================================================
-   LIVE DATE AND TIME
+   RENDER HISTORY
+===================================================== */
+
+function renderHistory(calls){
+
+    historyElement.innerHTML =
+        "";
+
+
+    for(
+        let i = 0;
+        i < 6;
+        i++
+    ){
+
+        const row =
+            document.createElement(
+                "div"
+            );
+
+
+        row.className =
+            "history-row";
+
+
+        const number =
+            document.createElement(
+                "div"
+            );
+
+
+        number.className =
+            "history-number";
+
+
+        const teller =
+            document.createElement(
+                "div"
+            );
+
+
+        teller.className =
+            "history-teller";
+
+
+        if(
+            calls[i]
+        ){
+
+            number.textContent =
+                calls[i].number;
+
+
+            teller.textContent =
+                "TELLER " +
+                calls[i].teller;
+
+        }
+        else{
+
+            number.textContent =
+                "---";
+
+
+            teller.textContent =
+                "---";
+
+        }
+
+
+        row.appendChild(
+            number
+        );
+
+
+        row.appendChild(
+            teller
+        );
+
+
+        historyElement.appendChild(
+            row
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   FLASH WHEN CUSTOMER IS CALLED
+===================================================== */
+
+function flashCurrentCall(){
+
+    nowCard.classList.remove(
+        "flash"
+    );
+
+
+    void nowCard.offsetWidth;
+
+
+    nowCard.classList.add(
+        "flash"
+    );
+
+
+    setTimeout(
+        function(){
+
+            nowCard.classList.remove(
+                "flash"
+            );
+
+        },
+        2100
+    );
+
+}
+
+
+
+/* =====================================================
+   DATE AND TIME
 ===================================================== */
 
 function updateClock(){
@@ -1013,8 +1224,9 @@ function updateClock(){
         new Date();
 
 
-    document.getElementById("date")
-        .textContent =
+    document.getElementById(
+        "date"
+    ).textContent =
         now.toLocaleDateString(
             "en-US",
             {
@@ -1026,8 +1238,9 @@ function updateClock(){
         );
 
 
-    document.getElementById("time")
-        .textContent =
+    document.getElementById(
+        "time"
+    ).textContent =
         now.toLocaleTimeString(
             "en-US",
             {
@@ -1035,10 +1248,12 @@ function updateClock(){
                 minute:"2-digit"
             }
         );
+
 }
 
 
 updateClock();
+
 
 setInterval(
     updateClock,
@@ -1046,207 +1261,26 @@ setInterval(
 );
 
 
-/* =====================================================
-   TEST DATA
-
-   This is temporary.
-
-   Later this function will receive calls from
-   the shared TAJ queue database.
-===================================================== */
-
-let currentNumber =
-    "T006";
-
-let currentTeller =
-    3;
-
-
-let recentCalls = [
-
-    {
-        number:"T005",
-        teller:1
-    },
-
-    {
-        number:"L003",
-        teller:4
-    },
-
-    {
-        number:"F002",
-        teller:2
-    },
-
-    {
-        number:"T004",
-        teller:3
-    },
-
-    {
-        number:"L002",
-        teller:1
-    },
-
-    {
-        number:"F001",
-        teller:5
-    }
-
-];
-
 
 /* =====================================================
-   UPDATE DISPLAY
+   PREVENT COPY / LONG PRESS
 ===================================================== */
 
-function showCall(
-    number,
-    teller
-){
+document.addEventListener(
+    "contextmenu",
+    function(event){
 
-    if(
-        currentNumber &&
-        currentTeller
-    ){
-
-        recentCalls.unshift(
-            {
-                number:currentNumber,
-                teller:currentTeller
-            }
-        );
-
-
-        recentCalls =
-            recentCalls.slice(
-                0,
-                6
-            );
+        event.preventDefault();
 
     }
-
-
-    currentNumber =
-        number;
-
-
-    currentTeller =
-        teller;
-
-
-    document
-        .getElementById(
-            "currentNumber"
-        )
-        .textContent =
-        number;
-
-
-    document
-        .getElementById(
-            "currentTeller"
-        )
-        .textContent =
-        "TELLER " + teller;
-
-
-    renderRecent();
-
-}
-
-
-/* =====================================================
-   RENDER RECENT CALLS
-===================================================== */
-
-function renderRecent(){
-
-    const list =
-        document.getElementById(
-            "recentList"
-        );
-
-
-    list.innerHTML = "";
-
-
-    recentCalls.forEach(
-        function(call){
-
-            const row =
-                document.createElement(
-                    "div"
-                );
-
-
-            row.className =
-                "recent-row";
-
-
-            row.innerHTML =
-                '<div class="recent-number">' +
-                call.number +
-                '</div>' +
-
-                '<div class="recent-teller">' +
-                'TELLER ' +
-                call.teller +
-                '</div>';
-
-
-            list.appendChild(
-                row
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   KEYBOARD TEST
-
-   Press SPACE on a computer to simulate
-   another customer being called.
-
-   This is ONLY for testing the screen.
-===================================================== */
-
-let testNumber = 6;
+);
 
 
 document.addEventListener(
-    "keydown",
+    "selectstart",
     function(event){
 
-        if(
-            event.code === "Space"
-        ){
-
-            event.preventDefault();
-
-
-            testNumber++;
-
-
-            const teller =
-                ((testNumber - 1) % 5) + 1;
-
-
-            showCall(
-                "T" +
-                String(testNumber)
-                .padStart(
-                    3,
-                    "0"
-                ),
-                teller
-            );
-
-        }
+        event.preventDefault();
 
     }
 );
