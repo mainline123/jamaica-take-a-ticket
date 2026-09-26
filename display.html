@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+<title>TAJ Queue Display</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-user-select:none;
+    user-select:none;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#001f3f;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+#stage{
+    position:fixed;
+    inset:0;
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+    background:#002d5c;
+}
+
+#screen{
+    position:absolute;
+    left:50%;
+    top:50%;
+
+    width:1920px;
+    height:1080px;
+
+    transform-origin:center center;
+
+    display:grid;
+    grid-template-columns:420px 900px 600px;
+    grid-template-rows:170px 730px 180px;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e9f7ff 0%,
+            #ffffff 38%,
+            #e7f7ee 100%
+        );
+
+    color:#062c5c;
+}
+
+
+/* ================================================
+   LEFT BRAND AREA
+================================================ */
+
+.brand{
+    grid-column:1;
+    grid-row:1 / 3;
+
+    position:relative;
+
+    padding:55px 35px;
+
+    background:
+        linear-gradient(
+            160deg,
+            #ffffff 0%,
+            #e6f7ff 50%,
+            #dff3e5 100%
+        );
+
+    overflow:hidden;
+}
+
+.brand:after{
+    content:"";
+
+    position:absolute;
+
+    left:-120px;
+    bottom:-100px;
+
+    width:620px;
+    height:300px;
+
+    transform:rotate(-12deg);
+
+    background:
+        linear-gradient(
+            135deg,
+            #009b3a 0 33%,
+            #fed100 33% 43%,
+            #000000 43% 68%,
+            #fed100 68% 78%,
+            #009b3a 78%
+        );
+
+    opacity:.96;
+}
+
+.taj{
+    position:relative;
+    z-index:2;
+
+    font-size:110px;
+    font-weight:900;
+    font-style:italic;
+    letter-spacing:-8px;
+
+    color:#063b75;
+}
+
+.tax{
+    position:relative;
+    z-index:2;
+
+    margin-top:15px;
+
+    font-size:38px;
+    line-height:1.05;
+    font-weight:800;
+}
+
+.jamaica{
+    position:relative;
+    z-index:2;
+
+    margin-top:6px;
+
+    font-size:47px;
+    font-weight:900;
+
+    color:#e6ad00;
+}
+
+.brand-rule{
+    position:relative;
+    z-index:2;
+
+    width:270px;
+    height:7px;
+
+    margin-top:28px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #009b3a 0 33%,
+            #fed100 33% 66%,
+            #000 66%
+        );
+}
+
+.brand-message{
+    position:relative;
+    z-index:2;
+
+    margin-top:45px;
+
+    font-size:31px;
+    line-height:1.2;
+
+    font-weight:800;
+}
+
+.brand-message span{
+    display:block;
+
+    margin-top:15px;
+
+    color:#009b3a;
+
+    font-family:Georgia,serif;
+    font-style:italic;
+
+    font-size:39px;
+}
+
+
+/* ================================================
+   NOW SERVING HEADER
+================================================ */
+
+.now-header{
+    grid-column:2;
+    grid-row:1;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px 30px;
+
+    background:#00396f;
+}
+
+.now-title{
+    width:100%;
+    height:120px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffe249,
+            #ffc900
+        );
+
+    color:#062653;
+
+    font-size:72px;
+    font-weight:900;
+
+    letter-spacing:2px;
+
+    box-shadow:
+        0 7px 18px
+        rgba(0,0,0,.25);
+}
+
+
+/* ================================================
+   DATE / TIME
+================================================ */
+
+.clock-panel{
+    grid-column:3;
+    grid-row:1;
+
+    background:
+        linear-gradient(
+            135deg,
+            #006c3b,
+            #003e2a
+        );
+
+    color:#fff;
+
+    display:flex;
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    border-left:
+        8px solid #fed100;
+}
+
+#date{
+    font-size:27px;
+    font-weight:bold;
+}
+
+#time{
+    margin-top:6px;
+
+    font-size:58px;
+    line-height:1;
+
+    font-weight:900;
+}
+
+
+/* ================================================
+   MAIN NUMBER PANEL
+================================================ */
+
+.main-call{
+    grid-column:2;
+    grid-row:2;
+
+    position:relative;
+
+    margin:25px 25px 30px;
+
+    border-radius:35px;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            #07568e,
+            #002d61 75%
+        );
+
+    box-shadow:
+        0 12px 30px
+        rgba(0,0,0,.28);
+
+    color:#fff;
+
+    display:flex;
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+}
+
+.main-call:before{
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    opacity:.08;
+
+    background:
+        repeating-linear-gradient(
+            135deg,
+            transparent 0,
+            transparent 45px,
+            #ffffff 46px,
+            transparent 48px
+        );
+}
+
+.speaker{
+    position:absolute;
+
+    left:65px;
+    top:245px;
+
+    font-size:100px;
+
+    color:#fed100;
+
+    z-index:2;
+}
+
+#currentNumber{
+    position:relative;
+    z-index:2;
+
+    font-size:250px;
+    line-height:.9;
+
+    font-weight:900;
+
+    letter-spacing:-10px;
+
+    text-shadow:
+        0 8px 12px
+        rgba(0,0,0,.25);
+}
+
+#currentTeller{
+    position:relative;
+    z-index:2;
+
+    min-width:600px;
+
+    margin-top:45px;
+    padding:20px 50px;
+
+    border-radius:30px;
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffe249,
+            #ffc900
+        );
+
+    color:#062653;
+
+    font-size:65px;
+
+    font-weight:900;
+
+    box-shadow:
+        0 8px 18px
+        rgba(0,0,0,.25);
+}
+
+.proceed{
+    position:relative;
+    z-index:2;
+
+    margin-top:25px;
+
+    font-size:28px;
+
+    font-style:italic;
+
+    color:#fff;
+}
+
+
+/* ================================================
+   RECENTLY CALLED
+================================================ */
+
+.recent-panel{
+    grid-column:3;
+    grid-row:2;
+
+    margin:25px 25px 30px 0;
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+    background:#b7dc63;
+
+    box-shadow:
+        0 10px 25px
+        rgba(0,0,0,.25);
+}
+
+.recent-title{
+    height:100px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            180deg,
+            #007340,
+            #00552e
+        );
+
+    color:#fff;
+
+    font-size:43px;
+
+    font-weight:900;
+}
+
+.table-head{
+    height:55px;
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    align-items:center;
+
+    text-align:center;
+
+    color:#005b35;
+
+    font-size:25px;
+
+    font-weight:900;
+}
+
+.recent-list{
+    height:520px;
+
+    display:grid;
+
+    grid-template-rows:
+        repeat(6,1fr);
+
+    gap:5px;
+
+    padding:
+        0 10px 10px;
+}
+
+.recent-row{
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    align-items:center;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f5fbff,
+            #e4f4ff
+        );
+
+    border-radius:22px;
+
+    color:#082a59;
+
+    font-weight:900;
+}
+
+.recent-number{
+    height:100%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-right:
+        2px solid
+        #8ebbc3;
+
+    font-size:49px;
+}
+
+.recent-teller{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:34px;
+}
+
+
+/* ================================================
+   BOTTOM INSTRUCTION BAR
+================================================ */
+
+.bottom{
+    grid-column:1 / 4;
+    grid-row:3;
+
+    background:
+        linear-gradient(
+            110deg,
+            #003d59,
+            #002b50
+        );
+
+    color:#fff;
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr 1fr 1fr;
+
+    align-items:center;
+
+    padding:
+        20px 35px;
+}
+
+.step{
+    height:120px;
+
+    display:grid;
+
+    grid-template-columns:
+        90px 1fr;
+
+    align-items:center;
+
+    padding:
+        0 25px;
+
+    border-right:
+        2px solid
+        rgba(255,255,255,.25);
+}
+
+.step:last-child{
+    border-right:none;
+}
+
+.step-icon{
+    width:70px;
+    height:70px;
+
+    border:
+        3px solid #fff;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    font-size:36px;
+
+    font-weight:bold;
+}
+
+.step-title{
+    font-size:24px;
+    font-weight:900;
+}
+
+.step-copy{
+    margin-top:8px;
+
+    font-size:19px;
+
+    line-height:1.2;
+}
+
+.yellow{
+    color:#fed100;
+}
+
+
+/* ================================================
+   TEST CONTROL
+   Hidden on NoviSign unless keyboard is used.
+================================================ */
+
+.test-note{
+    position:absolute;
+
+    left:450px;
+    bottom:185px;
+
+    z-index:50;
+
+    color:rgba(255,255,255,.35);
+
+    font-size:13px;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div id="stage">
+
+<div id="screen">
+
+
+<!-- ================================================
+     LEFT BRAND
+================================================ -->
+
+<section class="brand">
+
+    <div class="taj">
+        TAJ
+    </div>
+
+    <div class="tax">
+        TAX<br>
+        ADMINISTRATION
+    </div>
+
+    <div class="jamaica">
+        JAMAICA
+    </div>
+
+    <div class="brand-rule"></div>
+
+    <div class="brand-message">
+
+        Serving You.<br>
+        Building Jamaica.
+
+        <span>
+            Together We Build<br>
+            a Stronger Jamaica
+        </span>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================================================
+     NOW SERVING
+================================================ -->
+
+<header class="now-header">
+
+    <div class="now-title">
+        NOW SERVING
+    </div>
+
+</header>
+
+
+
+<!-- ================================================
+     CLOCK
+================================================ -->
+
+<section class="clock-panel">
+
+    <div id="date">
+        Saturday, September 26, 2026
+    </div>
+
+    <div id="time">
+        2:15 PM
+    </div>
+
+</section>
+
+
+
+<!-- ================================================
+     CURRENT NUMBER
+================================================ -->
+
+<main class="main-call">
+
+    <div class="speaker">
+        🔊
+    </div>
+
+    <div id="currentNumber">
+        T006
+    </div>
+
+    <div id="currentTeller">
+        TELLER 3
+    </div>
+
+    <div class="proceed">
+        Please proceed to the indicated teller.
+    </div>
+
+</main>
+
+
+
+<!-- ================================================
+     RECENTLY CALLED
+================================================ -->
+
+<aside class="recent-panel">
+
+    <div class="recent-title">
+        RECENTLY CALLED
+    </div>
+
+    <div class="table-head">
+
+        <div>
+            NUMBER
+        </div>
+
+        <div>
+            TELLER
+        </div>
+
+    </div>
+
+
+    <div
+        id="recentList"
+        class="recent-list">
+
+        <div class="recent-row">
+
+            <div class="recent-number">
+                T005
+            </div>
+
+            <div class="recent-teller">
+                TELLER 1
+            </div>
+
+        </div>
+
+
+        <div class="recent-row">
+
+            <div class="recent-number">
+                L003
+            </div>
+
+            <div class="recent-teller">
+                TELLER 4
+            </div>
+
+        </div>
+
+
+        <div class="recent-row">
+
+            <div class="recent-number">
+                F002
+            </div>
+
+            <div class="recent-teller">
+                TELLER 2
+            </div>
+
+        </div>
+
+
+        <div class="recent-row">
+
+            <div class="recent-number">
+                T004
+            </div>
+
+            <div class="recent-teller">
+                TELLER 3
+            </div>
+
+        </div>
+
+
+        <div class="recent-row">
+
+            <div class="recent-number">
+                L002
+            </div>
+
+            <div class="recent-teller">
+                TELLER 1
+            </div>
+
+        </div>
+
+
+        <div class="recent-row">
+
+            <div class="recent-number">
+                F001
+            </div>
+
+            <div class="recent-teller">
+                TELLER 5
+            </div>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+
+<!-- ================================================
+     BOTTOM BAR
+================================================ -->
+
+<footer class="bottom">
+
+
+    <div class="step">
+
+        <div class="step-icon">
+            1
+        </div>
+
+        <div>
+
+            <div class="step-title">
+                TAKE A TICKET
+            </div>
+
+            <div class="step-copy">
+                Select your service at
+                a self-service kiosk
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="step">
+
+        <div class="step-icon">
+            2
+        </div>
+
+        <div>
+
+            <div class="step-title">
+                WATCH THE DISPLAY
+            </div>
+
+            <div class="step-copy">
+                Your ticket number
+                will be called
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="step">
+
+        <div class="step-icon">
+            3
+        </div>
+
+        <div>
+
+            <div class="step-title">
+                GO TO YOUR TELLER
+            </div>
+
+            <div class="step-copy">
+                Proceed to the
+                indicated teller
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="step">
+
+        <div class="step-icon">
+            ✓
+        </div>
+
+        <div>
+
+            <div class="step-title yellow">
+                WE'RE HERE TO HELP
+            </div>
+
+            <div class="step-copy">
+                Thank you for
+                your patience
+            </div>
+
+        </div>
+
+    </div>
+
+
+</footer>
+
+
+</div>
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   SCALE 1920 x 1080 TO NOVISIGN SCREEN
+===================================================== */
+
+function scaleDisplay(){
+
+    const screen =
+        document.getElementById("screen");
+
+    const scaleX =
+        window.innerWidth / 1920;
+
+    const scaleY =
+        window.innerHeight / 1080;
+
+    screen.style.transform =
+        "translate(-50%, -50%) scale(" +
+        scaleX +
+        "," +
+        scaleY +
+        ")";
+}
+
+
+scaleDisplay();
+
+window.addEventListener(
+    "load",
+    scaleDisplay
+);
+
+window.addEventListener(
+    "resize",
+    function(){
+
+        setTimeout(
+            scaleDisplay,
+            100
+        );
+
+    }
+);
+
+
+/* =====================================================
+   LIVE DATE AND TIME
+===================================================== */
+
+function updateClock(){
+
+    const now =
+        new Date();
+
+
+    document.getElementById("date")
+        .textContent =
+        now.toLocaleDateString(
+            "en-US",
+            {
+                weekday:"long",
+                month:"long",
+                day:"numeric",
+                year:"numeric"
+            }
+        );
+
+
+    document.getElementById("time")
+        .textContent =
+        now.toLocaleTimeString(
+            "en-US",
+            {
+                hour:"numeric",
+                minute:"2-digit"
+            }
+        );
+}
+
+
+updateClock();
+
+setInterval(
+    updateClock,
+    1000
+);
+
+
+/* =====================================================
+   TEST DATA
+
+   This is temporary.
+
+   Later this function will receive calls from
+   the shared TAJ queue database.
+===================================================== */
+
+let currentNumber =
+    "T006";
+
+let currentTeller =
+    3;
+
+
+let recentCalls = [
+
+    {
+        number:"T005",
+        teller:1
+    },
+
+    {
+        number:"L003",
+        teller:4
+    },
+
+    {
+        number:"F002",
+        teller:2
+    },
+
+    {
+        number:"T004",
+        teller:3
+    },
+
+    {
+        number:"L002",
+        teller:1
+    },
+
+    {
+        number:"F001",
+        teller:5
+    }
+
+];
+
+
+/* =====================================================
+   UPDATE DISPLAY
+===================================================== */
+
+function showCall(
+    number,
+    teller
+){
+
+    if(
+        currentNumber &&
+        currentTeller
+    ){
+
+        recentCalls.unshift(
+            {
+                number:currentNumber,
+                teller:currentTeller
+            }
+        );
+
+
+        recentCalls =
+            recentCalls.slice(
+                0,
+                6
+            );
+
+    }
+
+
+    currentNumber =
+        number;
+
+
+    currentTeller =
+        teller;
+
+
+    document
+        .getElementById(
+            "currentNumber"
+        )
+        .textContent =
+        number;
+
+
+    document
+        .getElementById(
+            "currentTeller"
+        )
+        .textContent =
+        "TELLER " + teller;
+
+
+    renderRecent();
+
+}
+
+
+/* =====================================================
+   RENDER RECENT CALLS
+===================================================== */
+
+function renderRecent(){
+
+    const list =
+        document.getElementById(
+            "recentList"
+        );
+
+
+    list.innerHTML = "";
+
+
+    recentCalls.forEach(
+        function(call){
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "recent-row";
+
+
+            row.innerHTML =
+                '<div class="recent-number">' +
+                call.number +
+                '</div>' +
+
+                '<div class="recent-teller">' +
+                'TELLER ' +
+                call.teller +
+                '</div>';
+
+
+            list.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   KEYBOARD TEST
+
+   Press SPACE on a computer to simulate
+   another customer being called.
+
+   This is ONLY for testing the screen.
+===================================================== */
+
+let testNumber = 6;
+
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.code === "Space"
+        ){
+
+            event.preventDefault();
+
+
+            testNumber++;
+
+
+            const teller =
+                ((testNumber - 1) % 5) + 1;
+
+
+            showCall(
+                "T" +
+                String(testNumber)
+                .padStart(
+                    3,
+                    "0"
+                ),
+                teller
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
