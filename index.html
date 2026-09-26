@@ -4,12 +4,9 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width,
-initial-scale=1.0,
-maximum-scale=1.0,
-user-scalable=no">
+content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
-<title>TAJ - Take a Ticket</title>
+<title>TAJ - Take A Ticket</title>
 
 <style>
 
@@ -17,44 +14,28 @@ user-scalable=no">
     box-sizing:border-box;
     margin:0;
     padding:0;
-    -webkit-tap-highlight-color:transparent !important;
-    -webkit-user-select:none !important;
-    user-select:none !important;
-    -webkit-touch-callout:none !important;
-    -webkit-user-drag:none !important;
+    -webkit-user-select:none;
+    user-select:none;
+    -webkit-touch-callout:none;
+    -webkit-tap-highlight-color:transparent;
 }
 
-html,
-body{
+html,body{
     width:100%;
     height:100%;
     margin:0;
-    padding:0;
     overflow:hidden;
     background:#000;
     font-family:Arial,Helvetica,sans-serif;
-    touch-action:manipulation;
-}
-
-button{
-    -webkit-appearance:none;
-    appearance:none;
-    touch-action:manipulation;
-    -webkit-user-select:none !important;
-    user-select:none !important;
-    -webkit-touch-callout:none !important;
-    outline:none;
 }
 
 #stage{
     position:fixed;
-    left:0;
-    top:0;
+    inset:0;
     width:100vw;
     height:100vh;
     overflow:hidden;
     background:#000;
-    touch-action:manipulation;
 }
 
 #portraitCanvas{
@@ -66,357 +47,431 @@ button{
     transform-origin:center center;
     background:#fff;
     overflow:hidden;
-    color:#062d5c;
-    touch-action:manipulation;
 }
 
+
+/* =====================================================
+   HOME SCREEN
+===================================================== */
+
 #homeScreen{
+    position:absolute;
+    inset:0;
     width:1080px;
     height:1920px;
+
     display:grid;
     grid-template-rows:
         400px
         1060px
         280px
         180px;
+
     background:#fff;
 }
 
-/* HEADER */
 
-.hero{
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
     position:relative;
-    width:100%;
-    height:400px;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
     overflow:hidden;
-    padding:70px 70px 40px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ffffff 0%,
-            #ffffff 57%,
-            #e4f2f9 100%
-        );
+    border-bottom:18px solid #fed100;
 }
 
-.hero:after{
+.header::before{
     content:"";
     position:absolute;
-    width:610px;
-    height:380px;
-    right:-120px;
-    top:-100px;
+    left:0;
+    bottom:0;
+    width:100%;
+    height:44px;
+    background:#009b3a;
+}
 
-    background:
-        linear-gradient(
-            150deg,
-            #009b3a 0 34%,
-            #fed100 34% 42%,
-            #050505 42% 70%,
-            #fed100 70% 78%,
-            #009b3a 78%
-        );
-
-    transform:skewY(-8deg);
-    border-radius:0 0 0 70%;
-    z-index:1;
+.header::after{
+    content:"";
+    position:absolute;
+    right:-100px;
+    bottom:-30px;
+    width:600px;
+    height:95px;
+    background:#000;
+    transform:rotate(-5deg);
 }
 
 .brand{
     position:relative;
-    z-index:3;
-    display:flex;
-    align-items:center;
-    gap:25px;
+    z-index:2;
+    margin-top:-20px;
 }
 
-.taj-mark{
-    font-size:115px;
+.taj{
+    color:#003b73;
+    font-size:125px;
+    line-height:.9;
     font-weight:900;
-    font-style:italic;
-    letter-spacing:-8px;
-    line-height:.8;
-    color:#063b75;
+    letter-spacing:-7px;
 }
 
-.brand-line{
-    width:6px;
-    height:135px;
-    background:#0a4b82;
-}
-
-.brand-text{
-    line-height:.92;
-}
-
-.brand-text .tax{
-    display:block;
-    font-size:44px;
-    font-weight:800;
-}
-
-.brand-text .jamaica{
-    display:block;
-    font-size:43px;
-    font-weight:800;
-    color:#f5bd00;
+.tax-name{
+    margin-top:20px;
+    color:#003b73;
+    font-size:34px;
+    line-height:1.1;
+    font-weight:900;
+    text-transform:uppercase;
 }
 
 .tagline{
-    position:relative;
-    z-index:3;
-    margin-top:45px;
-    font-size:22px;
-    letter-spacing:5px;
-    font-weight:bold;
-    color:#07356b;
+    margin-top:14px;
+    color:#009b3a;
+    font-size:27px;
+    font-weight:800;
 }
 
-.serving{
-    position:absolute;
-    z-index:3;
-    right:65px;
-    bottom:35px;
-    text-align:center;
-    font-family:Georgia,serif;
-    font-style:italic;
-    transform:rotate(-7deg);
-    color:#07356b;
-    font-size:37px;
-    line-height:.9;
-}
 
-/* SERVICES */
+/* =====================================================
+   SERVICE SECTION
+===================================================== */
 
 .service-area{
-    width:100%;
-    height:1060px;
-
-    background:
-        linear-gradient(
-            150deg,
-            #075897,
-            #002e62 78%
-        );
-
-    padding:48px 65px 55px;
-
-    display:flex;
-    flex-direction:column;
+    background:#002f61;
+    padding:65px 70px 55px;
 }
 
-.heading{
+.service-title{
     color:#fff;
     text-align:center;
-    margin-bottom:40px;
-}
-
-.heading h1{
-    font-size:56px;
-    line-height:1;
+    font-size:54px;
     font-weight:900;
 }
 
-.heading p{
-    margin-top:16px;
-    font-size:27px;
-    font-style:italic;
+.service-subtitle{
+    margin-top:15px;
+    color:#d7e5ef;
+    text-align:center;
+    font-size:28px;
+    font-weight:600;
 }
 
 .buttons{
-    flex:1;
+    margin-top:52px;
     display:grid;
-    grid-template-rows:repeat(3,1fr);
+    grid-template-columns:1fr;
     gap:30px;
 }
 
 .service-button{
     width:100%;
+    height:215px;
+
     border:none;
-    border-radius:38px;
-    padding:25px 30px;
+    border-radius:28px;
 
-    display:grid;
-    grid-template-columns:
-        220px
-        1fr
-        80px;
+    background:#fff;
 
+    display:flex;
     align-items:center;
 
-    color:#062d5c;
-    text-align:left;
-    cursor:pointer;
+    padding:28px 38px;
 
     box-shadow:
-        0 10px 25px
-        rgba(0,0,0,.20);
+        0 10px 20px rgba(0,0,0,.18);
 
+    cursor:pointer;
     touch-action:manipulation;
 }
 
 .service-button:active{
-    opacity:.92;
+    transform:scale(.985);
 }
 
-.traffic{
-    background:
-        linear-gradient(
-            145deg,
-            #f9fdff,
-            #d8effd
-        );
+.service-button:disabled{
+    opacity:.38;
+    cursor:not-allowed;
+    transform:none;
 }
 
-.licence{
-    background:
-        linear-gradient(
-            145deg,
-            #f1ffec,
-            #d7f7ca
-        );
-}
-
-.fitness{
-    background:
-        linear-gradient(
-            145deg,
-            #fffef7,
-            #ffefbd
-        );
-}
-
-.service-icon{
-    height:82%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-right:
-        3px solid
-        rgba(6,45,92,.20);
-}
-
-.icon-box{
-    width:145px;
-    height:145px;
-
-    border:
-        8px solid #063b75;
-
-    border-radius:22px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:78px;
-    font-weight:900;
-    color:#063b75;
-}
-
-.service-copy{
-    padding:0 35px;
-}
-
-.service-title{
-    display:block;
-    font-size:43px;
-    line-height:1.05;
-    font-weight:900;
-}
-
-.service-description{
-    display:block;
-    margin-top:18px;
-    font-size:24px;
-    line-height:1.25;
-}
-
-.arrow{
-    text-align:center;
-    font-size:90px;
-    font-weight:300;
-}
-
-/* INFO */
-
-.info-panel{
-    width:100%;
-    height:280px;
-
-    background:#eef8ff;
-
-    display:grid;
-
-    grid-template-columns:
-        150px
-        1fr;
-
-    grid-template-rows:
-        190px
-        90px;
-
-    align-items:center;
-
-    padding:
-        20px 65px 0;
-}
-
-.info-icon{
-    width:90px;
-    height:90px;
-
-    border:
-        6px solid #063b75;
+.icon{
+    flex:0 0 135px;
+    width:135px;
+    height:135px;
 
     border-radius:50%;
 
     display:flex;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
 
-    font-family:Georgia,serif;
+    background:#009b3a;
 
-    font-size:58px;
-    font-weight:bold;
+    color:#fff;
+    font-size:66px;
+    font-weight:900;
+
+    margin-right:38px;
 }
 
-.info-copy{
-    font-size:25px;
+.button-text{
+    flex:1;
+    text-align:left;
+}
+
+.button-title{
+    color:#003b73;
+    font-size:38px;
+    line-height:1.12;
+    font-weight:900;
+}
+
+.button-note{
+    margin-top:13px;
+    color:#657789;
+    font-size:24px;
+    font-weight:600;
+}
+
+
+/* =====================================================
+   INFORMATION STRIP
+===================================================== */
+
+.info{
+    background:#f0f5f8;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:35px 75px;
+}
+
+.info-inner{
+    max-width:900px;
+}
+
+.info-title{
+    color:#003b73;
+    font-size:33px;
+    font-weight:900;
+}
+
+.info-text{
+    margin-top:14px;
+    color:#50677a;
+    font-size:26px;
     line-height:1.35;
+    font-weight:600;
 }
 
-.info-copy strong{
-    display:block;
-    font-size:29px;
-    margin-bottom:8px;
-}
 
-.info-right{
-    grid-column:1 / -1;
+/* =====================================================
+   FOOTER
+===================================================== */
 
-    border-top:
-        2px solid
-        rgba(6,45,92,.25);
+.footer{
+    background:#003b73;
+    color:#fff;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
     text-align:center;
 
-    padding-top:20px;
+    font-size:28px;
+    font-weight:800;
+    line-height:1.4;
 
-    font-size:19px;
-    font-weight:bold;
-    letter-spacing:3px;
+    padding:25px 60px;
 }
 
-/* FOOTER */
 
-.footer{
-    width:100%;
-    height:180px;
+/* =====================================================
+   OFFLINE OVERLAY
+===================================================== */
 
-    background:#00366b;
+#offlineOverlay{
+    display:none;
+
+    position:absolute;
+    inset:0;
+
+    z-index:50;
+
+    background:rgba(0,47,97,.97);
+
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    padding:80px;
+}
+
+#offlineOverlay.show{
+    display:flex;
+}
+
+.offline-box{
+    width:880px;
+
+    background:#fff;
+
+    border-radius:38px;
+
+    padding:85px 60px;
+
+    border-top:22px solid #fed100;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.35);
+}
+
+.offline-icon{
+    width:150px;
+    height:150px;
+
+    margin:0 auto 40px;
+
+    border-radius:50%;
+
+    background:#d92525;
+    color:#fff;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:92px;
+    font-weight:900;
+}
+
+.offline-title{
+    color:#003b73;
+
+    font-size:54px;
+    line-height:1.1;
+
+    font-weight:900;
+}
+
+.offline-text{
+    margin-top:35px;
+
+    color:#465e70;
+
+    font-size:34px;
+    line-height:1.4;
+
+    font-weight:700;
+}
+
+.offline-status{
+    margin-top:45px;
+
+    color:#009b3a;
+
+    font-size:25px;
+    font-weight:900;
+}
+
+
+/* =====================================================
+   PROCESSING OVERLAY
+===================================================== */
+
+#processingOverlay{
+    display:none;
+
+    position:absolute;
+    inset:0;
+
+    z-index:45;
+
+    background:rgba(0,47,97,.96);
+
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+}
+
+#processingOverlay.show{
+    display:flex;
+}
+
+.processing-box{
+    color:#fff;
+}
+
+.spinner{
+    width:120px;
+    height:120px;
+
+    margin:0 auto 35px;
+
+    border:14px solid rgba(255,255,255,.25);
+    border-top-color:#fed100;
+
+    border-radius:50%;
+
+    animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.processing-title{
+    font-size:48px;
+    font-weight:900;
+}
+
+.processing-text{
+    margin-top:20px;
+
+    font-size:27px;
+    font-weight:600;
+
+    color:#dbe8ef;
+}
+
+
+/* =====================================================
+   TICKET CONFIRMATION SCREEN
+===================================================== */
+
+#ticketScreen{
+    display:none;
+
+    position:absolute;
+    inset:0;
+
+    width:1080px;
+    height:1920px;
+
+    background:#fff;
+
+    z-index:30;
+
+    text-align:center;
+}
+
+.ticket-header{
+    height:390px;
+
+    background:#003b73;
+
     color:#fff;
 
     display:flex;
@@ -424,170 +479,156 @@ button{
     align-items:center;
     justify-content:center;
 
-    text-align:center;
+    border-bottom:22px solid #fed100;
 }
 
-.website{
-    font-size:28px;
-    font-weight:bold;
+.ticket-header .small{
+    font-size:34px;
+    font-weight:800;
 }
 
-.footer-message{
-    margin-top:12px;
-    font-size:23px;
-    font-weight:bold;
-}
-
-.jamaica-line{
-    width:470px;
-    height:7px;
-    margin-top:14px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #fed100 0 33%,
-            #79c942 33% 66%,
-            #009b3a 66%
-        );
-}
-
-/* TICKET SCREEN */
-
-#ticketScreen{
-    position:absolute;
-    left:0;
-    top:0;
-
-    width:1080px;
-    height:1920px;
-
-    z-index:100;
-
-    background:#f5fbff;
-
-    display:none;
-
-    grid-template-rows:
-        310px
-        230px
-        180px
-        570px
-        100px
-        260px
-        270px;
-
-    text-align:center;
-
-    touch-action:manipulation;
-}
-
-#ticketScreen.show{
-    display:grid;
-}
-
-.ticket-header{
-    background:#003b73;
-
-    border-bottom:
-        14px solid #fed100;
-
-    color:#fff;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.ticket-header h2{
-    font-size:72px;
+.ticket-header .big{
+    margin-top:15px;
+    font-size:74px;
     font-weight:900;
 }
 
-.success{
-    align-self:center;
-    justify-self:center;
-
-    width:150px;
-    height:150px;
-
-    border-radius:50%;
-
-    background:#009b3a;
-    color:#fff;
+.ticket-body{
+    height:1230px;
 
     display:flex;
+    flex-direction:column;
     align-items:center;
     justify-content:center;
 
-    font-size:90px;
-    font-weight:bold;
+    padding:50px 70px;
 }
 
-.ticket-service{
-    align-self:center;
+.your-number{
+    color:#52697c;
 
-    padding:0 80px;
-
-    color:#555;
-
-    font-size:42px;
-    font-weight:bold;
-
-    line-height:1.15;
+    font-size:35px;
+    font-weight:900;
 }
 
-.ticket-number{
-    align-self:center;
+#ticketNumber{
+    margin-top:25px;
 
     color:#003b73;
 
     font-size:235px;
-    line-height:.9;
+    line-height:1;
+
+    font-weight:900;
+    letter-spacing:-8px;
+}
+
+#ticketService{
+    margin-top:45px;
+
+    color:#003b73;
+
+    font-size:43px;
+    line-height:1.2;
 
     font-weight:900;
 }
 
-.your-number{
-    font-size:36px;
-    font-weight:bold;
+.wait-message{
+    margin-top:70px;
+
+    max-width:850px;
+
+    color:#4e6679;
+
+    font-size:33px;
+    line-height:1.45;
+
+    font-weight:700;
 }
 
-.wait{
-    padding:40px 100px;
+.ticket-footer{
+    height:300px;
 
-    font-size:31px;
+    background:#f0f5f8;
 
-    line-height:1.4;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
 }
 
-.done{
-    align-self:center;
-    justify-self:center;
-
-    width:650px;
-    height:115px;
+.done-button{
+    width:560px;
+    height:110px;
 
     border:none;
-    border-radius:70px;
+    border-radius:55px;
 
-    background:#003b73;
+    background:#009b3a;
+
     color:#fff;
 
-    font-size:40px;
-    font-weight:bold;
+    font-size:38px;
+    font-weight:900;
 
     cursor:pointer;
-
     touch-action:manipulation;
 }
 
-.done:active{
-    opacity:.92;
+.return-text{
+    margin-top:25px;
+
+    color:#6a7e8d;
+
+    font-size:22px;
+    font-weight:600;
+}
+
+
+/* =====================================================
+   SMALL ERROR MESSAGE
+===================================================== */
+
+#errorMessage{
+    display:none;
+
+    position:absolute;
+
+    left:80px;
+    right:80px;
+    bottom:220px;
+
+    z-index:60;
+
+    background:#fff;
+
+    border:8px solid #d92525;
+
+    border-radius:25px;
+
+    padding:35px;
+
+    color:#8d1111;
+
+    text-align:center;
+
+    font-size:28px;
+    line-height:1.35;
+
+    font-weight:900;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.3);
+}
+
+#errorMessage.show{
+    display:block;
 }
 
 </style>
 </head>
+
 
 <body>
 
@@ -595,319 +636,327 @@ button{
 
 <div id="portraitCanvas">
 
+
+<!-- =====================================================
+     HOME
+===================================================== -->
+
 <div id="homeScreen">
 
-<section class="hero">
+    <div class="header">
 
-    <div class="brand">
+        <div class="brand">
 
-        <div class="taj-mark">
-            TAJ
-        </div>
+            <div class="taj">
+                TAJ
+            </div>
 
-        <div class="brand-line"></div>
+            <div class="tax-name">
+                TAX ADMINISTRATION JAMAICA
+            </div>
 
-        <div class="brand-text">
-
-            <span class="tax">
-                Tax<br>
-                Administration
-            </span>
-
-            <span class="jamaica">
-                Jamaica
-            </span>
+            <div class="tagline">
+                Serving You. Building Jamaica.
+            </div>
 
         </div>
 
     </div>
 
-    <div class="tagline">
-        TOGETHER WE BUILD A STRONGER JAMAICA
-    </div>
 
-    <div class="serving">
-        Serving You<br>
-        Building Jamaica
-    </div>
+    <div class="service-area">
 
-</section>
+        <div class="service-title">
+            TAKE A TICKET
+        </div>
 
-
-<section class="service-area">
-
-    <div class="heading">
-
-        <h1>
-            PLEASE SELECT A SERVICE
-        </h1>
-
-        <p>
-            Touch an option below to get your ticket
-        </p>
-
-    </div>
+        <div class="service-subtitle">
+            Please select the service you require
+        </div>
 
 
-    <div class="buttons">
+        <div class="buttons">
 
-        <button
-            type="button"
-            class="service-button traffic"
-            data-prefix="T"
-            data-service="Traffic Ticket Payments">
+            <button
+                class="service-button"
+                data-prefix="T"
+                data-service="Traffic Ticket Payments">
 
-            <div class="service-icon">
-
-                <div class="icon-box">
-                    $
+                <div class="icon">
+                    T
                 </div>
 
-            </div>
+                <div class="button-text">
 
-            <div class="service-copy">
+                    <div class="button-title">
+                        Traffic Ticket Payments
+                    </div>
 
-                <span class="service-title">
-                    Traffic Ticket Payments
-                </span>
+                    <div class="button-note">
+                        Touch here to receive your queue number
+                    </div>
 
-                <span class="service-description">
-                    Pay your traffic tickets
-                    quickly and easily.
-                </span>
-
-            </div>
-
-            <div class="arrow">
-                ›
-            </div>
-
-        </button>
-
-
-        <button
-            type="button"
-            class="service-button licence"
-            data-prefix="L"
-            data-service="Motor Vehicle License Renewal">
-
-            <div class="service-icon">
-
-                <div class="icon-box">
-                    🚗
                 </div>
 
-            </div>
-
-            <div class="service-copy">
-
-                <span class="service-title">
-                    Motor Vehicle License Renewal
-                </span>
-
-                <span class="service-description">
-                    Renew your motor vehicle
-                    licence here.
-                </span>
-
-            </div>
-
-            <div class="arrow">
-                ›
-            </div>
-
-        </button>
+            </button>
 
 
-        <button
-            type="button"
-            class="service-button fitness"
-            data-prefix="F"
-            data-service="Motor Vehicle Fitness Examination">
+            <button
+                class="service-button"
+                data-prefix="L"
+                data-service="Motor Vehicle License Renewal">
 
-            <div class="service-icon">
-
-                <div class="icon-box">
-                    ✓
+                <div class="icon">
+                    L
                 </div>
 
+                <div class="button-text">
+
+                    <div class="button-title">
+                        Motor Vehicle License Renewal
+                    </div>
+
+                    <div class="button-note">
+                        Touch here to receive your queue number
+                    </div>
+
+                </div>
+
+            </button>
+
+
+            <button
+                class="service-button"
+                data-prefix="F"
+                data-service="Motor Vehicle Fitness Examination">
+
+                <div class="icon">
+                    F
+                </div>
+
+                <div class="button-text">
+
+                    <div class="button-title">
+                        Motor Vehicle Fitness Examination
+                    </div>
+
+                    <div class="button-note">
+                        Touch here to receive your queue number
+                    </div>
+
+                </div>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="info">
+
+        <div class="info-inner">
+
+            <div class="info-title">
+                PLEASE REMEMBER YOUR NUMBER
             </div>
 
-            <div class="service-copy">
-
-                <span class="service-title">
-                    Motor Vehicle Fitness Examination
-                </span>
-
-                <span class="service-description">
-                    Book or process your motor
-                    vehicle fitness examination.
-                </span>
-
+            <div class="info-text">
+                Your number will appear on the waiting-area
+                display when a teller is ready to serve you.
             </div>
 
-            <div class="arrow">
-                ›
-            </div>
-
-        </button>
+        </div>
 
     </div>
 
-</section>
 
-
-<section class="info-panel">
-
-    <div class="info-icon">
-        i
+    <div class="footer">
+        Thank you for visiting Tax Administration Jamaica
     </div>
-
-    <div class="info-copy">
-
-        <strong>
-            You will receive a ticket
-            with your number.
-        </strong>
-
-        Please keep your ticket and wait
-        for your number to be called on
-        the display screens.
-
-    </div>
-
-    <div class="info-right">
-        QUALITY SERVICE • STRONGER ROADS • A BRIGHTER JAMAICA
-    </div>
-
-</section>
-
-
-<footer class="footer">
-
-    <div class="website">
-        www.jamaicatax.gov.jm
-    </div>
-
-    <div class="footer-message">
-        Service Today • A Stronger Tomorrow
-    </div>
-
-    <div class="jamaica-line"></div>
-
-</footer>
 
 </div>
 
 
-<section id="ticketScreen">
+
+<!-- =====================================================
+     TICKET CONFIRMATION
+===================================================== -->
+
+<div id="ticketScreen">
 
     <div class="ticket-header">
 
-        <h2>
-            YOUR TICKET
-        </h2>
+        <div class="small">
+            TAX ADMINISTRATION JAMAICA
+        </div>
+
+        <div class="big">
+            THANK YOU
+        </div>
 
     </div>
 
-    <div class="success">
-        ✓
-    </div>
 
-    <div
-        id="ticketService"
-        class="ticket-service">
-    </div>
+    <div class="ticket-body">
 
-    <div
-        id="ticketNumber"
-        class="ticket-number">
-        ---
-    </div>
+        <div class="your-number">
+            YOUR QUEUE NUMBER IS
+        </div>
 
-    <div class="your-number">
-        YOUR NUMBER
-    </div>
+        <div id="ticketNumber">
+            T001
+        </div>
 
-    <div class="wait">
+        <div id="ticketService">
+            Traffic Ticket Payments
+        </div>
 
-        Please keep your ticket and wait
-        for your number to be called on
-        the display screens.
+        <div class="wait-message">
+            Please remember your number and take a seat.
+            Watch the waiting-area display for your number
+            and teller assignment.
+        </div>
 
     </div>
 
-    <button
-        type="button"
-        id="doneButton"
-        class="done">
 
-        DONE
+    <div class="ticket-footer">
 
-    </button>
+        <button
+            id="doneButton"
+            class="done-button">
+            DONE
+        </button>
 
-</section>
+        <div class="return-text">
+            This screen will return automatically
+        </div>
+
+    </div>
 
 </div>
 
+
+
+<!-- =====================================================
+     PROCESSING
+===================================================== -->
+
+<div id="processingOverlay">
+
+    <div class="processing-box">
+
+        <div class="spinner"></div>
+
+        <div class="processing-title">
+            PLEASE WAIT
+        </div>
+
+        <div class="processing-text">
+            Creating your queue number...
+        </div>
+
+    </div>
+
 </div>
+
+
+
+<!-- =====================================================
+     CONNECTION LOST
+===================================================== -->
+
+<div id="offlineOverlay">
+
+    <div class="offline-box">
+
+        <div class="offline-icon">
+            !
+        </div>
+
+        <div class="offline-title">
+            SERVICE TEMPORARILY UNAVAILABLE
+        </div>
+
+        <div class="offline-text">
+            We are unable to issue a queue number
+            at this time.<br><br>
+            Please see a staff member for assistance.
+        </div>
+
+        <div class="offline-status">
+            Waiting for connection...
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div id="errorMessage">
+    We were unable to create your queue number.
+    Please try again or see a staff member for assistance.
+</div>
+
+
+</div>
+</div>
+
 
 
 <script type="module">
 
-/* =====================================================
-   FIREBASE
-===================================================== */
-
 import {
     initializeApp
 }
-from
-"https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 
 import {
     getDatabase,
     ref,
-    runTransaction,
     push,
-    set
+    set,
+    onValue,
+    runTransaction
 }
-from
-"https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
+
+
+/* =====================================================
+   FIREBASE
+===================================================== */
 
 const firebaseConfig = {
 
     apiKey:
-    "AIzaSyCJAEZ-MD-W6SQZfUS5BkD-4NpT11vItHE",
+        "AIzaSyCJAEZ-MD-W6SQZfUS5BkD-4NpT11vItHE",
 
     authDomain:
-    "jamaica-take-a-ticket.firebaseapp.com",
+        "jamaica-take-a-ticket.firebaseapp.com",
 
     databaseURL:
-    "https://jamaica-take-a-ticket-default-rtdb.firebaseio.com",
+        "https://jamaica-take-a-ticket-default-rtdb.firebaseio.com",
 
     projectId:
-    "jamaica-take-a-ticket",
+        "jamaica-take-a-ticket",
 
     storageBucket:
-    "jamaica-take-a-ticket.firebasestorage.app",
+        "jamaica-take-a-ticket.firebasestorage.app",
 
     messagingSenderId:
-    "1093598545752",
+        "1093598545752",
 
     appId:
-    "1:1093598545752:web:7fa81726e2bcc5fdfb072d"
-
+        "1:1093598545752:web:7fa81726e2bcc5fdfb072d"
 };
 
 
 const app =
-    initializeApp(
-        firebaseConfig
-    );
-
+    initializeApp(firebaseConfig);
 
 const db =
     getDatabase(app);
@@ -915,32 +964,72 @@ const db =
 
 
 /* =====================================================
-   FULL-SCREEN PORTRAIT SCALING
+   ELEMENTS
+===================================================== */
+
+const portraitCanvas =
+    document.getElementById("portraitCanvas");
+
+const homeScreen =
+    document.getElementById("homeScreen");
+
+const ticketScreen =
+    document.getElementById("ticketScreen");
+
+const ticketNumber =
+    document.getElementById("ticketNumber");
+
+const ticketService =
+    document.getElementById("ticketService");
+
+const doneButton =
+    document.getElementById("doneButton");
+
+const offlineOverlay =
+    document.getElementById("offlineOverlay");
+
+const processingOverlay =
+    document.getElementById("processingOverlay");
+
+const errorMessage =
+    document.getElementById("errorMessage");
+
+const serviceButtons =
+    document.querySelectorAll(".service-button");
+
+
+let connected = false;
+let processing = false;
+let returnTimer = null;
+let errorTimer = null;
+
+
+
+/* =====================================================
+   PORTRAIT SCALING
 ===================================================== */
 
 function scalePortraitCanvas(){
 
-    const canvas =
-        document.getElementById(
-            "portraitCanvas"
-        );
+    const screenWidth =
+        window.innerWidth;
 
+    const screenHeight =
+        window.innerHeight;
 
     const scaleX =
-        window.innerWidth / 1080;
-
+        screenWidth / 1080;
 
     const scaleY =
-        window.innerHeight / 1920;
+        screenHeight / 1920;
 
 
-    canvas.style.transform =
+    portraitCanvas.style.transform =
         "translate(-50%, -50%) scale(" +
         scaleX +
         "," +
         scaleY +
         ")";
-
 }
 
 
@@ -959,62 +1048,67 @@ window.addEventListener(
 
         setTimeout(
             scalePortraitCanvas,
-            100
+            150
         );
-
     }
 );
 
 
 
 /* =====================================================
-   SHARED FIREBASE TICKET COUNTER
-
-   IMPORTANT:
-   These counters are now in Firebase rather than
-   localStorage.
-
-   That means multiple kiosks can share the same
-   T / L / F numbering.
+   CONNECTION STATUS
 ===================================================== */
 
-async function getNextTicketNumber(prefix){
+onValue(
+    ref(db,".info/connected"),
+    function(snapshot){
 
-    const counterRef =
-        ref(
-            db,
-            "counters/" + prefix
-        );
+        connected =
+            snapshot.val() === true;
 
 
-    const result =
-        await runTransaction(
-            counterRef,
-            function(current){
+        if(connected){
 
-                if(
-                    current === null
-                ){
+            offlineOverlay.classList.remove(
+                "show"
+            );
 
-                    return 1;
+            serviceButtons.forEach(
+                function(button){
 
+                    button.disabled = false;
                 }
+            );
+
+        }else{
+
+            /*
+               Never allow a new ticket to be started
+               while Firebase is disconnected.
+            */
+
+            serviceButtons.forEach(
+                function(button){
+
+                    button.disabled = true;
+                }
+            );
 
 
-                return current + 1;
+            if(!processing){
 
+                offlineOverlay.classList.add(
+                    "show"
+                );
             }
-        );
-
-
-    return result.snapshot.val();
-
-}
+        }
+    }
+);
 
 
 
 /* =====================================================
-   FORMAT TICKET
+   FORMAT TICKET NUMBER
 ===================================================== */
 
 function formatTicket(
@@ -1022,19 +1116,19 @@ function formatTicket(
     number
 ){
 
-    return prefix +
-        String(number)
-        .padStart(
+    return (
+        prefix +
+        String(number).padStart(
             3,
             "0"
-        );
-
+        )
+    );
 }
 
 
 
 /* =====================================================
-   CREATE LIVE QUEUE TICKET
+   CREATE TICKET
 ===================================================== */
 
 async function createTicket(
@@ -1042,93 +1136,237 @@ async function createTicket(
     service
 ){
 
-    const number =
-        await getNextTicketNumber(
-            prefix
-        );
+    /*
+       A customer must not receive a number unless
+       the kiosk currently has a Firebase connection.
+    */
+
+    if(
+        !connected ||
+        processing
+    ){
+        return;
+    }
 
 
-    const ticketNumber =
-        formatTicket(
-            prefix,
-            number
-        );
+    processing = true;
 
+    hideError();
 
-    const queueRef =
-        ref(
-            db,
-            "queue"
-        );
+    setButtonsDisabled(true);
 
-
-    const newTicketRef =
-        push(
-            queueRef
-        );
-
-
-    const ticket = {
-
-        number:
-            ticketNumber,
-
-        prefix:
-            prefix,
-
-        service:
-            service,
-
-        status:
-            "waiting",
-
-        createdAt:
-            Date.now()
-
-    };
-
-
-    await set(
-        newTicketRef,
-        ticket
+    processingOverlay.classList.add(
+        "show"
     );
 
 
-    return ticket;
+    try{
 
+        /*
+           Shared counter transaction.
+
+           Multiple kiosks can request tickets at the
+           same time without receiving the same number.
+        */
+
+        const counterRef =
+            ref(
+                db,
+                "counters/" + prefix
+            );
+
+
+        const transactionResult =
+            await runTransaction(
+                counterRef,
+                function(currentValue){
+
+                    return (
+                        currentValue || 0
+                    ) + 1;
+                },
+                {
+                    applyLocally:false
+                }
+            );
+
+
+        if(
+            !transactionResult.committed ||
+            !transactionResult.snapshot.exists()
+        ){
+
+            throw new Error(
+                "Counter transaction failed."
+            );
+        }
+
+
+        /*
+           IMPORTANT:
+
+           We do not show the customer their number yet.
+
+           First we must successfully create the actual
+           waiting queue record.
+        */
+
+        const number =
+            transactionResult.snapshot.val();
+
+
+        const formattedNumber =
+            formatTicket(
+                prefix,
+                number
+            );
+
+
+        const newTicketRef =
+            push(
+                ref(
+                    db,
+                    "queue"
+                )
+            );
+
+
+        const ticketData = {
+
+            number:
+                formattedNumber,
+
+            prefix:
+                prefix,
+
+            service:
+                service,
+
+            status:
+                "waiting",
+
+            createdAt:
+                Date.now()
+        };
+
+
+        /*
+           Wait for Firebase to confirm the queue record.
+        */
+
+        await set(
+            newTicketRef,
+            ticketData
+        );
+
+
+        /*
+           ONLY NOW is the customer shown the number.
+        */
+
+        ticketNumber.textContent =
+            formattedNumber;
+
+
+        ticketService.textContent =
+            service;
+
+
+        processingOverlay.classList.remove(
+            "show"
+        );
+
+
+        homeScreen.style.display =
+            "none";
+
+
+        ticketScreen.style.display =
+            "block";
+
+
+        startReturnTimer();
+
+    }
+    catch(error){
+
+        console.error(
+            "Ticket creation error:",
+            error
+        );
+
+
+        processingOverlay.classList.remove(
+            "show"
+        );
+
+
+        /*
+           Do not show a queue number when Firebase
+           did not successfully create the queue record.
+        */
+
+        ticketScreen.style.display =
+            "none";
+
+        homeScreen.style.display =
+            "grid";
+
+
+        if(!connected){
+
+            offlineOverlay.classList.add(
+                "show"
+            );
+
+        }else{
+
+            showError();
+        }
+    }
+    finally{
+
+        processing = false;
+
+
+        if(connected){
+
+            setButtonsDisabled(false);
+
+        }else{
+
+            setButtonsDisabled(true);
+
+            offlineOverlay.classList.add(
+                "show"
+            );
+        }
+    }
 }
 
 
 
 /* =====================================================
-   FAST TOUCH
+   SERVICE BUTTONS
 ===================================================== */
-
-const serviceButtons =
-    document.querySelectorAll(
-        ".service-button"
-    );
-
-
-let ticketLocked = false;
-
 
 serviceButtons.forEach(
     function(button){
 
         button.addEventListener(
             "pointerdown",
-            async function(event){
+            function(event){
 
                 event.preventDefault();
 
 
-                if(ticketLocked){
+                if(
+                    processing ||
+                    !connected ||
+                    button.disabled
+                ){
                     return;
                 }
-
-
-                ticketLocked = true;
 
 
                 const prefix =
@@ -1139,72 +1377,36 @@ serviceButtons.forEach(
                     button.dataset.service;
 
 
-                try{
-
-                    /*
-                       Create the ticket in Firebase
-                       BEFORE showing it to customer.
-                    */
-
-                    const ticket =
-                        await createTicket(
-                            prefix,
-                            service
-                        );
-
-
-                    document
-                        .getElementById(
-                            "ticketNumber"
-                        )
-                        .textContent =
-                            ticket.number;
-
-
-                    document
-                        .getElementById(
-                            "ticketService"
-                        )
-                        .textContent =
-                            ticket.service;
-
-
-                    document
-                        .getElementById(
-                            "ticketScreen"
-                        )
-                        .classList
-                        .add("show");
-
-
-                    startReturnTimer();
-
-                }
-                catch(error){
-
-                    console.error(
-                        error
-                    );
-
-
-                    ticketLocked =
-                        false;
-
-
-                    alert(
-                        "Unable to create ticket. Please try again."
-                    );
-
-                }
-
+                createTicket(
+                    prefix,
+                    service
+                );
             },
             {
                 passive:false
             }
         );
-
     }
 );
+
+
+
+/* =====================================================
+   BUTTON CONTROL
+===================================================== */
+
+function setButtonsDisabled(
+    disabled
+){
+
+    serviceButtons.forEach(
+        function(button){
+
+            button.disabled =
+                disabled;
+        }
+    );
+}
 
 
 
@@ -1214,62 +1416,55 @@ serviceButtons.forEach(
 
 function returnHome(){
 
-    document
-        .getElementById(
-            "ticketScreen"
-        )
-        .classList
-        .remove("show");
+    if(returnTimer){
+
+        clearTimeout(
+            returnTimer
+        );
+
+        returnTimer = null;
+    }
 
 
-    clearTimeout(
-        returnTimer
-    );
+    ticketScreen.style.display =
+        "none";
 
 
-    ticketLocked =
-        false;
+    homeScreen.style.display =
+        "grid";
 
+
+    hideError();
+
+
+    if(connected){
+
+        offlineOverlay.classList.remove(
+            "show"
+        );
+
+        setButtonsDisabled(false);
+
+    }else{
+
+        setButtonsDisabled(true);
+
+        offlineOverlay.classList.add(
+            "show"
+        );
+    }
 }
 
 
 
-/* =====================================================
-   FAST DONE BUTTON
-===================================================== */
-
-document
-    .getElementById(
-        "doneButton"
-    )
-    .addEventListener(
-        "pointerdown",
-        function(event){
-
-            event.preventDefault();
-
-            returnHome();
-
-        },
-        {
-            passive:false
-        }
-    );
-
-
-
-/* =====================================================
-   25 SECOND AUTO RETURN
-===================================================== */
-
-let returnTimer;
-
-
 function startReturnTimer(){
 
-    clearTimeout(
-        returnTimer
-    );
+    if(returnTimer){
+
+        clearTimeout(
+            returnTimer
+        );
+    }
 
 
     returnTimer =
@@ -1277,13 +1472,77 @@ function startReturnTimer(){
             returnHome,
             25000
         );
-
 }
 
 
 
 /* =====================================================
-   BLOCK COPY / LONG PRESS
+   DONE BUTTON
+===================================================== */
+
+doneButton.addEventListener(
+    "pointerdown",
+    function(event){
+
+        event.preventDefault();
+
+        returnHome();
+    },
+    {
+        passive:false
+    }
+);
+
+
+
+/* =====================================================
+   ERROR MESSAGE
+===================================================== */
+
+function showError(){
+
+    errorMessage.classList.add(
+        "show"
+    );
+
+
+    if(errorTimer){
+
+        clearTimeout(
+            errorTimer
+        );
+    }
+
+
+    errorTimer =
+        setTimeout(
+            hideError,
+            7000
+        );
+}
+
+
+function hideError(){
+
+    errorMessage.classList.remove(
+        "show"
+    );
+
+
+    if(errorTimer){
+
+        clearTimeout(
+            errorTimer
+        );
+
+        errorTimer = null;
+    }
+}
+
+
+
+/* =====================================================
+   BLOCK LONG PRESS / COPY / DRAG
 ===================================================== */
 
 document.addEventListener(
@@ -1291,10 +1550,6 @@ document.addEventListener(
     function(event){
 
         event.preventDefault();
-
-    },
-    {
-        passive:false
     }
 );
 
@@ -1304,10 +1559,6 @@ document.addEventListener(
     function(event){
 
         event.preventDefault();
-
-    },
-    {
-        passive:false
     }
 );
 
@@ -1317,10 +1568,6 @@ document.addEventListener(
     function(event){
 
         event.preventDefault();
-
-    },
-    {
-        passive:false
     }
 );
 
