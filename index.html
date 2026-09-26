@@ -17,32 +17,96 @@ user-scalable=no">
     box-sizing:border-box;
     margin:0;
     padding:0;
-    -webkit-tap-highlight-color:transparent;
+
+    -webkit-tap-highlight-color:transparent !important;
+
+    -webkit-user-select:none !important;
+    user-select:none !important;
+
+    -webkit-touch-callout:none !important;
+
+    -webkit-user-drag:none !important;
+}
+
+
+/* =====================================================
+   ANDROID / NOVISIGN KIOSK TOUCH LOCKDOWN
+===================================================== */
+
+html,
+body,
+#stage,
+#portraitCanvas,
+#homeScreen,
+button,
+div,
+span,
+section,
+footer{
+    -webkit-user-select:none !important;
+    user-select:none !important;
+
+    -webkit-touch-callout:none !important;
+
+    -webkit-tap-highlight-color:transparent !important;
+
+    -webkit-user-drag:none !important;
 }
 
 html,
 body{
     width:100%;
     height:100%;
+
     margin:0;
     padding:0;
+
     overflow:hidden;
+
     background:#000;
-    font-family:Arial,Helvetica,sans-serif;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    touch-action:manipulation;
 }
+
+button{
+    touch-action:manipulation;
+
+    -webkit-appearance:none;
+    appearance:none;
+}
+
+
+/* =====================================================
+   OUTER STAGE
+===================================================== */
 
 #stage{
     position:fixed;
+
     left:0;
     top:0;
+
     width:100vw;
     height:100vh;
+
     overflow:hidden;
+
     background:#000;
 }
 
+
+/* =====================================================
+   FIXED 1080 x 1920 PORTRAIT CANVAS
+===================================================== */
+
 #portraitCanvas{
     position:absolute;
+
     left:50%;
     top:50%;
 
@@ -52,9 +116,16 @@ body{
     transform-origin:center center;
 
     background:#fff;
+
     overflow:hidden;
+
     color:#062d5c;
 }
+
+
+/* =====================================================
+   HOME SCREEN
+===================================================== */
 
 #homeScreen{
     width:1080px;
@@ -78,8 +149,10 @@ body{
 
 .hero{
     position:relative;
+
     width:100%;
     height:400px;
+
     overflow:hidden;
 
     padding:
@@ -125,9 +198,11 @@ body{
 
 .brand{
     position:relative;
+
     z-index:3;
 
     display:flex;
+
     align-items:center;
 
     gap:25px;
@@ -137,6 +212,7 @@ body{
     font-size:115px;
 
     font-weight:900;
+
     font-style:italic;
 
     letter-spacing:-8px;
@@ -177,6 +253,7 @@ body{
 
 .tagline{
     position:relative;
+
     z-index:3;
 
     margin-top:45px;
@@ -200,7 +277,10 @@ body{
 
     text-align:center;
 
-    font-family:Georgia,serif;
+    font-family:
+        Georgia,
+        serif;
+
     font-style:italic;
 
     transform:rotate(-7deg);
@@ -232,6 +312,7 @@ body{
         48px 65px 55px;
 
     display:flex;
+
     flex-direction:column;
 }
 
@@ -261,7 +342,7 @@ body{
 
 
 /* =====================================================
-   BUTTONS
+   SERVICE BUTTONS
 ===================================================== */
 
 .buttons{
@@ -303,6 +384,13 @@ body{
     box-shadow:
         0 10px 25px
         rgba(0,0,0,.20);
+
+    -webkit-user-select:none !important;
+    user-select:none !important;
+
+    -webkit-touch-callout:none !important;
+
+    touch-action:manipulation;
 }
 
 .service-button:active{
@@ -444,7 +532,9 @@ body{
     justify-content:center;
     align-items:center;
 
-    font-family:Georgia,serif;
+    font-family:
+        Georgia,
+        serif;
 
     font-size:58px;
 
@@ -523,6 +613,7 @@ body{
 
 .jamaica-line{
     width:470px;
+
     height:7px;
 
     margin-top:14px;
@@ -538,7 +629,7 @@ body{
 
 
 /* =====================================================
-   TICKET CONFIRMATION
+   TICKET CONFIRMATION SCREEN
 ===================================================== */
 
 #ticketScreen{
@@ -677,6 +768,13 @@ body{
     font-weight:bold;
 
     cursor:pointer;
+
+    touch-action:manipulation;
+
+    -webkit-user-select:none !important;
+    user-select:none !important;
+
+    -webkit-touch-callout:none !important;
 }
 
 .done:active{
@@ -765,13 +863,13 @@ body{
     </div>
 
 
-
     <div class="buttons">
 
 
-        <!-- TRAFFIC -->
+        <!-- TRAFFIC TICKET PAYMENTS -->
 
         <button
+            type="button"
             class="service-button traffic"
             onclick="takeTicket(
                 'T',
@@ -810,9 +908,10 @@ body{
 
 
 
-        <!-- LICENCE -->
+        <!-- MOTOR VEHICLE LICENCE -->
 
         <button
+            type="button"
             class="service-button licence"
             onclick="takeTicket(
                 'L',
@@ -854,6 +953,7 @@ body{
         <!-- FITNESS -->
 
         <button
+            type="button"
             class="service-button fitness"
             onclick="takeTicket(
                 'F',
@@ -1006,6 +1106,7 @@ body{
 
 
     <button
+        type="button"
         class="done"
         onclick="returnHome()"
     >
@@ -1025,8 +1126,42 @@ body{
 <script>
 
 /* =====================================================
-   FORCE 1080 x 1920 DESIGN TO FILL THE
-   COMPLETE NOVISIGN DISPLAY AREA
+   EXTRA ANDROID LONG-PRESS PROTECTION
+===================================================== */
+
+document.addEventListener(
+    "contextmenu",
+    function(event){
+
+        event.preventDefault();
+
+    }
+);
+
+
+document.addEventListener(
+    "selectstart",
+    function(event){
+
+        event.preventDefault();
+
+    }
+);
+
+
+document.addEventListener(
+    "dragstart",
+    function(event){
+
+        event.preventDefault();
+
+    }
+);
+
+
+/* =====================================================
+   FORCE 1080 x 1920 DESIGN TO FILL
+   COMPLETE NOVISIGN DISPLAY
 ===================================================== */
 
 function scalePortraitCanvas(){
@@ -1048,12 +1183,8 @@ function scalePortraitCanvas(){
     /*
        Scale width and height independently.
 
-       This is intentional for this kiosk.
-
-       The kiosk/NoviSign viewport is not
-       reporting a perfect 9:16 display area.
-
-       This makes the design fill:
+       This deliberately fills all four
+       edges of the NoviSign display:
        LEFT
        RIGHT
        TOP
@@ -1207,7 +1338,7 @@ function takeTicket(
 
 
 /* =====================================================
-   RETURN TO HOME SCREEN
+   RETURN HOME
 ===================================================== */
 
 function returnHome(){
