@@ -9,6 +9,7 @@ content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no
 <title>TAJ - Teller 1</title>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -44,6 +45,8 @@ body{
     box-shadow:0 15px 45px rgba(0,0,0,.18);
 }
 
+/* HEADER */
+
 .header{
     background:#003b73;
     color:#fff;
@@ -64,6 +67,8 @@ body{
     font-weight:900;
 }
 
+/* CONNECTION */
+
 .connection{
     padding:14px 25px;
     background:#dce8ef;
@@ -81,6 +86,8 @@ body{
     background:#ffe1e1;
     color:#a00000;
 }
+
+/* MAIN */
 
 .content{
     padding:45px;
@@ -111,6 +118,8 @@ body{
     font-weight:bold;
 }
 
+/* BUTTONS */
+
 .buttons{
     margin-top:40px;
     display:grid;
@@ -131,11 +140,6 @@ button{
 
 button:active{
     transform:scale(.98);
-}
-
-button:disabled{
-    opacity:.45;
-    cursor:not-allowed;
 }
 
 .next{
@@ -164,6 +168,7 @@ button:disabled{
     font-weight:bold;
     color:#555;
 }
+
 </style>
 </head>
 
@@ -172,43 +177,87 @@ button:disabled{
 <div class="panel">
 
     <div class="header">
-        <div class="taj">TAJ</div>
-        <div class="teller-name">TELLER 1</div>
+
+        <div class="taj">
+            TAJ
+        </div>
+
+        <div class="teller-name">
+            TELLER 1
+        </div>
+
     </div>
 
-    <div id="connection" class="connection">
+
+    <div
+        id="connection"
+        class="connection">
+
         CONNECTING TO LIVE QUEUE...
+
     </div>
+
 
     <div class="content">
 
-        <div class="label">CURRENT CUSTOMER</div>
+        <div class="label">
+            CURRENT CUSTOMER
+        </div>
 
-        <div id="currentNumber" class="current-number">
+
+        <div
+            id="currentNumber"
+            class="current-number">
+
             ---
+
         </div>
 
-        <div id="currentService" class="current-service">
+
+        <div
+            id="currentService"
+            class="current-service">
+
             No customer currently assigned.
+
         </div>
+
 
         <div class="buttons">
 
-            <button id="nextButton" class="next" type="button">
+            <button
+                id="nextButton"
+                class="next">
+
                 NEXT CUSTOMER
+
             </button>
 
-            <button id="recallButton" class="recall" type="button">
+
+            <button
+                id="recallButton"
+                class="recall">
+
                 RECALL CUSTOMER
+
             </button>
 
-            <button id="completeButton" class="complete" type="button">
+
+            <button
+                id="completeButton"
+                class="complete">
+
                 COMPLETE
+
             </button>
 
         </div>
 
-        <div id="message" class="message"></div>
+
+        <div
+            id="message"
+            class="message">
+        </div>
 
     </div>
 
@@ -217,8 +266,12 @@ button:disabled{
 
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import {
+    initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
 
 import {
     getDatabase,
@@ -229,64 +282,88 @@ import {
     push,
     onValue
 }
-from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+from
+"https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
 
 const firebaseConfig = {
-    apiKey:"AIzaSyCJAEZ-MD-W6SQZfUS5BkD-4NpT11vItHE",
-    authDomain:"jamaica-take-a-ticket.firebaseapp.com",
-    databaseURL:"https://jamaica-take-a-ticket-default-rtdb.firebaseio.com",
-    projectId:"jamaica-take-a-ticket",
-    storageBucket:"jamaica-take-a-ticket.firebasestorage.app",
-    messagingSenderId:"1093598545752",
-    appId:"1:1093598545752:web:7fa81726e2bcc5fdfb072d"
+
+    apiKey:
+    "AIzaSyCJAEZ-MD-W6SQZfUS5BkD-4NpT11vItHE",
+
+    authDomain:
+    "jamaica-take-a-ticket.firebaseapp.com",
+
+    databaseURL:
+    "https://jamaica-take-a-ticket-default-rtdb.firebaseio.com",
+
+    projectId:
+    "jamaica-take-a-ticket",
+
+    storageBucket:
+    "jamaica-take-a-ticket.firebasestorage.app",
+
+    messagingSenderId:
+    "1093598545752",
+
+    appId:
+    "1:1093598545752:web:7fa81726e2bcc5fdfb072d"
+
 };
 
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+const app =
+    initializeApp(firebaseConfig);
+
+
+const db =
+    getDatabase(app);
+
+
+/* ONLY TELLER IDENTITY CHANGED */
 
 const TELLER_NUMBER = 1;
 
+
 const connection =
-    document.getElementById("connection");
+    document.getElementById(
+        "connection"
+    );
+
 
 const currentNumber =
-    document.getElementById("currentNumber");
+    document.getElementById(
+        "currentNumber"
+    );
+
 
 const currentService =
-    document.getElementById("currentService");
+    document.getElementById(
+        "currentService"
+    );
+
 
 const message =
-    document.getElementById("message");
-
-const nextButton =
-    document.getElementById("nextButton");
-
-const recallButton =
-    document.getElementById("recallButton");
-
-const completeButton =
-    document.getElementById("completeButton");
+    document.getElementById(
+        "message"
+    );
 
 
 let currentTicket = null;
 let currentQueueKey = null;
-let connected = false;
-let actionLock = false;
+let touchLock = false;
 
 
-/* ==========================================
+
+/* =====================================================
    CONNECTION
-========================================== */
+===================================================== */
 
 onValue(
     ref(db,".info/connected"),
     function(snapshot){
 
-        connected = snapshot.val() === true;
-
-        if(connected){
+        if(snapshot.val() === true){
 
             connection.textContent =
                 "LIVE QUEUE CONNECTED";
@@ -294,153 +371,88 @@ onValue(
             connection.className =
                 "connection live";
 
-        }else{
+        }
+        else{
 
             connection.textContent =
                 "QUEUE CONNECTION LOST";
 
             connection.className =
                 "connection offline";
+
         }
 
-        updateButtons();
     }
 );
 
 
-/* ==========================================
-   RESTORE TELLER
-========================================== */
+
+/* =====================================================
+   RESTORE TELLER 1 STATE
+===================================================== */
 
 onValue(
-    ref(db,"tellers/teller1"),
+    ref(
+        db,
+        "tellers/teller" +
+        TELLER_NUMBER
+    ),
     function(snapshot){
 
-        const data = snapshot.val();
+        const data =
+            snapshot.val();
 
-        if(data && data.number){
 
-            currentTicket = data;
-            currentQueueKey = data.queueKey || null;
+        if(
+            data &&
+            data.number
+        ){
+
+            currentTicket =
+                data;
+
+            currentQueueKey =
+                data.queueKey ||
+                null;
+
 
             currentNumber.textContent =
                 data.number;
 
+
             currentService.textContent =
-                data.service || "";
+                data.service ||
+                "";
 
-        }else{
+        }
+        else{
 
-            currentTicket = null;
-            currentQueueKey = null;
+            currentTicket =
+                null;
 
-            currentNumber.textContent = "---";
+            currentQueueKey =
+                null;
+
+
+            currentNumber.textContent =
+                "---";
+
 
             currentService.textContent =
                 "No customer currently assigned.";
+
         }
 
-        updateButtons();
     }
 );
 
 
-/* ==========================================
-   BUTTON STATES
-========================================== */
 
-function updateButtons(){
-
-    if(!connected){
-
-        nextButton.disabled = true;
-        recallButton.disabled = true;
-        completeButton.disabled = true;
-
-        return;
-    }
-
-    if(currentTicket){
-
-        nextButton.disabled = true;
-        recallButton.disabled = false;
-        completeButton.disabled = false;
-
-    }else{
-
-        nextButton.disabled = false;
-        recallButton.disabled = true;
-        completeButton.disabled = true;
-    }
-}
-
-
-/* ==========================================
-   FIND OLDEST WAITING CUSTOMER
-========================================== */
-
-async function findNextWaitingCustomer(){
-
-    const snapshot =
-        await get(ref(db,"queue"));
-
-    if(!snapshot.exists()){
-        return null;
-    }
-
-    const waiting = [];
-
-    snapshot.forEach(function(child){
-
-        const ticket = child.val();
-
-        if(
-            ticket &&
-            ticket.status === "waiting"
-        ){
-
-            waiting.push({
-                key:child.key,
-                ...ticket
-            });
-        }
-    });
-
-
-    if(waiting.length === 0){
-        return null;
-    }
-
-
-    waiting.sort(function(a,b){
-
-        return (
-            Number(a.createdAt) || 0
-        ) -
-        (
-            Number(b.createdAt) || 0
-        );
-    });
-
-
-    return waiting[0];
-}
-
-
-/* ==========================================
+/* =====================================================
    NEXT CUSTOMER
-========================================== */
+===================================================== */
 
 async function getNextCustomer(){
-
-    if(!connected){
-
-        message.textContent =
-            "Queue connection unavailable.";
-
-        return;
-    }
-
 
     if(currentTicket){
 
@@ -457,11 +469,61 @@ async function getNextCustomer(){
 
     try{
 
-        const ticket =
-            await findNextWaitingCustomer();
+        const snapshot =
+            await get(
+                ref(
+                    db,
+                    "queue"
+                )
+            );
 
 
-        if(!ticket){
+        const waiting = [];
+
+
+        snapshot.forEach(
+            function(child){
+
+                const ticket =
+                    child.val();
+
+
+                if(
+                    ticket &&
+                    ticket.status ===
+                    "waiting"
+                ){
+
+                    waiting.push({
+
+                        key:
+                            child.key,
+
+                        ...ticket
+
+                    });
+
+                }
+
+            }
+        );
+
+
+        waiting.sort(
+            function(a,b){
+
+                return (
+                    a.createdAt || 0
+                ) -
+                (
+                    b.createdAt || 0
+                );
+
+            }
+        );
+
+
+        if(waiting.length === 0){
 
             message.textContent =
                 "No customers waiting.";
@@ -470,110 +532,127 @@ async function getNextCustomer(){
         }
 
 
-        const calledAt =
-            Date.now();
+        const next =
+            waiting[0];
 
 
-        /*
-         Change the actual queue record
-         from WAITING to CALLED.
-        */
-
-        await update(
-            ref(
-                db,
-                "queue/" + ticket.key
-            ),
-            {
-                status:"called",
-                teller:TELLER_NUMBER,
-                calledAt:calledAt
-            }
+        await callCustomer(
+            next.key,
+            next
         );
 
 
-        const tellerData = {
+        message.textContent =
+            next.number +
+            " called.";
 
-            number:
-                ticket.number,
+    }
+    catch(error){
 
-            prefix:
-                ticket.prefix || "",
+        console.error(error);
 
-            service:
-                ticket.service || "",
+        message.textContent =
+            "Unable to access queue.";
 
-            queueKey:
-                ticket.key,
+    }
+
+}
+
+
+
+/* =====================================================
+   CALL CUSTOMER
+===================================================== */
+
+async function callCustomer(
+    queueKey,
+    ticket
+){
+
+    const calledAt =
+        Date.now();
+
+
+    await update(
+        ref(
+            db,
+            "queue/" +
+            queueKey
+        ),
+        {
+
+            status:
+                "called",
 
             teller:
                 TELLER_NUMBER,
 
             calledAt:
                 calledAt
-        };
+
+        }
+    );
 
 
-        /*
-         Assign customer to Teller 1.
-        */
+    const tellerData = {
 
-        await set(
-            ref(
-                db,
-                "tellers/teller1"
-            ),
-            tellerData
-        );
+        number:
+            ticket.number,
 
+        prefix:
+            ticket.prefix ||
+            "",
 
-        /*
-         Send customer to waiting display.
-        */
+        service:
+            ticket.service ||
+            "",
 
-        await set(
-            ref(
-                db,
-                "display/current"
-            ),
-            tellerData
-        );
+        queueKey:
+            queueKey,
 
+        teller:
+            TELLER_NUMBER,
 
-        /*
-         Add to display history.
-        */
+        calledAt:
+            calledAt
 
-        await push(
-            ref(
-                db,
-                "display/history"
-            ),
-            tellerData
-        );
+    };
 
 
-        message.textContent =
-            ticket.number +
-            " called.";
+    await set(
+        ref(
+            db,
+            "tellers/teller" +
+            TELLER_NUMBER
+        ),
+        tellerData
+    );
 
-    }
-    catch(error){
 
-        console.error(
-            "NEXT CUSTOMER ERROR:",
-            error
-        );
+    await set(
+        ref(
+            db,
+            "display/current"
+        ),
+        tellerData
+    );
 
-        message.textContent =
-            "Unable to call customer.";
-    }
+
+    await push(
+        ref(
+            db,
+            "display/history"
+        ),
+        tellerData
+    );
+
 }
 
 
-/* ==========================================
-   RECALL
-========================================== */
+
+/* =====================================================
+   RECALL CUSTOMER
+===================================================== */
 
 async function recallCustomer(){
 
@@ -586,56 +665,52 @@ async function recallCustomer(){
     }
 
 
-    try{
-
-        const recallData = {
-
-            ...currentTicket,
-
-            teller:
-                TELLER_NUMBER,
-
-            recalledAt:
-                Date.now()
-        };
+    const recalledAt =
+        Date.now();
 
 
-        await set(
-            ref(
-                db,
-                "display/current"
-            ),
-            recallData
-        );
+    const recallData = {
+
+        ...currentTicket,
+
+        teller:
+            TELLER_NUMBER,
+
+        recalledAt:
+            recalledAt
+
+    };
 
 
-        await push(
-            ref(
-                db,
-                "display/history"
-            ),
-            recallData
-        );
+    await set(
+        ref(
+            db,
+            "display/current"
+        ),
+        recallData
+    );
 
 
-        message.textContent =
-            currentTicket.number +
-            " recalled.";
+    await push(
+        ref(
+            db,
+            "display/history"
+        ),
+        recallData
+    );
 
-    }
-    catch(error){
 
-        console.error(error);
+    message.textContent =
+        currentTicket.number +
+        " recalled.";
 
-        message.textContent =
-            "Unable to recall customer.";
-    }
 }
 
 
-/* ==========================================
-   COMPLETE
-========================================== */
+
+/* =====================================================
+   COMPLETE CUSTOMER
+===================================================== */
 
 async function completeCustomer(){
 
@@ -650,10 +725,6 @@ async function completeCustomer(){
 
     try{
 
-        const completedNumber =
-            currentTicket.number;
-
-
         if(currentQueueKey){
 
             await update(
@@ -663,35 +734,51 @@ async function completeCustomer(){
                     currentQueueKey
                 ),
                 {
-                    status:"complete",
-                    completedAt:Date.now()
+
+                    status:
+                        "complete",
+
+                    completedAt:
+                        Date.now()
+
                 }
             );
+
         }
+
+
+        const completedNumber =
+            currentTicket.number;
 
 
         await set(
             ref(
                 db,
-                "tellers/teller1"
+                "tellers/teller" +
+                TELLER_NUMBER
             ),
             null
         );
 
 
-        currentTicket = null;
-        currentQueueKey = null;
+        currentTicket =
+            null;
 
-        currentNumber.textContent = "---";
+        currentQueueKey =
+            null;
+
+
+        currentNumber.textContent =
+            "---";
+
 
         currentService.textContent =
             "No customer currently assigned.";
 
+
         message.textContent =
             completedNumber +
             " completed.";
-
-        updateButtons();
 
     }
     catch(error){
@@ -700,80 +787,107 @@ async function completeCustomer(){
 
         message.textContent =
             "Unable to complete customer.";
+
     }
+
 }
 
 
-/* ==========================================
-   BUTTON CONTROL
-========================================== */
 
-async function runAction(action){
+/* =====================================================
+   FAST BUTTON HANDLING
+===================================================== */
 
-    if(actionLock){
-        return;
-    }
+function fastButton(
+    id,
+    action
+){
 
-    actionLock = true;
+    document
+    .getElementById(id)
+    .addEventListener(
+        "pointerdown",
+        async function(event){
 
-    try{
+            event.preventDefault();
 
-        await action();
 
-    }finally{
+            if(touchLock){
+                return;
+            }
 
-        setTimeout(function(){
-            actionLock = false;
-        },350);
-    }
+
+            touchLock =
+                true;
+
+
+            try{
+
+                await action();
+
+            }
+            finally{
+
+                setTimeout(
+                    function(){
+
+                        touchLock =
+                            false;
+
+                    },
+                    400
+                );
+
+            }
+
+        },
+        {
+            passive:false
+        }
+    );
+
 }
 
 
-nextButton.addEventListener(
-    "click",
-    function(event){
-
-        event.preventDefault();
-        runAction(getNextCustomer);
-    }
+fastButton(
+    "nextButton",
+    getNextCustomer
 );
 
 
-recallButton.addEventListener(
-    "click",
-    function(event){
-
-        event.preventDefault();
-        runAction(recallCustomer);
-    }
+fastButton(
+    "recallButton",
+    recallCustomer
 );
 
 
-completeButton.addEventListener(
-    "click",
-    function(event){
-
-        event.preventDefault();
-        runAction(completeCustomer);
-    }
+fastButton(
+    "completeButton",
+    completeCustomer
 );
 
 
-/* ==========================================
-   PREVENT LONG PRESS
-========================================== */
+
+/* =====================================================
+   DISABLE LONG PRESS / COPY
+===================================================== */
 
 document.addEventListener(
     "contextmenu",
     function(event){
+
         event.preventDefault();
+
     }
 );
+
 
 document.addEventListener(
     "selectstart",
     function(event){
+
         event.preventDefault();
+
     }
 );
 
