@@ -17,7 +17,6 @@ user-scalable=no">
     box-sizing:border-box;
     margin:0;
     padding:0;
-
     -webkit-tap-highlight-color:transparent !important;
     -webkit-user-select:none !important;
     user-select:none !important;
@@ -33,110 +32,64 @@ body{
     padding:0;
     overflow:hidden;
     background:#000;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
+    font-family:Arial,Helvetica,sans-serif;
     touch-action:manipulation;
 }
 
 button{
     -webkit-appearance:none;
     appearance:none;
-
     touch-action:manipulation;
-
     -webkit-user-select:none !important;
     user-select:none !important;
-
     -webkit-touch-callout:none !important;
-
     outline:none;
 }
 
-
-/* =====================================================
-   STAGE
-===================================================== */
-
 #stage{
     position:fixed;
-
     left:0;
     top:0;
-
     width:100vw;
     height:100vh;
-
     overflow:hidden;
-
     background:#000;
-
     touch-action:manipulation;
 }
-
-
-/* =====================================================
-   FIXED PORTRAIT CANVAS
-===================================================== */
 
 #portraitCanvas{
     position:absolute;
-
     left:50%;
     top:50%;
-
     width:1080px;
     height:1920px;
-
     transform-origin:center center;
-
     background:#fff;
-
     overflow:hidden;
-
     color:#062d5c;
-
     touch-action:manipulation;
 }
-
-
-/* =====================================================
-   HOME SCREEN
-===================================================== */
 
 #homeScreen{
     width:1080px;
     height:1920px;
-
     display:grid;
-
     grid-template-rows:
         400px
         1060px
         280px
         180px;
-
     background:#fff;
 }
 
-
-/* =====================================================
-   HEADER
-===================================================== */
+/* HEADER */
 
 .hero{
     position:relative;
-
     width:100%;
     height:400px;
-
     overflow:hidden;
-
-    padding:
-        70px 70px 40px;
+    padding:70px 70px 40px;
 
     background:
         linear-gradient(
@@ -149,12 +102,9 @@ button{
 
 .hero:after{
     content:"";
-
     position:absolute;
-
     width:610px;
     height:380px;
-
     right:-120px;
     top:-100px;
 
@@ -169,43 +119,30 @@ button{
         );
 
     transform:skewY(-8deg);
-
-    border-radius:
-        0 0 0 70%;
-
+    border-radius:0 0 0 70%;
     z-index:1;
 }
 
 .brand{
     position:relative;
-
     z-index:3;
-
     display:flex;
-
     align-items:center;
-
     gap:25px;
 }
 
 .taj-mark{
     font-size:115px;
-
     font-weight:900;
-
     font-style:italic;
-
     letter-spacing:-8px;
-
     line-height:.8;
-
     color:#063b75;
 }
 
 .brand-line{
     width:6px;
     height:135px;
-
     background:#0a4b82;
 }
 
@@ -215,67 +152,42 @@ button{
 
 .brand-text .tax{
     display:block;
-
     font-size:44px;
-
     font-weight:800;
 }
 
 .brand-text .jamaica{
     display:block;
-
     font-size:43px;
-
     font-weight:800;
-
     color:#f5bd00;
 }
 
 .tagline{
     position:relative;
-
     z-index:3;
-
     margin-top:45px;
-
     font-size:22px;
-
     letter-spacing:5px;
-
     font-weight:bold;
-
     color:#07356b;
 }
 
 .serving{
     position:absolute;
-
     z-index:3;
-
     right:65px;
     bottom:35px;
-
     text-align:center;
-
-    font-family:
-        Georgia,
-        serif;
-
+    font-family:Georgia,serif;
     font-style:italic;
-
     transform:rotate(-7deg);
-
     color:#07356b;
-
     font-size:37px;
-
     line-height:.9;
 }
 
-
-/* =====================================================
-   SERVICE AREA
-===================================================== */
+/* SERVICES */
 
 .service-area{
     width:100%;
@@ -288,66 +200,44 @@ button{
             #002e62 78%
         );
 
-    padding:
-        48px 65px 55px;
+    padding:48px 65px 55px;
 
     display:flex;
-
     flex-direction:column;
 }
 
 .heading{
     color:#fff;
-
     text-align:center;
-
     margin-bottom:40px;
 }
 
 .heading h1{
     font-size:56px;
-
     line-height:1;
-
     font-weight:900;
 }
 
 .heading p{
     margin-top:16px;
-
     font-size:27px;
-
     font-style:italic;
 }
 
-
-/* =====================================================
-   SERVICE BUTTONS
-===================================================== */
-
 .buttons{
     flex:1;
-
     display:grid;
-
-    grid-template-rows:
-        repeat(3,1fr);
-
+    grid-template-rows:repeat(3,1fr);
     gap:30px;
 }
 
 .service-button{
     width:100%;
-
     border:none;
-
     border-radius:38px;
-
-    padding:
-        25px 30px;
+    padding:25px 30px;
 
     display:grid;
-
     grid-template-columns:
         220px
         1fr
@@ -356,9 +246,7 @@ button{
     align-items:center;
 
     color:#062d5c;
-
     text-align:left;
-
     cursor:pointer;
 
     box-shadow:
@@ -366,18 +254,7 @@ button{
         rgba(0,0,0,.20);
 
     touch-action:manipulation;
-
-    -webkit-user-select:none !important;
-    user-select:none !important;
-
-    -webkit-touch-callout:none !important;
 }
-
-
-/*
-   NO SCALE ANIMATION.
-   Keep touch response as light as possible.
-*/
 
 .service-button:active{
     opacity:.92;
@@ -412,9 +289,7 @@ button{
 
 .service-icon{
     height:82%;
-
     display:flex;
-
     align-items:center;
     justify-content:center;
 
@@ -433,54 +308,39 @@ button{
     border-radius:22px;
 
     display:flex;
-
     align-items:center;
     justify-content:center;
 
     font-size:78px;
-
     font-weight:900;
-
     color:#063b75;
 }
 
 .service-copy{
-    padding:
-        0 35px;
+    padding:0 35px;
 }
 
 .service-title{
     display:block;
-
     font-size:43px;
-
     line-height:1.05;
-
     font-weight:900;
 }
 
 .service-description{
     display:block;
-
     margin-top:18px;
-
     font-size:24px;
-
     line-height:1.25;
 }
 
 .arrow{
     text-align:center;
-
     font-size:90px;
-
     font-weight:300;
 }
 
-
-/* =====================================================
-   INFORMATION
-===================================================== */
+/* INFO */
 
 .info-panel{
     width:100%;
@@ -514,36 +374,28 @@ button{
     border-radius:50%;
 
     display:flex;
-
     justify-content:center;
     align-items:center;
 
-    font-family:
-        Georgia,
-        serif;
+    font-family:Georgia,serif;
 
     font-size:58px;
-
     font-weight:bold;
 }
 
 .info-copy{
     font-size:25px;
-
     line-height:1.35;
 }
 
 .info-copy strong{
     display:block;
-
     font-size:29px;
-
     margin-bottom:8px;
 }
 
 .info-right{
-    grid-column:
-        1 / -1;
+    grid-column:1 / -1;
 
     border-top:
         2px solid
@@ -554,29 +406,21 @@ button{
     padding-top:20px;
 
     font-size:19px;
-
     font-weight:bold;
-
     letter-spacing:3px;
 }
 
-
-/* =====================================================
-   FOOTER
-===================================================== */
+/* FOOTER */
 
 .footer{
     width:100%;
     height:180px;
 
     background:#00366b;
-
     color:#fff;
 
     display:flex;
-
     flex-direction:column;
-
     align-items:center;
     justify-content:center;
 
@@ -585,22 +429,18 @@ button{
 
 .website{
     font-size:28px;
-
     font-weight:bold;
 }
 
 .footer-message{
     margin-top:12px;
-
     font-size:23px;
-
     font-weight:bold;
 }
 
 .jamaica-line{
     width:470px;
     height:7px;
-
     margin-top:14px;
 
     background:
@@ -612,14 +452,10 @@ button{
         );
 }
 
-
-/* =====================================================
-   TICKET CONFIRMATION
-===================================================== */
+/* TICKET SCREEN */
 
 #ticketScreen{
     position:absolute;
-
     left:0;
     top:0;
 
@@ -659,14 +495,12 @@ button{
     color:#fff;
 
     display:flex;
-
     align-items:center;
     justify-content:center;
 }
 
 .ticket-header h2{
     font-size:72px;
-
     font-weight:900;
 }
 
@@ -680,29 +514,24 @@ button{
     border-radius:50%;
 
     background:#009b3a;
-
     color:#fff;
 
     display:flex;
-
     align-items:center;
     justify-content:center;
 
     font-size:90px;
-
     font-weight:bold;
 }
 
 .ticket-service{
     align-self:center;
 
-    padding:
-        0 80px;
+    padding:0 80px;
 
     color:#555;
 
     font-size:42px;
-
     font-weight:bold;
 
     line-height:1.15;
@@ -714,7 +543,6 @@ button{
     color:#003b73;
 
     font-size:235px;
-
     line-height:.9;
 
     font-weight:900;
@@ -722,13 +550,11 @@ button{
 
 .your-number{
     font-size:36px;
-
     font-weight:bold;
 }
 
 .wait{
-    padding:
-        40px 100px;
+    padding:40px 100px;
 
     font-size:31px;
 
@@ -743,15 +569,12 @@ button{
     height:115px;
 
     border:none;
-
     border-radius:70px;
 
     background:#003b73;
-
     color:#fff;
 
     font-size:40px;
-
     font-weight:bold;
 
     cursor:pointer;
@@ -766,24 +589,13 @@ button{
 </style>
 </head>
 
-
 <body>
-
 
 <div id="stage">
 
-
 <div id="portraitCanvas">
 
-
-<!-- =====================================================
-     HOME SCREEN
-===================================================== -->
-
 <div id="homeScreen">
-
-
-<!-- HEADER -->
 
 <section class="hero">
 
@@ -810,11 +622,9 @@ button{
 
     </div>
 
-
     <div class="tagline">
         TOGETHER WE BUILD A STRONGER JAMAICA
     </div>
-
 
     <div class="serving">
         Serving You<br>
@@ -823,11 +633,6 @@ button{
 
 </section>
 
-
-
-<!-- =====================================================
-     SERVICES
-===================================================== -->
 
 <section class="service-area">
 
@@ -846,15 +651,11 @@ button{
 
     <div class="buttons">
 
-
-        <!-- TRAFFIC -->
-
         <button
             type="button"
             class="service-button traffic"
             data-prefix="T"
-            data-service="Traffic Ticket Payments"
-        >
+            data-service="Traffic Ticket Payments">
 
             <div class="service-icon">
 
@@ -863,7 +664,6 @@ button{
                 </div>
 
             </div>
-
 
             <div class="service-copy">
 
@@ -878,7 +678,6 @@ button{
 
             </div>
 
-
             <div class="arrow">
                 ›
             </div>
@@ -886,15 +685,11 @@ button{
         </button>
 
 
-
-        <!-- LICENCE -->
-
         <button
             type="button"
             class="service-button licence"
             data-prefix="L"
-            data-service="Motor Vehicle License Renewal"
-        >
+            data-service="Motor Vehicle License Renewal">
 
             <div class="service-icon">
 
@@ -903,7 +698,6 @@ button{
                 </div>
 
             </div>
-
 
             <div class="service-copy">
 
@@ -918,7 +712,6 @@ button{
 
             </div>
 
-
             <div class="arrow">
                 ›
             </div>
@@ -926,15 +719,11 @@ button{
         </button>
 
 
-
-        <!-- FITNESS -->
-
         <button
             type="button"
             class="service-button fitness"
             data-prefix="F"
-            data-service="Motor Vehicle Fitness Examination"
-        >
+            data-service="Motor Vehicle Fitness Examination">
 
             <div class="service-icon">
 
@@ -943,7 +732,6 @@ button{
                 </div>
 
             </div>
-
 
             <div class="service-copy">
 
@@ -958,30 +746,22 @@ button{
 
             </div>
 
-
             <div class="arrow">
                 ›
             </div>
 
         </button>
 
-
     </div>
 
 </section>
 
-
-
-<!-- =====================================================
-     INFORMATION
-===================================================== -->
 
 <section class="info-panel">
 
     <div class="info-icon">
         i
     </div>
-
 
     <div class="info-copy">
 
@@ -996,7 +776,6 @@ button{
 
     </div>
 
-
     <div class="info-right">
         QUALITY SERVICE • STRONGER ROADS • A BRIGHTER JAMAICA
     </div>
@@ -1004,35 +783,22 @@ button{
 </section>
 
 
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
 <footer class="footer">
 
     <div class="website">
         www.jamaicatax.gov.jm
     </div>
 
-
     <div class="footer-message">
         Service Today • A Stronger Tomorrow
     </div>
-
 
     <div class="jamaica-line"></div>
 
 </footer>
 
-
 </div>
 
-
-
-<!-- =====================================================
-     TICKET CONFIRMATION
-===================================================== -->
 
 <section id="ticketScreen">
 
@@ -1044,31 +810,24 @@ button{
 
     </div>
 
-
     <div class="success">
         ✓
     </div>
-
 
     <div
         id="ticketService"
         class="ticket-service">
     </div>
 
-
     <div
         id="ticketNumber"
         class="ticket-number">
-
-        T001
-
+        ---
     </div>
-
 
     <div class="your-number">
         YOUR NUMBER
     </div>
-
 
     <div class="wait">
 
@@ -1077,7 +836,6 @@ button{
         the display screens.
 
     </div>
-
 
     <button
         type="button"
@@ -1090,51 +848,70 @@ button{
 
 </section>
 
+</div>
 
 </div>
 
 
-</div>
-
-
-
-<script>
+<script type="module">
 
 /* =====================================================
-   BLOCK ANDROID COPY / SELECT / CONTEXT MENU
+   FIREBASE
 ===================================================== */
 
-document.addEventListener(
-    "contextmenu",
-    function(event){
-
-        event.preventDefault();
-
-    },
-    { passive:false }
-);
+import {
+    initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 
-document.addEventListener(
-    "selectstart",
-    function(event){
+import {
+    getDatabase,
+    ref,
+    runTransaction,
+    push,
+    set
+}
+from
+"https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
-        event.preventDefault();
 
-    },
-    { passive:false }
-);
+const firebaseConfig = {
+
+    apiKey:
+    "AIzaSyCJAEZ-MD-W6SQZfUS5BkD-4NpT11vItHE",
+
+    authDomain:
+    "jamaica-take-a-ticket.firebaseapp.com",
+
+    databaseURL:
+    "https://jamaica-take-a-ticket-default-rtdb.firebaseio.com",
+
+    projectId:
+    "jamaica-take-a-ticket",
+
+    storageBucket:
+    "jamaica-take-a-ticket.firebasestorage.app",
+
+    messagingSenderId:
+    "1093598545752",
+
+    appId:
+    "1:1093598545752:web:7fa81726e2bcc5fdfb072d"
+
+};
 
 
-document.addEventListener(
-    "dragstart",
-    function(event){
+const app =
+    initializeApp(
+        firebaseConfig
+    );
 
-        event.preventDefault();
 
-    },
-    { passive:false }
-);
+const db =
+    getDatabase(app);
+
 
 
 /* =====================================================
@@ -1149,20 +926,12 @@ function scalePortraitCanvas(){
         );
 
 
-    const screenWidth =
-        window.innerWidth;
-
-
-    const screenHeight =
-        window.innerHeight;
-
-
     const scaleX =
-        screenWidth / 1080;
+        window.innerWidth / 1080;
 
 
     const scaleY =
-        screenHeight / 1920;
+        window.innerHeight / 1920;
 
 
     canvas.style.transform =
@@ -1197,35 +966,51 @@ window.addEventListener(
 );
 
 
+
 /* =====================================================
-   TICKET COUNTER
+   SHARED FIREBASE TICKET COUNTER
+
+   IMPORTANT:
+   These counters are now in Firebase rather than
+   localStorage.
+
+   That means multiple kiosks can share the same
+   T / L / F numbering.
 ===================================================== */
 
-function getCounter(prefix){
+async function getNextTicketNumber(prefix){
 
-    const key =
-        "taj_ticket_" + prefix;
-
-
-    let current =
-        parseInt(
-            localStorage.getItem(key) || "0",
-            10
+    const counterRef =
+        ref(
+            db,
+            "counters/" + prefix
         );
 
 
-    current++;
+    const result =
+        await runTransaction(
+            counterRef,
+            function(current){
+
+                if(
+                    current === null
+                ){
+
+                    return 1;
+
+                }
 
 
-    localStorage.setItem(
-        key,
-        current
-    );
+                return current + 1;
+
+            }
+        );
 
 
-    return current;
+    return result.snapshot.val();
 
 }
+
 
 
 /* =====================================================
@@ -1247,75 +1032,76 @@ function formatTicket(
 }
 
 
-/* =====================================================
-   PREVENT ACCIDENTAL DOUBLE TICKETS
-===================================================== */
-
-let ticketLocked = false;
-
 
 /* =====================================================
-   CREATE TICKET
+   CREATE LIVE QUEUE TICKET
 ===================================================== */
 
-function takeTicket(
+async function createTicket(
     prefix,
     service
 ){
 
-    if(ticketLocked){
-        return;
-    }
-
-
-    ticketLocked = true;
-
-
     const number =
-        getCounter(prefix);
+        await getNextTicketNumber(
+            prefix
+        );
 
 
-    const ticket =
+    const ticketNumber =
         formatTicket(
             prefix,
             number
         );
 
 
-    document
-        .getElementById(
-            "ticketNumber"
-        )
-        .textContent =
-            ticket;
+    const queueRef =
+        ref(
+            db,
+            "queue"
+        );
 
 
-    document
-        .getElementById(
-            "ticketService"
-        )
-        .textContent =
-            service;
+    const newTicketRef =
+        push(
+            queueRef
+        );
 
 
-    document
-        .getElementById(
-            "ticketScreen"
-        )
-        .classList
-        .add("show");
+    const ticket = {
+
+        number:
+            ticketNumber,
+
+        prefix:
+            prefix,
+
+        service:
+            service,
+
+        status:
+            "waiting",
+
+        createdAt:
+            Date.now()
+
+    };
 
 
-    startReturnTimer();
+    await set(
+        newTicketRef,
+        ticket
+    );
+
+
+    return ticket;
 
 }
 
 
-/* =====================================================
-   FAST TOUCH HANDLING
 
-   Respond when finger goes DOWN instead of waiting
-   for Android WebView to finish a normal click.
+/* =====================================================
+   FAST TOUCH
 ===================================================== */
 
 const serviceButtons =
@@ -1324,14 +1110,25 @@ const serviceButtons =
     );
 
 
+let ticketLocked = false;
+
+
 serviceButtons.forEach(
     function(button){
 
         button.addEventListener(
             "pointerdown",
-            function(event){
+            async function(event){
 
                 event.preventDefault();
+
+
+                if(ticketLocked){
+                    return;
+                }
+
+
+                ticketLocked = true;
 
 
                 const prefix =
@@ -1342,10 +1139,63 @@ serviceButtons.forEach(
                     button.dataset.service;
 
 
-                takeTicket(
-                    prefix,
-                    service
-                );
+                try{
+
+                    /*
+                       Create the ticket in Firebase
+                       BEFORE showing it to customer.
+                    */
+
+                    const ticket =
+                        await createTicket(
+                            prefix,
+                            service
+                        );
+
+
+                    document
+                        .getElementById(
+                            "ticketNumber"
+                        )
+                        .textContent =
+                            ticket.number;
+
+
+                    document
+                        .getElementById(
+                            "ticketService"
+                        )
+                        .textContent =
+                            ticket.service;
+
+
+                    document
+                        .getElementById(
+                            "ticketScreen"
+                        )
+                        .classList
+                        .add("show");
+
+
+                    startReturnTimer();
+
+                }
+                catch(error){
+
+                    console.error(
+                        error
+                    );
+
+
+                    ticketLocked =
+                        false;
+
+
+                    alert(
+                        "Unable to create ticket. Please try again."
+                    );
+
+                }
 
             },
             {
@@ -1355,6 +1205,7 @@ serviceButtons.forEach(
 
     }
 );
+
 
 
 /* =====================================================
@@ -1376,13 +1227,11 @@ function returnHome(){
     );
 
 
-    /*
-       Allow next customer to select a service.
-    */
-
-    ticketLocked = false;
+    ticketLocked =
+        false;
 
 }
+
 
 
 /* =====================================================
@@ -1408,8 +1257,9 @@ document
     );
 
 
+
 /* =====================================================
-   AUTO RETURN AFTER 25 SECONDS
+   25 SECOND AUTO RETURN
 ===================================================== */
 
 let returnTimer;
@@ -1430,8 +1280,51 @@ function startReturnTimer(){
 
 }
 
-</script>
 
+
+/* =====================================================
+   BLOCK COPY / LONG PRESS
+===================================================== */
+
+document.addEventListener(
+    "contextmenu",
+    function(event){
+
+        event.preventDefault();
+
+    },
+    {
+        passive:false
+    }
+);
+
+
+document.addEventListener(
+    "selectstart",
+    function(event){
+
+        event.preventDefault();
+
+    },
+    {
+        passive:false
+    }
+);
+
+
+document.addEventListener(
+    "dragstart",
+    function(event){
+
+        event.preventDefault();
+
+    },
+    {
+        passive:false
+    }
+);
+
+</script>
 
 </body>
 </html>
