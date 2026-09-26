@@ -1,20 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
+
+<title>TAJ - Take a Ticket</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#fff;
+    color:#062d5c;
+}
+
+body{
+    display:flex;
+}
+
+
+/* =========================================================
+   16:9 LANDSCAPE KIOSK
+========================================================= */
+
+.kiosk{
+    width:100vw;
+    height:100vh;
+    max-width:none;
+    background:#fff;
+
+    display:grid;
+
+    grid-template-rows:
+        22vh
+        1fr
+        12vh
+        9vh;
+
+    position:relative;
+    overflow:hidden;
+}
+
+
+/* =========================================================
+   TOP BRANDING
+========================================================= */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff 0%,
+            #fff 56%,
+            #e2f1f8 100%
+        );
+
+    padding:2.5vh 4vw;
+}
+
+.hero:after{
+    content:"";
+
+    position:absolute;
+
+    width:42%;
+    height:95%;
+
+    right:-5%;
+    top:-25%;
+
+    background:
+        linear-gradient(
+            150deg,
+            #009b3a 0 34%,
+            #fed100 34% 42%,
+            #050505 42% 70%,
+            #fed100 70% 78%,
+            #009b3a 78%
+        );
+
+    transform:skewY(-8deg);
+
+    border-radius:0 0 0 60%;
+
+    opacity:.96;
+}
+
+.brand{
+    position:relative;
+    z-index:2;
+
+    display:flex;
+    align-items:center;
+
+    gap:1.4vw;
+
+    width:58%;
+}
+
+.taj-mark{
+    font-size:clamp(54px,7vw,105px);
+
+    font-weight:900;
+    font-style:italic;
+
+    letter-spacing:-6px;
+
+    line-height:.8;
+
+    color:#063b75;
+}
+
+.brand-line{
+    width:4px;
+    height:10vh;
+
+    background:#0a4b82;
+}
+
+.brand-text{
+    line-height:.93;
+}
+
+.brand-text .tax{
+    display:block;
+
+    font-size:clamp(24px,3vw,45px);
+
+    font-weight:800;
+}
+
+.brand-text .jamaica{
+    display:block;
+
+    font-size:clamp(23px,2.8vw,42px);
+
+    font-weight:800;
+
+    color:#f5bd00;
+}
+
+.tagline{
+    position:relative;
+    z-index:2;
+
+    margin-top:1.5vh;
+
+    font-size:clamp(12px,1.25vw,20px);
+
+    letter-spacing:.28em;
+
+    font-weight:bold;
+
+    color:#07356b;
+}
+
+.serving{
+    position:absolute;
+    z-index:2;
+
+    right:8%;
+    bottom:3vh;
+
+    text-align:center;
+
+    font-family:Georgia,serif;
+    font-style:italic;
+
+    transform:rotate(-7deg);
+
+    color:#07356b;
+
+    font-size:clamp(22px,2.7vw,42px);
+
+    line-height:.9;
+}
+
+
+/* =========================================================
+   SERVICE AREA
+========================================================= */
+
+.service-area{
+    min-height:0;
+
+    background:
+        linear-gradient(
+            135deg,
+            #005392,
+            #002d62 75%
+        );
+
+    padding:2vh 3vw 2.2vh;
+
+    display:flex;
+    flex-direction:column;
+}
+
+.heading{
+    color:#fff;
+
+    text-align:center;
+
+    margin-bottom:1.8vh;
+}
+
+.heading h1{
+    font-size:clamp(30px,3.4vw,54px);
+
+    font-weight:900;
+
+    line-height:1;
+}
+
+.heading p{
+    font-size:clamp(16px,1.7vw,27px);
+
+    font-style:italic;
+
+    margin-top:.7vh;
+}
+
+
+/* =========================================================
+   SERVICE BUTTONS
+========================================================= */
+
+.buttons{
+    flex:1;
+    min-height:0;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:1.8vw;
+}
+
+.service-button{
+    min-width:0;
+
+    border:none;
+
+    border-radius:28px;
+
+    padding:2vh 1.6vw;
+
+    display:grid;
+
+    grid-template-rows:
+        32%
+        1fr
+        18%;
+
+    align-items:center;
+    justify-items:center;
+
+    cursor:pointer;
+
+    color:#062d5c;
+
+    box-shadow:
+        0 7px 18px
+        rgba(0,0,0,.18);
+
+    text-align:center;
+}
+
+.service-button:active{
+    transform:scale(.985);
+}
+
+.traffic{
+    background:
+        linear-gradient(
+            145deg,
+            #f8fdff,
+            #d9f1ff
+        );
+}
+
+.licence{
+    background:
+        linear-gradient(
+            145deg,
+            #efffe9,
+            #d7f8c8
+        );
+}
+
+.fitness{
+    background:
+        linear-gradient(
+            145deg,
+            #fffdf3,
+            #fff0bd
+        );
+}
+
+.service-icon{
+    width:100%;
+    height:100%;
+
+    border-bottom:
+        2px solid
+        rgba(6,45,92,.25);
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    padding:0 0 1vh;
+}
+
+.icon-box{
+    width:clamp(68px,6vw,100px);
+    height:clamp(68px,6vw,100px);
+
+    border:
+        6px solid #063b75;
+
+    border-radius:15px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    font-size:
+        clamp(38px,3.5vw,55px);
+
+    font-weight:900;
+
+    color:#063b75;
+}
+
+.service-copy{
+    text-align:center;
+
+    padding:
+        1.2vh .5vw 0;
+}
+
+.service-title{
+    display:block;
+
+    font-size:
+        clamp(22px,2.2vw,36px);
+
+    line-height:1;
+
+    font-weight:900;
+}
+
+.service-description{
+    display:block;
+
+    font-size:
+        clamp(14px,1.25vw,20px);
+
+    line-height:1.15;
+
+    margin-top:1.2vh;
+}
+
+.arrow{
+    font-size:
+        clamp(42px,4vw,68px);
+
+    font-weight:300;
+
+    text-align:center;
+
+    line-height:.8;
+}
+
+
+/* =========================================================
+   INFORMATION PANEL
+========================================================= */
+
+.info-panel{
+    min-height:0;
+
+    background:#eef8ff;
+
+    padding:
+        1.3vh 4vw;
+
+    display:grid;
+
+    grid-template-columns:
+        8%
+        1fr
+        30%;
+
+    align-items:center;
+
+    color:#062d5c;
+}
+
+.info-icon{
+    width:
+        clamp(48px,4vw,68px);
+
+    height:
+        clamp(48px,4vw,68px);
+
+    border:
+        4px solid #063b75;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    font-family:
+        Georgia,serif;
+
+    font-size:
+        clamp(30px,2.7vw,45px);
+
+    font-weight:bold;
+}
+
+.info-copy{
+    font-size:
+        clamp(13px,1.25vw,20px);
+
+    padding-right:2vw;
+}
+
+.info-copy strong{
+    display:block;
+
+    font-size:
+        clamp(15px,1.4vw,22px);
+}
+
+.info-right{
+    border-left:
+        2px solid #0a4b82;
+
+    padding-left:3vw;
+
+    font-size:
+        clamp(13px,1.25vw,20px);
+
+    line-height:1.25;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+    min-height:0;
+
+    background:#00366b;
+
+    color:#fff;
+
+    display:flex;
+
+    justify-content:
+        space-between;
+
+    align-items:center;
+
+    padding:
+        1.2vh 4vw;
+}
+
+.website{
+    font-size:
+        clamp(15px,1.5vw,24px);
+
+    font-weight:bold;
+}
+
+.footer-message{
+    font-size:
+        clamp(14px,1.35vw,22px);
+
+    font-weight:bold;
+
+    line-height:1.05;
+}
+
+.jamaica-line{
+    width:100%;
+    height:5px;
+
+    margin-top:6px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #fed100 0 33%,
+            #79c942 33% 66%,
+            #009b3a 66%
+        );
+}
+
+
+/* =========================================================
+   ON-SCREEN TICKET CONFIRMATION
+========================================================= */
+
+.ticket-screen{
+    position:absolute;
+
+    inset:0;
+
+    z-index:100;
+
+    background:#f5fbff;
+
+    display:none;
+
+    grid-template-columns:
+        42%
+        58%;
+
+    grid-template-rows:
+        18vh
+        1fr;
+
+    text-align:center;
+}
+
+.ticket-screen.show{
+    display:grid;
+}
+
+.ticket-header{
+    grid-column:1/-1;
+    grid-row:1;
+
+    background:#003b73;
+
+    border-bottom:
+        10px solid #fed100;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    color:#fff;
+}
+
+.ticket-header h2{
+    font-size:
+        clamp(32px,3.5vw,55px);
+}
+
+.success{
+    grid-column:1;
+    grid-row:2;
+
+    align-self:start;
+    justify-self:center;
+
+    width:110px;
+    height:110px;
+
+    background:#009b3a;
+
+    color:#fff;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    font-size:65px;
+
+    font-weight:bold;
+
+    margin-top:6vh;
+}
+
+.ticket-service{
+    grid-column:1;
+    grid-row:2;
+
+    align-self:center;
+
+    padding:0 3vw;
+
+    font-size:
+        clamp(22px,2.4vw,36px);
+
+    color:#555;
+}
+
+.your-number{
+    grid-column:2;
+    grid-row:2;
+
+    align-self:start;
+
+    margin-top:6vh;
+
+    font-size:
+        clamp(22px,2vw,32px);
+
+    font-weight:bold;
+}
+
+.ticket-number{
+    grid-column:2;
+    grid-row:2;
+
+    align-self:center;
+
+    font-size:
+        clamp(110px,13vw,220px);
+
+    color:#003b73;
+
+    font-weight:900;
+
+    line-height:1;
+}
+
+.printing{
+    grid-column:1;
+    grid-row:2;
+
+    align-self:end;
+    justify-self:center;
+
+    margin-bottom:12vh;
+
+    padding:
+        1.6vh 2.5vw;
+
+    border-radius:18px;
+
+    background:#fff3bd;
+
+    border:
+        3px solid #fed100;
+
+    font-size:
+        clamp(16px,1.5vw,24px);
+}
+
+.wait{
+    grid-column:2;
+    grid-row:2;
+
+    align-self:end;
+    justify-self:center;
+
+    max-width:700px;
+
+    margin-bottom:13vh;
+
+    padding:0 3vw;
+
+    font-size:
+        clamp(16px,1.5vw,24px);
+
+    line-height:1.3;
+}
+
+.done{
+    position:absolute;
+
+    right:5vw;
+    bottom:3vh;
+
+    border:none;
+
+    background:#003b73;
+
+    color:#fff;
+
+    font-weight:bold;
+
+    font-size:
+        clamp(20px,1.8vw,30px);
+
+    padding:
+        1.5vh 5vw;
+
+    border-radius:60px;
+
+    cursor:pointer;
+}
+
+.done:active{
+    transform:scale(.97);
+}
+
+
+/* =========================================================
+   PRINT TICKET
+========================================================= */
+
+#printTicket{
+    display:none;
+}
+
+
+/* =========================================================
+   PRINTING
+========================================================= */
+
+@media print{
+
+    @page{
+        size:auto;
+        margin:12mm;
+    }
+
+    html,
+    body{
+        width:auto;
+        height:auto;
+
+        overflow:visible;
+
+        background:#fff;
+    }
+
+    .kiosk{
+        display:none !important;
+    }
+
+    #printTicket{
+        display:block !important;
+
+        width:80mm;
+
+        margin:0 auto;
+
+        padding:7mm;
+
+        background:#fff;
+
+        color:#000;
+
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif;
+
+        text-align:center;
+
+        border:
+            2px dashed #000;
+    }
+
+    .print-logo{
+        font-size:18pt;
+
+        font-weight:900;
+
+        line-height:1.05;
+
+        margin-bottom:3mm;
+    }
+
+    .print-tagline{
+        font-size:8pt;
+
+        letter-spacing:.12em;
+
+        margin-bottom:5mm;
+    }
+
+    .print-divider{
+        border-top:
+            1px solid #000;
+
+        margin:4mm 0;
+    }
+
+    .print-service-label{
+        font-size:9pt;
+
+        font-weight:bold;
+
+        margin-bottom:2mm;
+    }
+
+    #printService{
+        font-size:15pt;
+
+        font-weight:900;
+
+        line-height:1.1;
+    }
+
+    .print-number-label{
+        margin-top:7mm;
+
+        font-size:10pt;
+
+        font-weight:bold;
+    }
+
+    #printNumber{
+        font-size:46pt;
+
+        font-weight:900;
+
+        line-height:1;
+
+        margin:
+            3mm 0 5mm;
+    }
+
+    #printDateTime{
+        font-size:9pt;
+
+        margin-bottom:5mm;
+    }
+
+    .print-message{
+        font-size:10pt;
+
+        line-height:1.35;
+
+        margin-top:5mm;
+    }
+
+    .print-thanks{
+        font-size:11pt;
+
+        font-weight:bold;
+
+        margin-top:7mm;
+    }
+
+    .print-website{
+        font-size:8pt;
+
+        margin-top:5mm;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     KIOSK SCREEN
+===================================================== -->
+
+<div class="kiosk">
+
+
+<section class="hero">
+
+    <div class="brand">
+
+        <div class="taj-mark">
+            TAJ
+        </div>
+
+        <div class="brand-line">
+        </div>
+
+        <div class="brand-text">
+
+            <span class="tax">
+                Tax<br>
+                Administration
+            </span>
+
+            <span class="jamaica">
+                Jamaica
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="tagline">
+        TOGETHER WE BUILD A STRONGER JAMAICA
+    </div>
+
+
+    <div class="serving">
+        Serving You<br>
+        Building Jamaica
+    </div>
+
+</section>
+
+
+
+<section class="service-area">
+
+    <div class="heading">
+
+        <h1>
+            PLEASE SELECT A SERVICE
+        </h1>
+
+        <p>
+            Touch an option below to get your ticket
+        </p>
+
+    </div>
+
+
+    <div class="buttons">
+
+
+        <button
+            class="service-button traffic"
+            onclick="takeTicket('T','Traffic Ticket Payments')"
+        >
+
+            <div class="service-icon">
+
+                <div class="icon-box">
+                    $
+                </div>
+
+            </div>
+
+
+            <div class="service-copy">
+
+                <span class="service-title">
+                    Traffic Ticket<br>
+                    Payments
+                </span>
+
+                <span class="service-description">
+                    Pay your traffic tickets quickly and easily.
+                </span>
+
+            </div>
+
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </button>
+
+
+
+        <button
+            class="service-button licence"
+            onclick="takeTicket('L','Motor Vehicle License Renewal')"
+        >
+
+            <div class="service-icon">
+
+                <div class="icon-box">
+                    🚗
+                </div>
+
+            </div>
+
+
+            <div class="service-copy">
+
+                <span class="service-title">
+                    Motor Vehicle<br>
+                    License Renewal
+                </span>
+
+                <span class="service-description">
+                    Renew your motor vehicle licence here.
+                </span>
+
+            </div>
+
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </button>
+
+
+
+        <button
+            class="service-button fitness"
+            onclick="takeTicket('F','Motor Vehicle Fitness Examination')"
+        >
+
+            <div class="service-icon">
+
+                <div class="icon-box">
+                    ✓
+                </div>
+
+            </div>
+
+
+            <div class="service-copy">
+
+                <span class="service-title">
+                    Motor Vehicle<br>
+                    Fitness Examination
+                </span>
+
+                <span class="service-description">
+                    Book or process your motor vehicle fitness examination.
+                </span>
+
+            </div>
+
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </button>
+
+
+    </div>
+
+</section>
+
+
+
+<section class="info-panel">
+
+    <div class="info-icon">
+        i
+    </div>
+
+
+    <div class="info-copy">
+
+        <strong>
+            You will receive a ticket with your number.
+        </strong>
+
+        Please keep your ticket and wait for your number
+        to be called on the display screens.
+
+    </div>
+
+
+    <div class="info-right">
+
+        QUALITY SERVICE<br>
+        STRONGER ROADS<br>
+        A BRIGHTER JAMAICA
+
+    </div>
+
+</section>
+
+
+
+<footer class="footer">
+
+    <div class="website">
+        www.jamaicatax.gov.jm
+    </div>
+
+
+    <div class="footer-message">
+
+        Service Today<br>
+        A Stronger Tomorrow
+
+        <div class="jamaica-line">
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =====================================================
+     ON-SCREEN CONFIRMATION
+===================================================== -->
+
+<section
+    id="ticketScreen"
+    class="ticket-screen"
+>
+
+    <div class="ticket-header">
+
+        <h2>
+            YOUR TICKET
+        </h2>
+
+    </div>
+
+
+    <div class="success">
+        ✓
+    </div>
+
+
+    <div
+        id="ticketService"
+        class="ticket-service"
+    >
+    </div>
+
+
+    <div class="your-number">
+        YOUR NUMBER
+    </div>
+
+
+    <div
+        id="ticketNumber"
+        class="ticket-number"
+    >
+        T001
+    </div>
+
+
+    <div class="printing">
+        🖨️ Your ticket is ready to print
+    </div>
+
+
+    <div class="wait">
+
+        Please take your ticket and wait for your
+        number to be called on the display screens.
+
+    </div>
+
+
+    <button
+        class="done"
+        onclick="returnHome()"
+    >
+        DONE
+    </button>
+
+</section>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     PRINTED TICKET
+===================================================== -->
+
+<div id="printTicket">
+
+
+    <div class="print-logo">
+
+        TAX ADMINISTRATION<br>
+        JAMAICA
+
+    </div>
+
+
+    <div class="print-tagline">
+
+        TOGETHER WE BUILD A STRONGER JAMAICA
+
+    </div>
+
+
+    <div class="print-divider">
+    </div>
+
+
+    <div class="print-service-label">
+        SERVICE
+    </div>
+
+
+    <div id="printService">
+
+        Traffic Ticket Payments
+
+    </div>
+
+
+    <div class="print-number-label">
+        YOUR NUMBER
+    </div>
+
+
+    <div id="printNumber">
+
+        T001
+
+    </div>
+
+
+    <div id="printDateTime">
+    </div>
+
+
+    <div class="print-divider">
+    </div>
+
+
+    <div class="print-message">
+
+        Please keep this ticket and wait for your
+        number to be called on the display screens.
+
+    </div>
+
+
+    <div class="print-thanks">
+
+        THANK YOU
+
+    </div>
+
+
+    <div class="print-website">
+
+        www.jamaicatax.gov.jm
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   COUNTER
+========================================================= */
+
+function getCounter(prefix){
+
+    const key =
+        "taj_ticket_" + prefix;
+
+    let current =
+        parseInt(
+            localStorage.getItem(key) || "0",
+            10
+        );
+
+    current++;
+
+    localStorage.setItem(
+        key,
+        current
+    );
+
+    return current;
+}
+
+
+/* =========================================================
+   FORMAT NUMBER
+========================================================= */
+
+function formatTicket(prefix,number){
+
+    return prefix +
+        String(number).padStart(3,"0");
+
+}
+
+
+/* =========================================================
+   DATE / TIME
+========================================================= */
+
+function getTicketDateTime(){
+
+    const now =
+        new Date();
+
+    return now.toLocaleString(
+        "en-JM",
+        {
+            year:"numeric",
+            month:"short",
+            day:"numeric",
+            hour:"numeric",
+            minute:"2-digit"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CREATE + PRINT TICKET
+========================================================= */
+
 function takeTicket(prefix,service){
 
-    const number = getCounter(prefix);
-    const ticket = formatTicket(prefix,number);
-    const dateTime = getTicketDateTime();
+    const number =
+        getCounter(prefix);
 
-    document.getElementById("ticketNumber").textContent = ticket;
-    document.getElementById("ticketService").textContent = service;
+    const ticket =
+        formatTicket(
+            prefix,
+            number
+        );
 
-    document.getElementById("printNumber").textContent = ticket;
-    document.getElementById("printService").textContent = service;
-    document.getElementById("printDateTime").textContent = dateTime;
+    const dateTime =
+        getTicketDateTime();
 
-    document.getElementById("ticketScreen").classList.add("show");
+
+    /* SCREEN NUMBER */
+
+    document
+        .getElementById("ticketNumber")
+        .textContent = ticket;
+
+
+    document
+        .getElementById("ticketService")
+        .textContent = service;
+
+
+    /* PRINTED NUMBER */
+
+    document
+        .getElementById("printNumber")
+        .textContent = ticket;
+
+
+    document
+        .getElementById("printService")
+        .textContent = service;
+
+
+    document
+        .getElementById("printDateTime")
+        .textContent = dateTime;
+
+
+    /* SHOW CONFIRMATION */
+
+    document
+        .getElementById("ticketScreen")
+        .classList.add("show");
+
+
+    /* START RETURN TIMER */
 
     startReturnTimer();
 
-    /* PRINT IMMEDIATELY FROM THE USER'S TOUCH */
+
+    /*
+       IMPORTANT:
+       Print is called directly from the user's
+       touch/click instead of through a timer.
+    */
+
     window.print();
+
 }
+
+
+/* =========================================================
+   RETURN TO SERVICE MENU
+========================================================= */
+
+function returnHome(){
+
+    document
+        .getElementById("ticketScreen")
+        .classList.remove("show");
+
+    clearTimeout(returnTimer);
+
+}
+
+
+/* =========================================================
+   AUTO RETURN AFTER 25 SECONDS
+========================================================= */
+
+let returnTimer;
+
+
+function startReturnTimer(){
+
+    clearTimeout(returnTimer);
+
+    returnTimer =
+        setTimeout(
+            returnHome,
+            25000
+        );
+
+}
+
+</script>
+
+
+</body>
+</html>
