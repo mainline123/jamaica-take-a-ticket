@@ -19,37 +19,9 @@ user-scalable=no">
     padding:0;
 
     -webkit-tap-highlight-color:transparent !important;
-
     -webkit-user-select:none !important;
     user-select:none !important;
-
     -webkit-touch-callout:none !important;
-
-    -webkit-user-drag:none !important;
-}
-
-
-/* =====================================================
-   ANDROID / NOVISIGN KIOSK TOUCH LOCKDOWN
-===================================================== */
-
-html,
-body,
-#stage,
-#portraitCanvas,
-#homeScreen,
-button,
-div,
-span,
-section,
-footer{
-    -webkit-user-select:none !important;
-    user-select:none !important;
-
-    -webkit-touch-callout:none !important;
-
-    -webkit-tap-highlight-color:transparent !important;
-
     -webkit-user-drag:none !important;
 }
 
@@ -57,12 +29,9 @@ html,
 body{
     width:100%;
     height:100%;
-
     margin:0;
     padding:0;
-
     overflow:hidden;
-
     background:#000;
 
     font-family:
@@ -74,15 +43,22 @@ body{
 }
 
 button{
-    touch-action:manipulation;
-
     -webkit-appearance:none;
     appearance:none;
+
+    touch-action:manipulation;
+
+    -webkit-user-select:none !important;
+    user-select:none !important;
+
+    -webkit-touch-callout:none !important;
+
+    outline:none;
 }
 
 
 /* =====================================================
-   OUTER STAGE
+   STAGE
 ===================================================== */
 
 #stage{
@@ -97,11 +73,13 @@ button{
     overflow:hidden;
 
     background:#000;
+
+    touch-action:manipulation;
 }
 
 
 /* =====================================================
-   FIXED 1080 x 1920 PORTRAIT CANVAS
+   FIXED PORTRAIT CANVAS
 ===================================================== */
 
 #portraitCanvas{
@@ -120,6 +98,8 @@ button{
     overflow:hidden;
 
     color:#062d5c;
+
+    touch-action:manipulation;
 }
 
 
@@ -385,16 +365,22 @@ button{
         0 10px 25px
         rgba(0,0,0,.20);
 
+    touch-action:manipulation;
+
     -webkit-user-select:none !important;
     user-select:none !important;
 
     -webkit-touch-callout:none !important;
-
-    touch-action:manipulation;
 }
 
+
+/*
+   NO SCALE ANIMATION.
+   Keep touch response as light as possible.
+*/
+
 .service-button:active{
-    transform:scale(.985);
+    opacity:.92;
 }
 
 .traffic{
@@ -493,7 +479,7 @@ button{
 
 
 /* =====================================================
-   INFORMATION PANEL
+   INFORMATION
 ===================================================== */
 
 .info-panel{
@@ -613,7 +599,6 @@ button{
 
 .jamaica-line{
     width:470px;
-
     height:7px;
 
     margin-top:14px;
@@ -629,7 +614,7 @@ button{
 
 
 /* =====================================================
-   TICKET CONFIRMATION SCREEN
+   TICKET CONFIRMATION
 ===================================================== */
 
 #ticketScreen{
@@ -657,6 +642,8 @@ button{
         270px;
 
     text-align:center;
+
+    touch-action:manipulation;
 }
 
 #ticketScreen.show{
@@ -770,15 +757,10 @@ button{
     cursor:pointer;
 
     touch-action:manipulation;
-
-    -webkit-user-select:none !important;
-    user-select:none !important;
-
-    -webkit-touch-callout:none !important;
 }
 
 .done:active{
-    transform:scale(.98);
+    opacity:.92;
 }
 
 </style>
@@ -811,8 +793,7 @@ button{
             TAJ
         </div>
 
-        <div class="brand-line">
-        </div>
+        <div class="brand-line"></div>
 
         <div class="brand-text">
 
@@ -866,15 +847,13 @@ button{
     <div class="buttons">
 
 
-        <!-- TRAFFIC TICKET PAYMENTS -->
+        <!-- TRAFFIC -->
 
         <button
             type="button"
             class="service-button traffic"
-            onclick="takeTicket(
-                'T',
-                'Traffic Ticket Payments'
-            )"
+            data-prefix="T"
+            data-service="Traffic Ticket Payments"
         >
 
             <div class="service-icon">
@@ -908,15 +887,13 @@ button{
 
 
 
-        <!-- MOTOR VEHICLE LICENCE -->
+        <!-- LICENCE -->
 
         <button
             type="button"
             class="service-button licence"
-            onclick="takeTicket(
-                'L',
-                'Motor Vehicle License Renewal'
-            )"
+            data-prefix="L"
+            data-service="Motor Vehicle License Renewal"
         >
 
             <div class="service-icon">
@@ -955,10 +932,8 @@ button{
         <button
             type="button"
             class="service-button fitness"
-            onclick="takeTicket(
-                'F',
-                'Motor Vehicle Fitness Examination'
-            )"
+            data-prefix="F"
+            data-service="Motor Vehicle Fitness Examination"
         >
 
             <div class="service-icon">
@@ -1046,8 +1021,7 @@ button{
     </div>
 
 
-    <div class="jamaica-line">
-    </div>
+    <div class="jamaica-line"></div>
 
 </footer>
 
@@ -1078,16 +1052,16 @@ button{
 
     <div
         id="ticketService"
-        class="ticket-service"
-    >
+        class="ticket-service">
     </div>
 
 
     <div
         id="ticketNumber"
-        class="ticket-number"
-    >
+        class="ticket-number">
+
         T001
+
     </div>
 
 
@@ -1107,10 +1081,11 @@ button{
 
     <button
         type="button"
-        class="done"
-        onclick="returnHome()"
-    >
+        id="doneButton"
+        class="done">
+
         DONE
+
     </button>
 
 </section>
@@ -1126,7 +1101,7 @@ button{
 <script>
 
 /* =====================================================
-   EXTRA ANDROID LONG-PRESS PROTECTION
+   BLOCK ANDROID COPY / SELECT / CONTEXT MENU
 ===================================================== */
 
 document.addEventListener(
@@ -1135,7 +1110,8 @@ document.addEventListener(
 
         event.preventDefault();
 
-    }
+    },
+    { passive:false }
 );
 
 
@@ -1145,7 +1121,8 @@ document.addEventListener(
 
         event.preventDefault();
 
-    }
+    },
+    { passive:false }
 );
 
 
@@ -1155,13 +1132,13 @@ document.addEventListener(
 
         event.preventDefault();
 
-    }
+    },
+    { passive:false }
 );
 
 
 /* =====================================================
-   FORCE 1080 x 1920 DESIGN TO FILL
-   COMPLETE NOVISIGN DISPLAY
+   FULL-SCREEN PORTRAIT SCALING
 ===================================================== */
 
 function scalePortraitCanvas(){
@@ -1178,18 +1155,6 @@ function scalePortraitCanvas(){
 
     const screenHeight =
         window.innerHeight;
-
-
-    /*
-       Scale width and height independently.
-
-       This deliberately fills all four
-       edges of the NoviSign display:
-       LEFT
-       RIGHT
-       TOP
-       BOTTOM
-    */
 
 
     const scaleX =
@@ -1210,12 +1175,8 @@ function scalePortraitCanvas(){
 }
 
 
-/* INITIAL SCALE */
-
 scalePortraitCanvas();
 
-
-/* SCALE AFTER PAGE LOAD */
 
 window.addEventListener(
     "load",
@@ -1223,15 +1184,13 @@ window.addEventListener(
 );
 
 
-/* RESCALE IF NOVISIGN CHANGES SIZE */
-
 window.addEventListener(
     "resize",
     function(){
 
         setTimeout(
             scalePortraitCanvas,
-            150
+            100
         );
 
     }
@@ -1270,7 +1229,7 @@ function getCounter(prefix){
 
 
 /* =====================================================
-   FORMAT TICKET NUMBER
+   FORMAT TICKET
 ===================================================== */
 
 function formatTicket(
@@ -1289,6 +1248,13 @@ function formatTicket(
 
 
 /* =====================================================
+   PREVENT ACCIDENTAL DOUBLE TICKETS
+===================================================== */
+
+let ticketLocked = false;
+
+
+/* =====================================================
    CREATE TICKET
 ===================================================== */
 
@@ -1296,6 +1262,14 @@ function takeTicket(
     prefix,
     service
 ){
+
+    if(ticketLocked){
+        return;
+    }
+
+
+    ticketLocked = true;
+
 
     const number =
         getCounter(prefix);
@@ -1338,6 +1312,52 @@ function takeTicket(
 
 
 /* =====================================================
+   FAST TOUCH HANDLING
+
+   Respond when finger goes DOWN instead of waiting
+   for Android WebView to finish a normal click.
+===================================================== */
+
+const serviceButtons =
+    document.querySelectorAll(
+        ".service-button"
+    );
+
+
+serviceButtons.forEach(
+    function(button){
+
+        button.addEventListener(
+            "pointerdown",
+            function(event){
+
+                event.preventDefault();
+
+
+                const prefix =
+                    button.dataset.prefix;
+
+
+                const service =
+                    button.dataset.service;
+
+
+                takeTicket(
+                    prefix,
+                    service
+                );
+
+            },
+            {
+                passive:false
+            }
+        );
+
+    }
+);
+
+
+/* =====================================================
    RETURN HOME
 ===================================================== */
 
@@ -1355,7 +1375,37 @@ function returnHome(){
         returnTimer
     );
 
+
+    /*
+       Allow next customer to select a service.
+    */
+
+    ticketLocked = false;
+
 }
+
+
+/* =====================================================
+   FAST DONE BUTTON
+===================================================== */
+
+document
+    .getElementById(
+        "doneButton"
+    )
+    .addEventListener(
+        "pointerdown",
+        function(event){
+
+            event.preventDefault();
+
+            returnHome();
+
+        },
+        {
+            passive:false
+        }
+    );
 
 
 /* =====================================================
