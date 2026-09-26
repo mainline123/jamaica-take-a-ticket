@@ -425,6 +425,14 @@ async function claimTicket(ticket){
             ticketRef,
             function(current){
 
+                /*
+                   The ticket can be claimed ONLY
+                   while its status is "waiting".
+
+                   If Teller 1 or Teller 3 got here
+                   first, this transaction aborts.
+                */
+
                 if(
                     current === null ||
                     current.status !== "waiting"
@@ -521,6 +529,15 @@ async function getNextCustomer(){
 
         let claimed = null;
 
+
+        /*
+           Try the oldest customer first.
+
+           If another teller claims that customer
+           at the same instant, Firebase rejects
+           our claim and we automatically try
+           the next waiting customer.
+        */
 
         for(
             const ticket of waiting
