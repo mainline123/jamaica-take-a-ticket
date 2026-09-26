@@ -2,14 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-
 <meta name="viewport"
 content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
 <title>TAJ - Now Serving</title>
 
 <style>
-
 *{
     box-sizing:border-box;
     margin:0;
@@ -20,8 +18,7 @@ content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no
     -webkit-tap-highlight-color:transparent;
 }
 
-html,
-body{
+html,body{
     width:100%;
     height:100%;
     overflow:hidden;
@@ -29,51 +26,38 @@ body{
     font-family:Arial,Helvetica,sans-serif;
 }
 
-body{
-    color:#fff;
-}
+body{color:#fff;}
 
 .screen{
     position:relative;
     width:100vw;
     height:100vh;
-
     display:grid;
     grid-template-columns:28% 44% 28%;
     grid-template-rows:82% 18%;
-
     overflow:hidden;
-
-    background:
-        linear-gradient(
-            135deg,
-            #dff6ff 0%,
-            #69c9ef 26%,
-            #e9f8ff 27%,
-            #d8f3e4 55%,
-            #1d7a43 100%
-        );
+    background:linear-gradient(
+        135deg,
+        #dff6ff 0%,
+        #69c9ef 26%,
+        #e9f8ff 27%,
+        #d8f3e4 55%,
+        #1d7a43 100%
+    );
 }
 
-/* ==============================================
-   LEFT SIDE
-============================================== */
+/* LEFT */
 
 .left{
     position:relative;
-
     padding:3.5vh 2.5vw;
-
     color:#052d5c;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255,255,255,.96),
-            rgba(210,242,255,.88) 45%,
-            rgba(14,143,94,.86)
-        );
-
+    background:linear-gradient(
+        180deg,
+        rgba(255,255,255,.96),
+        rgba(210,242,255,.88) 45%,
+        rgba(14,143,94,.86)
+    );
     overflow:hidden;
 }
 
@@ -90,36 +74,28 @@ body{
 
 .brand-jamaica{
     margin-top:.5vh;
-
     font-size:3.3vw;
     line-height:1;
-
     font-weight:900;
     font-style:italic;
-
     color:#009b3a;
 }
 
 .brand-line{
     width:85%;
     height:.7vh;
-
     margin-top:1.2vh;
-
     border-radius:20px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #009b3a 0 38%,
-            #fed100 38% 66%,
-            #003b73 66% 100%
-        );
+    background:linear-gradient(
+        90deg,
+        #009b3a 0 38%,
+        #fed100 38% 66%,
+        #003b73 66% 100%
+    );
 }
 
 .tagline{
     margin-top:1.2vh;
-
     font-size:.95vw;
     font-weight:800;
     letter-spacing:.06vw;
@@ -127,17 +103,12 @@ body{
 
 .left-message{
     position:absolute;
-
     left:2.6vw;
     right:2.6vw;
     bottom:9vh;
-
     text-align:center;
-
     color:#fff;
-
-    text-shadow:
-        0 2px 5px rgba(0,0,0,.4);
+    text-shadow:0 2px 5px rgba(0,0,0,.4);
 }
 
 .left-message .script{
@@ -148,67 +119,43 @@ body{
 
 .left-message .together{
     margin-top:.5vh;
-
     color:#fed100;
-
     font-size:3vw;
     font-weight:900;
     font-style:italic;
 }
 
-/* ==============================================
-   CENTER NOW SERVING
-============================================== */
+/* CENTER */
 
 .center{
     position:relative;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     padding:4vh 1.2vw;
 }
 
 .now-card{
     width:100%;
     height:86%;
-
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-
     padding:2vh 2vw;
-
     border-radius:2.2vw;
-
-    background:
-        linear-gradient(
-            145deg,
-            #003d75,
-            #001f49
-        );
-
-    box-shadow:
-        0 1vh 2.5vh rgba(0,0,0,.28);
-
+    background:linear-gradient(145deg,#003d75,#001f49);
+    box-shadow:0 1vh 2.5vh rgba(0,0,0,.28);
     border:.18vw solid rgba(255,255,255,.15);
 }
 
 .now-title{
     width:94%;
-
     padding:1.4vh 1vw;
-
     border-radius:1.3vw;
-
     text-align:center;
-
     background:#fed100;
-
     color:#001c49;
-
     font-size:3.8vw;
     line-height:1;
     font-weight:900;
@@ -216,90 +163,63 @@ body{
 
 .number-row{
     width:100%;
-
     flex:1;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     gap:1.5vw;
 }
 
 .speaker{
     color:#fed100;
-
     font-size:5vw;
-
     line-height:1;
 }
 
 #currentNumber{
     font-size:9.8vw;
     line-height:1;
-
     font-weight:900;
-
     letter-spacing:-.35vw;
-
     color:#fff;
-
-    text-shadow:
-        0 .3vh .5vh rgba(0,0,0,.35);
+    text-shadow:0 .3vh .5vh rgba(0,0,0,.35);
 }
 
 .teller-box{
     min-width:68%;
-
     padding:1.2vh 2vw;
-
     border-radius:1.2vw;
-
     background:#fed100;
-
     color:#001c49;
-
     text-align:center;
-
     font-size:3.1vw;
     line-height:1;
-
     font-weight:900;
 }
 
 .instruction{
     margin-top:1.8vh;
-
     font-size:1.25vw;
-
     font-style:italic;
-
-    color:#fff;
 }
 
-/* ==============================================
-   RIGHT SIDE
-============================================== */
+/* RIGHT */
 
 .right{
     padding:2.2vh 1.3vw 2.2vh 0;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(0,88,45,.93),
-            rgba(8,94,50,.88)
-        );
+    background:linear-gradient(
+        180deg,
+        rgba(0,88,45,.93),
+        rgba(8,94,50,.88)
+    );
 }
 
 .date-time{
     height:13%;
-
     display:flex;
     flex-direction:column;
     align-items:flex-end;
     justify-content:center;
-
     padding-right:.5vw;
 }
 
@@ -310,77 +230,55 @@ body{
 
 #time{
     margin-top:.4vh;
-
     font-size:2.5vw;
     font-weight:900;
 }
 
 .recent-panel{
     height:87%;
-
     overflow:hidden;
-
     border-radius:1.6vw;
-
     background:#cbea78;
-
     border:.15vw solid rgba(255,255,255,.7);
 }
 
 .recent-title{
     height:14%;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     background:#006b37;
-
     color:#fff;
-
     font-size:1.8vw;
     font-weight:900;
 }
 
 .column-headings{
     height:9%;
-
     display:grid;
     grid-template-columns:50% 50%;
-
     align-items:center;
-
     text-align:center;
-
     color:#00602f;
-
     font-size:1.15vw;
     font-weight:900;
 }
 
 .history{
     height:77%;
-
     display:grid;
     grid-template-rows:repeat(6,1fr);
-
     gap:.35vh;
-
     padding:.3vh .4vw 1vh;
 }
 
 .history-row{
     display:grid;
     grid-template-columns:50% 50%;
-
     align-items:center;
-
     background:#edf9ff;
-
     color:#001c49;
-
     border-radius:1vw;
-
     overflow:hidden;
 }
 
@@ -388,12 +286,9 @@ body{
     display:flex;
     align-items:center;
     justify-content:center;
-
     height:100%;
-
     font-size:2.25vw;
     font-weight:900;
-
     border-right:.1vw solid #82b9b0;
 }
 
@@ -401,79 +296,51 @@ body{
     display:flex;
     align-items:center;
     justify-content:center;
-
     height:100%;
-
     font-size:1.45vw;
     font-weight:900;
 }
 
-/* ==============================================
-   BOTTOM INSTRUCTIONS
-============================================== */
+/* BOTTOM */
 
 .bottom{
     grid-column:1 / 4;
-
     display:grid;
-    grid-template-columns:
-        1fr 1fr 1fr 1fr;
-
+    grid-template-columns:1fr 1fr 1fr 1fr;
     align-items:center;
-
     padding:1.5vh 2.2vw;
-
     background:#003b4d;
-
     border-top:.3vh solid rgba(255,255,255,.4);
 }
 
 .step{
     position:relative;
-
     display:flex;
     align-items:center;
-
     min-width:0;
-
     padding:0 1vw;
 }
 
 .step:not(:last-child)::after{
     content:"›";
-
     position:absolute;
-
     right:-.4vw;
-
     color:#fed100;
-
     font-size:4vw;
-
     font-weight:900;
 }
 
 .step-icon{
     width:4.4vw;
     height:4.4vw;
-
     flex:none;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     margin-right:1vw;
-
     border:.15vw solid #fff;
-
     border-radius:50%;
-
     font-size:2.1vw;
-}
-
-.step-text{
-    min-width:0;
 }
 
 .step-title{
@@ -483,69 +350,40 @@ body{
 
 .step-sub{
     margin-top:.4vh;
-
     font-size:.82vw;
-
     line-height:1.2;
 }
 
-/* ==============================================
-   CONNECTION INDICATOR
-============================================== */
-
 #connection{
     position:absolute;
-
     left:50%;
     bottom:18.5%;
-
     transform:translateX(-50%);
-
     z-index:20;
-
     padding:.5vh 1vw;
-
     border-radius:20px;
-
     background:rgba(0,0,0,.6);
-
     color:#fff;
-
     font-size:.7vw;
-
     opacity:0;
-
-    transition:opacity .3s;
 }
 
 #connection.offline{
     opacity:1;
 }
 
-/* ==============================================
-   CALL FLASH
-============================================== */
-
 .flash{
     animation:callFlash .65s ease-in-out 3;
 }
 
 @keyframes callFlash{
-
-    0%{
-        transform:scale(1);
-    }
-
+    0%{transform:scale(1);}
     50%{
         transform:scale(1.06);
         filter:brightness(1.25);
     }
-
-    100%{
-        transform:scale(1);
-    }
+    100%{transform:scale(1);}
 }
-
 </style>
 </head>
 
@@ -553,263 +391,170 @@ body{
 
 <div class="screen">
 
-    <section class="left">
+<section class="left">
 
-        <div class="brand">
-
-            <div class="brand-top">
-                TAX ADMINISTRATION
-            </div>
-
-            <div class="brand-jamaica">
-                JAMAICA
-            </div>
-
-            <div class="brand-line"></div>
-
-            <div class="tagline">
-                SERVING YOU • BUILDING JAMAICA
-            </div>
-
+    <div class="brand">
+        <div class="brand-top">TAX ADMINISTRATION</div>
+        <div class="brand-jamaica">JAMAICA</div>
+        <div class="brand-line"></div>
+        <div class="tagline">
+            SERVING YOU • BUILDING JAMAICA
         </div>
-
-        <div class="left-message">
-
-            <div class="script">
-                Jamaica Moves Forward
-            </div>
-
-            <div class="together">
-                Together
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <main class="center">
-
-        <div
-            id="nowCard"
-            class="now-card">
-
-            <div class="now-title">
-                NOW SERVING
-            </div>
-
-            <div class="number-row">
-
-                <div class="speaker">
-                    🔊
-                </div>
-
-                <div id="currentNumber">
-                    ---
-                </div>
-
-            </div>
-
-            <div
-                id="currentTeller"
-                class="teller-box">
-
-                WAITING
-
-            </div>
-
-            <div class="instruction">
-                Please proceed to the indicated teller.
-            </div>
-
-        </div>
-
-    </main>
-
-
-    <aside class="right">
-
-        <div class="date-time">
-
-            <div id="date">
-                Loading...
-            </div>
-
-            <div id="time">
-                --:--
-            </div>
-
-        </div>
-
-
-        <div class="recent-panel">
-
-            <div class="recent-title">
-                RECENTLY CALLED
-            </div>
-
-            <div class="column-headings">
-
-                <div>
-                    NUMBER
-                </div>
-
-                <div>
-                    TELLER
-                </div>
-
-            </div>
-
-
-            <div
-                id="history"
-                class="history">
-
-                <div class="history-row">
-                    <div class="history-number">---</div>
-                    <div class="history-teller">---</div>
-                </div>
-
-                <div class="history-row">
-                    <div class="history-number">---</div>
-                    <div class="history-teller">---</div>
-                </div>
-
-                <div class="history-row">
-                    <div class="history-number">---</div>
-                    <div class="history-teller">---</div>
-                </div>
-
-                <div class="history-row">
-                    <div class="history-number">---</div>
-                    <div class="history-teller">---</div>
-                </div>
-
-                <div class="history-row">
-                    <div class="history-number">---</div>
-                    <div class="history-teller">---</div>
-                </div>
-
-                <div class="history-row">
-                    <div class="history-number">---</div>
-                    <div class="history-teller">---</div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </aside>
-
-
-    <footer class="bottom">
-
-        <div class="step">
-
-            <div class="step-icon">
-                👥
-            </div>
-
-            <div class="step-text">
-
-                <div class="step-title">
-                    TAKE A TICKET
-                </div>
-
-                <div class="step-sub">
-                    Use one of our self-service kiosks
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="step">
-
-            <div class="step-icon">
-                🪑
-            </div>
-
-            <div class="step-text">
-
-                <div class="step-title">
-                    WATCH THE DISPLAY
-                </div>
-
-                <div class="step-sub">
-                    Your number will be called
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="step">
-
-            <div class="step-icon">
-                👤
-            </div>
-
-            <div class="step-text">
-
-                <div class="step-title">
-                    GO TO YOUR TELLER
-                </div>
-
-                <div class="step-sub">
-                    Proceed to the indicated teller
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="step">
-
-            <div class="step-icon">
-                ✓
-            </div>
-
-            <div class="step-text">
-
-                <div class="step-title">
-                    WE'RE HERE TO HELP
-                </div>
-
-                <div class="step-sub">
-                    Thank you for your patience
-                </div>
-
-            </div>
-
-        </div>
-
-    </footer>
-
-
-    <div id="connection">
-        Connecting to live queue...
     </div>
+
+    <div class="left-message">
+        <div class="script">Jamaica Moves Forward</div>
+        <div class="together">Together</div>
+    </div>
+
+</section>
+
+
+<main class="center">
+
+    <div id="nowCard" class="now-card">
+
+        <div class="now-title">
+            NOW SERVING
+        </div>
+
+        <div class="number-row">
+
+            <div class="speaker">
+                🔊
+            </div>
+
+            <div id="currentNumber">
+                ---
+            </div>
+
+        </div>
+
+        <div id="currentTeller" class="teller-box">
+            WAITING
+        </div>
+
+        <div class="instruction">
+            Please proceed to the indicated teller.
+        </div>
+
+    </div>
+
+</main>
+
+
+<aside class="right">
+
+    <div class="date-time">
+        <div id="date">Loading...</div>
+        <div id="time">--:--</div>
+    </div>
+
+    <div class="recent-panel">
+
+        <div class="recent-title">
+            RECENTLY CALLED
+        </div>
+
+        <div class="column-headings">
+            <div>NUMBER</div>
+            <div>TELLER</div>
+        </div>
+
+        <div id="history" class="history">
+
+            <div class="history-row">
+                <div class="history-number">---</div>
+                <div class="history-teller">---</div>
+            </div>
+
+            <div class="history-row">
+                <div class="history-number">---</div>
+                <div class="history-teller">---</div>
+            </div>
+
+            <div class="history-row">
+                <div class="history-number">---</div>
+                <div class="history-teller">---</div>
+            </div>
+
+            <div class="history-row">
+                <div class="history-number">---</div>
+                <div class="history-teller">---</div>
+            </div>
+
+            <div class="history-row">
+                <div class="history-number">---</div>
+                <div class="history-teller">---</div>
+            </div>
+
+            <div class="history-row">
+                <div class="history-number">---</div>
+                <div class="history-teller">---</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+<footer class="bottom">
+
+    <div class="step">
+        <div class="step-icon">👥</div>
+        <div class="step-text">
+            <div class="step-title">TAKE A TICKET</div>
+            <div class="step-sub">
+                Use one of our self-service kiosks
+            </div>
+        </div>
+    </div>
+
+    <div class="step">
+        <div class="step-icon">🪑</div>
+        <div class="step-text">
+            <div class="step-title">WATCH THE DISPLAY</div>
+            <div class="step-sub">
+                Your number will be called
+            </div>
+        </div>
+    </div>
+
+    <div class="step">
+        <div class="step-icon">👤</div>
+        <div class="step-text">
+            <div class="step-title">GO TO YOUR TELLER</div>
+            <div class="step-sub">
+                Proceed to the indicated teller
+            </div>
+        </div>
+    </div>
+
+    <div class="step">
+        <div class="step-icon">✓</div>
+        <div class="step-text">
+            <div class="step-title">WE'RE HERE TO HELP</div>
+            <div class="step-sub">
+                Thank you for your patience
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<div id="connection">
+    Connecting to live queue...
+</div>
 
 </div>
 
 
-
 <script type="module">
 
-/* =====================================================
-   FIREBASE
-===================================================== */
-
-import {
-    initializeApp
-}
-from
-"https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 import {
     getDatabase,
@@ -818,162 +563,213 @@ import {
     query,
     limitToLast
 }
-from
-"https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
 
 const firebaseConfig = {
-
-    apiKey:
-    "AIzaSyCJAEZ-MD-W6SQZfUS5BkD-4NpT11vItHE",
-
-    authDomain:
-    "jamaica-take-a-ticket.firebaseapp.com",
-
-    databaseURL:
-    "https://jamaica-take-a-ticket-default-rtdb.firebaseio.com",
-
-    projectId:
-    "jamaica-take-a-ticket",
-
-    storageBucket:
-    "jamaica-take-a-ticket.firebasestorage.app",
-
-    messagingSenderId:
-    "1093598545752",
-
-    appId:
-    "1:1093598545752:web:7fa81726e2bcc5fdfb072d"
-
+    apiKey:"AIzaSyCJAEZ-MD-W6SQZfUS5BkD-4NpT11vItHE",
+    authDomain:"jamaica-take-a-ticket.firebaseapp.com",
+    databaseURL:"https://jamaica-take-a-ticket-default-rtdb.firebaseio.com",
+    projectId:"jamaica-take-a-ticket",
+    storageBucket:"jamaica-take-a-ticket.firebasestorage.app",
+    messagingSenderId:"1093598545752",
+    appId:"1:1093598545752:web:7fa81726e2bcc5fdfb072d"
 };
 
 
-const app =
-    initializeApp(
-        firebaseConfig
-    );
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-
-const db =
-    getDatabase(app);
-
-
-
-/* =====================================================
-   ELEMENTS
-===================================================== */
 
 const currentNumber =
-    document.getElementById(
-        "currentNumber"
-    );
-
+    document.getElementById("currentNumber");
 
 const currentTeller =
-    document.getElementById(
-        "currentTeller"
-    );
-
+    document.getElementById("currentTeller");
 
 const historyElement =
-    document.getElementById(
-        "history"
-    );
-
+    document.getElementById("history");
 
 const nowCard =
-    document.getElementById(
-        "nowCard"
-    );
-
+    document.getElementById("nowCard");
 
 const connection =
-    document.getElementById(
-        "connection"
-    );
+    document.getElementById("connection");
 
 
-
-/* =====================================================
-   CONNECTION STATUS
-===================================================== */
-
-const connectedRef =
-    ref(
-        db,
-        ".info/connected"
-    );
-
+/* CONNECTION */
 
 onValue(
-    connectedRef,
+    ref(db,".info/connected"),
     function(snapshot){
 
-        if(
-            snapshot.val() === true
-        ){
+        if(snapshot.val() === true){
 
-            connection.classList.remove(
-                "offline"
-            );
-
+            connection.classList.remove("offline");
             connection.textContent =
                 "Live queue connected";
 
-        }
-        else{
+        }else{
 
-            connection.classList.add(
-                "offline"
-            );
-
+            connection.classList.add("offline");
             connection.textContent =
                 "Connecting to live queue...";
 
         }
-
     }
 );
 
 
-
 /* =====================================================
-   CURRENT NUMBER
+   TWO-TONE BONG
 ===================================================== */
 
+let audioContext = null;
+
+function playBong(){
+
+    try{
+
+        if(!audioContext){
+
+            audioContext =
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
+        }
+
+        if(audioContext.state === "suspended"){
+            audioContext.resume();
+        }
+
+
+        const now = audioContext.currentTime;
+
+
+        function createTone(
+            frequency,
+            start,
+            duration,
+            volume
+        ){
+
+            const oscillator =
+                audioContext.createOscillator();
+
+            const gain =
+                audioContext.createGain();
+
+
+            oscillator.type = "sine";
+
+            oscillator.frequency.setValueAtTime(
+                frequency,
+                now + start
+            );
+
+
+            gain.gain.setValueAtTime(
+                0.0001,
+                now + start
+            );
+
+            gain.gain.exponentialRampToValueAtTime(
+                volume,
+                now + start + .04
+            );
+
+            gain.gain.exponentialRampToValueAtTime(
+                0.0001,
+                now + start + duration
+            );
+
+
+            oscillator.connect(gain);
+            gain.connect(audioContext.destination);
+
+
+            oscillator.start(
+                now + start
+            );
+
+            oscillator.stop(
+                now + start + duration
+            );
+        }
+
+
+        /*
+           DONG
+        */
+
+        createTone(
+            523.25,
+            0,
+            .85,
+            .7
+        );
+
+        createTone(
+            783.99,
+            0,
+            .85,
+            .20
+        );
+
+
+        /*
+           DONG
+        */
+
+        createTone(
+            659.25,
+            .95,
+            1.0,
+            .7
+        );
+
+        createTone(
+            987.77,
+            .95,
+            1.0,
+            .20
+        );
+
+    }
+    catch(error){
+
+        console.log(
+            "Audio unavailable:",
+            error
+        );
+    }
+}
+
+
+/* =====================================================
+   CURRENT CALL
+===================================================== */
+
+let firstCurrentLoad = true;
 let lastCallSignature = "";
 
 
-const currentRef =
-    ref(
-        db,
-        "display/current"
-    );
-
-
 onValue(
-    currentRef,
+    ref(db,"display/current"),
     function(snapshot){
 
-        const data =
-            snapshot.val();
+        const data = snapshot.val();
 
 
-        if(
-            !data ||
-            !data.number
-        ){
+        if(!data || !data.number){
 
-            currentNumber.textContent =
-                "---";
+            currentNumber.textContent = "---";
+            currentTeller.textContent = "WAITING";
 
-
-            currentTeller.textContent =
-                "WAITING";
-
+            firstCurrentLoad = false;
 
             return;
-
         }
 
 
@@ -982,8 +778,7 @@ onValue(
 
 
         currentTeller.textContent =
-            "TELLER " +
-            data.teller;
+            "TELLER " + data.teller;
 
 
         const signature =
@@ -998,34 +793,44 @@ onValue(
             );
 
 
-        if(
-            signature !==
-            lastCallSignature
-        ){
+        /*
+           Don't bong simply because
+           the TV page has reloaded.
+        */
+
+        if(firstCurrentLoad){
 
             lastCallSignature =
                 signature;
 
+            firstCurrentLoad =
+                false;
+
+            return;
+        }
+
+
+        if(signature !== lastCallSignature){
+
+            lastCallSignature =
+                signature;
 
             flashCurrentCall();
 
+            playBong();
         }
 
     }
 );
 
 
-
 /* =====================================================
-   RECENT CALL HISTORY
+   HISTORY
 ===================================================== */
 
 const historyRef =
     query(
-        ref(
-            db,
-            "display/history"
-        ),
+        ref(db,"display/history"),
         limitToLast(6)
     );
 
@@ -1043,16 +848,8 @@ onValue(
                 const data =
                     child.val();
 
-
-                if(
-                    data &&
-                    data.number
-                ){
-
-                    calls.push(
-                        data
-                    );
-
+                if(data && data.number){
+                    calls.push(data);
                 }
 
             }
@@ -1062,171 +859,107 @@ onValue(
         calls.sort(
             function(a,b){
 
-                const timeA =
+                const aTime =
                     a.recalledAt ||
                     a.calledAt ||
                     0;
 
-
-                const timeB =
+                const bTime =
                     b.recalledAt ||
                     b.calledAt ||
                     0;
 
-
-                return timeB - timeA;
-
+                return bTime - aTime;
             }
         );
 
 
-        renderHistory(
-            calls
-        );
-
+        renderHistory(calls);
     }
 );
 
 
-
-/* =====================================================
-   RENDER HISTORY
-===================================================== */
-
 function renderHistory(calls){
 
-    historyElement.innerHTML =
-        "";
+    historyElement.innerHTML = "";
 
 
-    for(
-        let i = 0;
-        i < 6;
-        i++
-    ){
+    for(let i=0;i<6;i++){
 
         const row =
-            document.createElement(
-                "div"
-            );
-
+            document.createElement("div");
 
         row.className =
             "history-row";
 
 
         const number =
-            document.createElement(
-                "div"
-            );
-
+            document.createElement("div");
 
         number.className =
             "history-number";
 
 
         const teller =
-            document.createElement(
-                "div"
-            );
-
+            document.createElement("div");
 
         teller.className =
             "history-teller";
 
 
-        if(
-            calls[i]
-        ){
+        if(calls[i]){
 
             number.textContent =
                 calls[i].number;
-
 
             teller.textContent =
                 "TELLER " +
                 calls[i].teller;
 
-        }
-        else{
+        }else{
 
-            number.textContent =
-                "---";
-
-
-            teller.textContent =
-                "---";
-
+            number.textContent = "---";
+            teller.textContent = "---";
         }
 
 
-        row.appendChild(
-            number
-        );
+        row.appendChild(number);
+        row.appendChild(teller);
 
-
-        row.appendChild(
-            teller
-        );
-
-
-        historyElement.appendChild(
-            row
-        );
-
+        historyElement.appendChild(row);
     }
-
 }
 
 
-
-/* =====================================================
-   FLASH WHEN CUSTOMER IS CALLED
-===================================================== */
+/* FLASH */
 
 function flashCurrentCall(){
 
-    nowCard.classList.remove(
-        "flash"
-    );
-
+    nowCard.classList.remove("flash");
 
     void nowCard.offsetWidth;
 
-
-    nowCard.classList.add(
-        "flash"
-    );
+    nowCard.classList.add("flash");
 
 
     setTimeout(
         function(){
-
-            nowCard.classList.remove(
-                "flash"
-            );
-
+            nowCard.classList.remove("flash");
         },
         2100
     );
-
 }
 
 
-
-/* =====================================================
-   DATE AND TIME
-===================================================== */
+/* CLOCK */
 
 function updateClock(){
 
-    const now =
-        new Date();
+    const now = new Date();
 
 
-    document.getElementById(
-        "date"
-    ).textContent =
+    document.getElementById("date")
+    .textContent =
         now.toLocaleDateString(
             "en-US",
             {
@@ -1238,9 +971,8 @@ function updateClock(){
         );
 
 
-    document.getElementById(
-        "time"
-    ).textContent =
+    document.getElementById("time")
+    .textContent =
         now.toLocaleTimeString(
             "en-US",
             {
@@ -1248,12 +980,10 @@ function updateClock(){
                 minute:"2-digit"
             }
         );
-
 }
 
 
 updateClock();
-
 
 setInterval(
     updateClock,
@@ -1261,27 +991,19 @@ setInterval(
 );
 
 
-
-/* =====================================================
-   PREVENT COPY / LONG PRESS
-===================================================== */
+/* PREVENT LONG PRESS */
 
 document.addEventListener(
     "contextmenu",
     function(event){
-
         event.preventDefault();
-
     }
 );
-
 
 document.addEventListener(
     "selectstart",
     function(event){
-
         event.preventDefault();
-
     }
 );
 
