@@ -182,13 +182,9 @@ button:disabled{
 
     <div class="content">
 
-        <div class="label">
-            CURRENT CUSTOMER
-        </div>
+        <div class="label">CURRENT CUSTOMER</div>
 
-        <div id="currentNumber" class="current-number">
-            ---
-        </div>
+        <div id="currentNumber" class="current-number">---</div>
 
         <div id="currentService" class="current-service">
             No customer currently assigned.
@@ -224,7 +220,6 @@ from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 import {
     getDatabase,
     ref,
-    get,
     set,
     update,
     push,
@@ -277,6 +272,8 @@ let currentQueueKey = null;
 let touchLock = false;
 let connected = false;
 
+let liveQueue = {};
+
 
 /* =====================================================
    CONNECTION STATUS
@@ -316,6 +313,29 @@ onValue(
             message.textContent =
                 "Please wait for the queue connection to return.";
         }
+    }
+);
+
+
+/* =====================================================
+   LIVE QUEUE LISTENER
+===================================================== */
+
+onValue(
+    ref(db,"queue"),
+    function(snapshot){
+
+        liveQueue =
+            snapshot.val() || {};
+    },
+    function(error){
+
+        console.error(
+            "Queue listener error:",
+            error
+        );
+
+        liveQueue = {};
     }
 );
 
@@ -363,20 +383,15 @@ onValue(
    FIND WAITING CUSTOMERS
 ===================================================== */
 
-async function findWaitingCustomers(){
-
-    const snapshot =
-        await get(
-            ref(db,"queue")
-        );
+function findWaitingCustomers(){
 
     const waiting = [];
 
-    snapshot.forEach(
-        function(child){
+    Object.keys(liveQueue).forEach(
+        function(key){
 
             const ticket =
-                child.val();
+                liveQueue[key];
 
             if(
                 ticket &&
@@ -384,12 +399,13 @@ async function findWaitingCustomers(){
             ){
 
                 waiting.push({
-                    key:child.key,
+                    key:key,
                     ...ticket
                 });
             }
         }
     );
+
 
     waiting.sort(
         function(a,b){
@@ -403,12 +419,13 @@ async function findWaitingCustomers(){
         }
     );
 
+
     return waiting;
 }
 
 
 /* =====================================================
-   ATOMICALLY CLAIM ONE CUSTOMER
+   ATOMICALLY CLAIM CUSTOMER
 ===================================================== */
 
 async function claimTicket(ticket){
@@ -424,15 +441,6 @@ async function claimTicket(ticket){
         await runTransaction(
             ticketRef,
             function(current){
-
-                /*
-                   Firebase will commit this ONLY
-                   while the customer is still waiting.
-
-                   If Teller 1 or Teller 2 claimed
-                   the customer first, this transaction
-                   does not overwrite their claim.
-                */
 
                 if(
                     current === null ||
@@ -516,7 +524,7 @@ async function getNextCustomer(){
     try{
 
         const waiting =
-            await findWaitingCustomers();
+            findWaitingCustomers();
 
 
         if(waiting.length === 0){
@@ -530,14 +538,6 @@ async function getNextCustomer(){
 
         let claimed = null;
 
-
-        /*
-           Start with the oldest waiting customer.
-
-           If another teller gets that customer
-           at virtually the same instant, try the
-           next waiting customer.
-        */
 
         for(
             const ticket of waiting
@@ -582,7 +582,7 @@ async function getNextCustomer(){
 
 
 /* =====================================================
-   ANNOUNCE CLAIMED CUSTOMER
+   ANNOUNCE CUSTOMER
 ===================================================== */
 
 async function announceCustomer(ticket){
