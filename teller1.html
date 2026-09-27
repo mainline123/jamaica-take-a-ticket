@@ -232,6 +232,13 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
+import {
+    getAuth,
+    onAuthStateChanged,
+    signInAnonymously
+}
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
 
 const firebaseConfig = {
     apiKey:"AIzaSyCJAEZ-MD-W6SQZfUS5BkD-4NpT11vItHE",
@@ -246,6 +253,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const auth = getAuth(app);
 
 const TELLER_NUMBER = 1;
 
@@ -275,6 +283,8 @@ let currentTicket = null;
 let currentQueueKey = null;
 let touchLock = false;
 let connected = false;
+let authenticated = false;
+let authAttemptStarted = false;
 
 /*
    LIVE LOCAL COPY OF FIREBASE QUEUE
@@ -286,8 +296,99 @@ let liveQueue = {};
 
 
 /* =====================================================
-   CONNECTION STATUS
+   CONNECTION + AUTHENTICATION STATUS
 ===================================================== */
+
+function updateAvailability(){
+
+    const available =
+        connected &&
+        authenticated;
+
+    if(available){
+
+        connection.textContent =
+            "LIVE QUEUE CONNECTED";
+
+        connection.className =
+            "connection live";
+
+        nextButton.disabled = false;
+        recallButton.disabled = false;
+        completeButton.disabled = false;
+
+    }else{
+
+        if(!connected){
+
+            connection.textContent =
+                "QUEUE CONNECTION LOST";
+
+        }else{
+
+            connection.textContent =
+                "AUTHENTICATING SECURE CONNECTION...";
+        }
+
+        connection.className =
+            "connection offline";
+
+        nextButton.disabled = true;
+        recallButton.disabled = true;
+        completeButton.disabled = true;
+    }
+}
+
+
+onAuthStateChanged(
+    auth,
+    async function(user){
+
+        if(user){
+
+            authenticated = true;
+
+            console.log(
+                "Firebase authenticated:",
+                user.uid
+            );
+
+            updateAvailability();
+
+            return;
+        }
+
+        authenticated = false;
+
+        updateAvailability();
+
+        if(authAttemptStarted){
+            return;
+        }
+
+        authAttemptStarted = true;
+
+        try{
+
+            await signInAnonymously(auth);
+
+        }catch(error){
+
+            console.error(
+                "Firebase authentication error:",
+                error
+            );
+
+            authenticated = false;
+
+            message.textContent =
+                "Unable to authenticate secure connection.";
+
+            updateAvailability();
+        }
+    }
+);
+
 
 onValue(
     ref(db,".info/connected"),
@@ -296,29 +397,9 @@ onValue(
         connected =
             snapshot.val() === true;
 
-        if(connected){
+        updateAvailability();
 
-            connection.textContent =
-                "LIVE QUEUE CONNECTED";
-
-            connection.className =
-                "connection live";
-
-            nextButton.disabled = false;
-            recallButton.disabled = false;
-            completeButton.disabled = false;
-
-        }else{
-
-            connection.textContent =
-                "QUEUE CONNECTION LOST";
-
-            connection.className =
-                "connection offline";
-
-            nextButton.disabled = true;
-            recallButton.disabled = true;
-            completeButton.disabled = true;
+        if(!connected){
 
             message.textContent =
                 "Please wait for the queue connection to return.";
@@ -509,7 +590,10 @@ async function claimTicket(ticket){
 
 async function getNextCustomer(){
 
-    if(!connected){
+    if(
+        !connected ||
+        !authenticated
+    ){
 
         message.textContent =
             "Queue connection is unavailable.";
@@ -655,7 +739,10 @@ async function announceCustomer(ticket){
 
 async function recallCustomer(){
 
-    if(!connected){
+    if(
+        !connected ||
+        !authenticated
+    ){
 
         message.textContent =
             "Queue connection is unavailable.";
@@ -727,7 +814,10 @@ async function recallCustomer(){
 
 async function completeCustomer(){
 
-    if(!connected){
+    if(
+        !connected ||
+        !authenticated
+    ){
 
         message.textContent =
             "Queue connection is unavailable.";
