@@ -597,7 +597,9 @@ const connection =
     document.getElementById("connection");
 
 
-/* CONNECTION */
+/* =====================================================
+   CONNECTION
+===================================================== */
 
 onValue(
     ref(db,".info/connected"),
@@ -606,15 +608,16 @@ onValue(
         if(snapshot.val() === true){
 
             connection.classList.remove("offline");
+
             connection.textContent =
                 "Live queue connected";
 
         }else{
 
             connection.classList.add("offline");
+
             connection.textContent =
                 "Connecting to live queue...";
-
         }
     }
 );
@@ -699,10 +702,6 @@ function playBong(){
         }
 
 
-        /*
-           DONG
-        */
-
         createTone(
             523.25,
             0,
@@ -717,10 +716,6 @@ function playBong(){
             .20
         );
 
-
-        /*
-           DONG
-        */
 
         createTone(
             659.25,
@@ -744,6 +739,101 @@ function playBong(){
             error
         );
     }
+}
+
+
+/* =====================================================
+   VOICE ANNOUNCEMENT
+===================================================== */
+
+let speechTimer = null;
+
+function speakAnnouncement(number,teller){
+
+    if(!number || !teller){
+        return;
+    }
+
+
+    if(speechTimer){
+        clearTimeout(speechTimer);
+    }
+
+
+    if(
+        "speechSynthesis" in window
+    ){
+        window.speechSynthesis.cancel();
+    }
+
+
+    /*
+       Turn T061 into:
+       T zero six one
+    */
+
+    const ticketText =
+        String(number)
+        .split("")
+        .join(" ");
+
+
+    speechTimer =
+        setTimeout(
+            function(){
+
+                try{
+
+                    if(
+                        !(
+                            "speechSynthesis" in window
+                        )
+                    ){
+
+                        console.log(
+                            "Speech synthesis unavailable."
+                        );
+
+                        return;
+                    }
+
+
+                    const announcement =
+                        "Now serving " +
+                        ticketText +
+                        ". Please proceed to Teller " +
+                        teller +
+                        ".";
+
+
+                    const speech =
+                        new SpeechSynthesisUtterance(
+                            announcement
+                        );
+
+
+                    speech.lang = "en-US";
+                    speech.rate = 0.85;
+                    speech.pitch = 1;
+                    speech.volume = 1;
+
+
+                    window.speechSynthesis.speak(
+                        speech
+                    );
+
+                }
+                catch(error){
+
+                    console.log(
+                        "Voice announcement unavailable:",
+                        error
+                    );
+                }
+
+            },
+            2200
+        );
 }
 
 
@@ -794,7 +884,7 @@ onValue(
 
 
         /*
-           Don't bong simply because
+           Don't bong or speak simply because
            the TV page has reloaded.
         */
 
@@ -818,6 +908,11 @@ onValue(
             flashCurrentCall();
 
             playBong();
+
+            speakAnnouncement(
+                data.number,
+                data.teller
+            );
         }
 
     }
@@ -931,7 +1026,9 @@ function renderHistory(calls){
 }
 
 
-/* FLASH */
+/* =====================================================
+   FLASH
+===================================================== */
 
 function flashCurrentCall(){
 
@@ -944,14 +1041,18 @@ function flashCurrentCall(){
 
     setTimeout(
         function(){
+
             nowCard.classList.remove("flash");
+
         },
         2100
     );
 }
 
 
-/* CLOCK */
+/* =====================================================
+   CLOCK
+===================================================== */
 
 function updateClock(){
 
@@ -991,18 +1092,23 @@ setInterval(
 );
 
 
-/* PREVENT LONG PRESS */
+/* =====================================================
+   PREVENT LONG PRESS
+===================================================== */
 
 document.addEventListener(
     "contextmenu",
     function(event){
+
         event.preventDefault();
     }
 );
 
+
 document.addEventListener(
     "selectstart",
     function(event){
+
         event.preventDefault();
     }
 );
