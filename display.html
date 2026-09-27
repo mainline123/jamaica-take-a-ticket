@@ -641,39 +641,41 @@ function playBong(){
 
 
 /* ================================================
-   COMPACT VOICE SYSTEM
+   NATURAL VOICE SYSTEM
+   Uses audio_natural/0.wav through 100.wav
+   plus T.wav, L.wav, F.wav, now-serving.wav,
+   and please-proceed-to-teller.wav
 ================================================ */
 
 let announcementToken = 0;
 
-const voiceNames = [
-    "now-serving",
-    "please-proceed-to-teller",
-    "T",
-    "L",
-    "F",
-    "hundred",
-    "0","1","2","3","4","5","6","7","8","9",
-    "10","11","12","13","14","15","16","17","18","19",
-    "20","30","40","50","60","70","80","90"
-];
-
 const voiceCache = {};
 
-voiceNames.forEach(function(name){
+function getVoiceAudio(name){
 
-    const audio =
-        new Audio(
-            "audio_compact/" +
+    if(!voiceCache[name]){
+
+        const audio = new Audio(
+            "audio_natural/" +
             name +
             ".wav"
         );
 
-    audio.preload = "auto";
+        audio.preload = "auto";
+        voiceCache[name] = audio;
+    }
 
-    voiceCache[name] = audio;
-});
+    return voiceCache[name];
+}
 
+/* Preload the clips used on every announcement. */
+[
+    "now-serving",
+    "please-proceed-to-teller",
+    "T",
+    "L",
+    "F"
+].forEach(getVoiceAudio);
 
 function pause(ms){
 
@@ -683,7 +685,6 @@ function pause(ms){
         }
     );
 }
-
 
 function playVoiceClip(name,token){
 
@@ -695,22 +696,8 @@ function playVoiceClip(name,token){
                 return;
             }
 
-            const original =
-                voiceCache[name];
-
-            if(!original){
-
-                console.log(
-                    "Missing voice clip:",
-                    name
-                );
-
-                resolve();
-                return;
-            }
-
-            const audio =
-                original.cloneNode(true);
+            const original = getVoiceAudio(name);
+            const audio = original.cloneNode(true);
 
             audio.volume = 1;
 
@@ -738,254 +725,133 @@ function playVoiceClip(name,token){
                 {once:true}
             );
 
-            const result =
-                audio.play();
+            const result = audio.play();
 
             if(
                 result &&
                 typeof result.catch === "function"
             ){
-
                 result.catch(
                     function(error){
-
                         console.log(
                             "Voice playback blocked:",
                             name,
                             error
                         );
-
                         finish();
                     }
                 );
             }
 
-            setTimeout(
-                finish,
-                4000
-            );
+            setTimeout(finish,5000);
         }
     );
 }
 
+/*
+   Convert a three-digit ticket number into the new
+   natural recordings.
 
-/* ================================================
-   CONVERT NUMBER TO NATURAL AUDIO PARTS
-
-   061 -> 0, 60, 1
+   001 -> 0, 0, 1
    014 -> 0, 14
-   125 -> 1, hundred, 20, 5
-================================================ */
+   061 -> 0, 61
+   099 -> 0, 99
+   100 -> 100
+   125 -> 1, hundred, 25
+   999 -> 9, hundred, 99
+*/
+function naturalNumberParts(ticketDigits){
 
-function numberParts(ticketDigits){
-
-    const clean =
-        String(ticketDigits)
-        .replace(/\D/g,"");
+    let clean = String(ticketDigits).replace(/\D/g,"");
 
     if(!clean){
         return [];
     }
 
-    const parts = [];
+    if(clean.length < 3){
+        clean = clean.padStart(3,"0");
+    }
 
-    /*
-       Preserve leading zero for three-digit
-       ticket numbers such as 061 and 014.
-    */
+    if(clean.length === 3){
 
-    if(
-        clean.length === 3 &&
-        clean.charAt(0) === "0"
-    ){
+        const number = parseInt(clean,10);
 
-        parts.push("0");
+        if(number <= 100){
 
-        const remaining =
-            parseInt(
-                clean.substring(1),
-                10
-            );
+            if(number < 10){
+                return ["0","0",String(number)];
+            }
 
-        if(remaining === 0){
+            if(number < 100){
+                return ["0",String(number)];
+            }
 
-            parts.push("0");
-            parts.push("0");
-
-            return parts;
+            return ["100"];
         }
 
-        addUnder100(
-            remaining,
-            parts
-        );
-
-        return parts;
-    }
-
-
-    const number =
-        parseInt(clean,10);
-
-
-    if(number < 100){
-
-        addUnder100(
-            number,
-            parts
-        );
-
-        return parts;
-    }
-
-
-    if(number <= 999){
-
-        const hundreds =
-            Math.floor(
-                number / 100
-            );
-
-        parts.push(
-            String(hundreds)
-        );
-
-        parts.push(
-            "hundred"
-        );
-
-
-        const remainder =
-            number % 100;
-
+        const hundreds = Math.floor(number / 100);
+        const remainder = number % 100;
+        const parts = [String(hundreds),"hundred"];
 
         if(remainder > 0){
-
-            addUnder100(
-                remainder,
-                parts
-            );
+            parts.push(String(remainder));
         }
 
         return parts;
     }
 
+    const number = parseInt(clean,10);
 
-    /*
-       Safety fallback if ticket numbers
-       ever exceed 999.
-    */
-
-    clean
-    .split("")
-    .forEach(
-        function(digit){
-            parts.push(digit);
-        }
-    );
-
-
-    return parts;
-}
-
-
-function addUnder100(number,parts){
-
-    if(number < 20){
-
-        parts.push(
-            String(number)
-        );
-
-        return;
+    if(number >= 0 && number <= 100){
+        return [String(number)];
     }
 
-
-    const tens =
-        Math.floor(
-            number / 10
-        ) * 10;
-
-
-    const ones =
-        number % 10;
-
-
-    parts.push(
-        String(tens)
-    );
-
-
-    if(ones > 0){
-
-        parts.push(
-            String(ones)
-        );
-    }
+    return clean.split("");
 }
 
+/* Teller numbers are spoken naturally without leading zeros. */
+function tellerNumberParts(teller){
 
-/* ================================================
-   ANNOUNCEMENT
+    const clean = String(teller).replace(/\D/g,"");
 
-   Example:
-   T061
+    if(!clean){
+        return [];
+    }
 
-   now serving
-   T
-   zero
-   sixty
-   one
-   please proceed to teller
-   two
-================================================ */
+    const number = parseInt(clean,10);
 
-async function playAnnouncement(
-    number,
-    teller
-){
+    if(number >= 0 && number <= 100){
+        return [String(number)];
+    }
+
+    return clean.split("");
+}
+
+async function playAnnouncement(number,teller){
 
     if(!number || !teller){
         return;
     }
 
-
     announcementToken++;
 
-    const token =
-        announcementToken;
+    const token = announcementToken;
 
-
-    /*
-       Let the bong finish.
-    */
-
+    /* Let the two-tone bong finish. */
     await pause(2050);
-
 
     if(token !== announcementToken){
         return;
     }
 
-
-    const ticket =
-        String(number)
+    const ticket = String(number)
         .trim()
         .toUpperCase();
 
+    const prefix = ticket.charAt(0);
+    const digits = ticket.substring(1);
 
-    const prefix =
-        ticket.charAt(0);
-
-
-    const digits =
-        ticket.substring(1);
-
-
-    const clips = [
-        "now-serving"
-    ];
-
+    const clips = ["now-serving"];
 
     if(
         prefix === "T" ||
@@ -995,58 +861,30 @@ async function playAnnouncement(
         clips.push(prefix);
     }
 
-
-    const ticketNumberParts =
-        numberParts(digits);
-
-
-    ticketNumberParts.forEach(
+    naturalNumberParts(digits).forEach(
         function(part){
             clips.push(part);
         }
     );
 
+    clips.push("please-proceed-to-teller");
 
-    clips.push(
-        "please-proceed-to-teller"
-    );
-
-
-    const tellerParts =
-        numberParts(
-            String(teller)
-        );
-
-
-    tellerParts.forEach(
+    tellerNumberParts(teller).forEach(
         function(part){
             clips.push(part);
         }
     );
 
-
-    for(
-        let i = 0;
-        i < clips.length;
-        i++
-    ){
+    for(let i = 0; i < clips.length; i++){
 
         if(token !== announcementToken){
             return;
         }
 
+        await playVoiceClip(clips[i],token);
 
-        await playVoiceClip(
-            clips[i],
-            token
-        );
-
-
-        /*
-           Very short transition between clips.
-        */
-
-        await pause(20);
+        /* Tiny transition only; the natural WAV controls cadence. */
+        await pause(10);
     }
 }
 
