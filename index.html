@@ -49,31 +49,19 @@ html,body{
     overflow:hidden;
 }
 
-
-/* =====================================================
-   HOME SCREEN
-===================================================== */
+/* HOME SCREEN */
 
 #homeScreen{
     position:absolute;
     inset:0;
     width:1080px;
     height:1920px;
-
     display:grid;
-    grid-template-rows:
-        400px
-        1060px
-        280px
-        180px;
-
+    grid-template-rows:400px 1060px 280px 180px;
     background:#fff;
 }
 
-
-/* =====================================================
-   HEADER
-===================================================== */
+/* HEADER */
 
 .header{
     position:relative;
@@ -137,10 +125,7 @@ html,body{
     font-weight:800;
 }
 
-
-/* =====================================================
-   SERVICE SECTION
-===================================================== */
+/* SERVICE SECTION */
 
 .service-area{
     background:#002f61;
@@ -172,20 +157,13 @@ html,body{
 .service-button{
     width:100%;
     height:215px;
-
     border:none;
     border-radius:28px;
-
     background:#fff;
-
     display:flex;
     align-items:center;
-
     padding:28px 38px;
-
-    box-shadow:
-        0 10px 20px rgba(0,0,0,.18);
-
+    box-shadow:0 10px 20px rgba(0,0,0,.18);
     cursor:pointer;
     touch-action:manipulation;
 }
@@ -204,19 +182,14 @@ html,body{
     flex:0 0 135px;
     width:135px;
     height:135px;
-
     border-radius:50%;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     background:#009b3a;
-
     color:#fff;
     font-size:66px;
     font-weight:900;
-
     margin-right:38px;
 }
 
@@ -239,10 +212,7 @@ html,body{
     font-weight:600;
 }
 
-
-/* =====================================================
-   INFORMATION STRIP
-===================================================== */
+/* INFORMATION */
 
 .info{
     background:#f0f5f8;
@@ -271,48 +241,32 @@ html,body{
     font-weight:600;
 }
 
-
-/* =====================================================
-   FOOTER
-===================================================== */
+/* FOOTER */
 
 .footer{
     background:#003b73;
     color:#fff;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     text-align:center;
-
     font-size:28px;
     font-weight:800;
     line-height:1.4;
-
     padding:25px 60px;
 }
 
-
-/* =====================================================
-   OFFLINE OVERLAY
-===================================================== */
+/* OFFLINE */
 
 #offlineOverlay{
     display:none;
-
     position:absolute;
     inset:0;
-
     z-index:50;
-
     background:rgba(0,47,97,.97);
-
     align-items:center;
     justify-content:center;
-
     text-align:center;
-
     padding:80px;
 }
 
@@ -322,85 +276,59 @@ html,body{
 
 .offline-box{
     width:880px;
-
     background:#fff;
-
     border-radius:38px;
-
     padding:85px 60px;
-
     border-top:22px solid #fed100;
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.35);
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
 }
 
 .offline-icon{
     width:150px;
     height:150px;
-
     margin:0 auto 40px;
-
     border-radius:50%;
-
     background:#d92525;
     color:#fff;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     font-size:92px;
     font-weight:900;
 }
 
 .offline-title{
     color:#003b73;
-
     font-size:54px;
     line-height:1.1;
-
     font-weight:900;
 }
 
 .offline-text{
     margin-top:35px;
-
     color:#465e70;
-
     font-size:34px;
     line-height:1.4;
-
     font-weight:700;
 }
 
 .offline-status{
     margin-top:45px;
-
     color:#009b3a;
-
     font-size:25px;
     font-weight:900;
 }
 
-
-/* =====================================================
-   PROCESSING OVERLAY
-===================================================== */
+/* PROCESSING */
 
 #processingOverlay{
     display:none;
-
     position:absolute;
     inset:0;
-
     z-index:45;
-
     background:rgba(0,47,97,.96);
-
     align-items:center;
     justify-content:center;
-
     text-align:center;
 }
 
@@ -415,21 +343,15 @@ html,body{
 .spinner{
     width:120px;
     height:120px;
-
     margin:0 auto 35px;
-
     border:14px solid rgba(255,255,255,.25);
     border-top-color:#fed100;
-
     border-radius:50%;
-
     animation:spin .8s linear infinite;
 }
 
 @keyframes spin{
-    to{
-        transform:rotate(360deg);
-    }
+    to{transform:rotate(360deg);}
 }
 
 .processing-title{
@@ -439,46 +361,32 @@ html,body{
 
 .processing-text{
     margin-top:20px;
-
     font-size:27px;
     font-weight:600;
-
     color:#dbe8ef;
 }
 
-
-/* =====================================================
-   TICKET CONFIRMATION SCREEN
-===================================================== */
+/* TICKET SCREEN */
 
 #ticketScreen{
     display:none;
-
     position:absolute;
     inset:0;
-
     width:1080px;
     height:1920px;
-
     background:#fff;
-
     z-index:30;
-
     text-align:center;
 }
 
 .ticket-header{
     height:390px;
-
     background:#003b73;
-
     color:#fff;
-
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-
     border-bottom:22px solid #fed100;
 }
 
@@ -495,63 +403,48 @@ html,body{
 
 .ticket-body{
     height:1230px;
-
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-
     padding:50px 70px;
 }
 
 .your-number{
     color:#52697c;
-
     font-size:35px;
     font-weight:900;
 }
 
 #ticketNumber{
     margin-top:25px;
-
     color:#003b73;
-
     font-size:235px;
     line-height:1;
-
     font-weight:900;
     letter-spacing:-8px;
 }
 
 #ticketService{
     margin-top:45px;
-
     color:#003b73;
-
     font-size:43px;
     line-height:1.2;
-
     font-weight:900;
 }
 
 .wait-message{
     margin-top:70px;
-
     max-width:850px;
-
     color:#4e6679;
-
     font-size:33px;
     line-height:1.45;
-
     font-weight:700;
 }
 
 .ticket-footer{
     height:300px;
-
     background:#f0f5f8;
-
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -561,65 +454,42 @@ html,body{
 .done-button{
     width:560px;
     height:110px;
-
     border:none;
     border-radius:55px;
-
     background:#009b3a;
-
     color:#fff;
-
     font-size:38px;
     font-weight:900;
-
     cursor:pointer;
     touch-action:manipulation;
 }
 
 .return-text{
     margin-top:25px;
-
     color:#6a7e8d;
-
     font-size:22px;
     font-weight:600;
 }
 
-
-/* =====================================================
-   SMALL ERROR MESSAGE
-===================================================== */
+/* ERROR */
 
 #errorMessage{
     display:none;
-
     position:absolute;
-
     left:80px;
     right:80px;
     bottom:220px;
-
     z-index:60;
-
     background:#fff;
-
     border:8px solid #d92525;
-
     border-radius:25px;
-
     padding:35px;
-
     color:#8d1111;
-
     text-align:center;
-
     font-size:28px;
     line-height:1.35;
-
     font-weight:900;
-
-    box-shadow:
-        0 12px 35px rgba(0,0,0,.3);
+    box-shadow:0 12px 35px rgba(0,0,0,.3);
 }
 
 #errorMessage.show{
@@ -629,27 +499,16 @@ html,body{
 </style>
 </head>
 
-
 <body>
 
 <div id="stage">
-
 <div id="portraitCanvas">
-
-
-<!-- =====================================================
-     HOME
-===================================================== -->
 
 <div id="homeScreen">
 
     <div class="header">
-
         <div class="brand">
-
-            <div class="taj">
-                TAJ
-            </div>
+            <div class="taj">TAJ</div>
 
             <div class="tax-name">
                 TAX ADMINISTRATION JAMAICA
@@ -658,11 +517,8 @@ html,body{
             <div class="tagline">
                 Serving You. Building Jamaica.
             </div>
-
         </div>
-
     </div>
-
 
     <div class="service-area">
 
@@ -674,87 +530,63 @@ html,body{
             Please select the service you require
         </div>
 
-
         <div class="buttons">
 
-            <button
-                class="service-button"
-                data-prefix="T"
-                data-service="Traffic Ticket Payments">
+            <button class="service-button"
+                    data-prefix="T"
+                    data-service="Traffic Ticket Payments">
 
-                <div class="icon">
-                    T
-                </div>
+                <div class="icon">T</div>
 
                 <div class="button-text">
-
                     <div class="button-title">
                         Traffic Ticket Payments
                     </div>
-
                     <div class="button-note">
                         Touch here to receive your queue number
                     </div>
-
                 </div>
 
             </button>
 
+            <button class="service-button"
+                    data-prefix="L"
+                    data-service="Motor Vehicle License Renewal">
 
-            <button
-                class="service-button"
-                data-prefix="L"
-                data-service="Motor Vehicle License Renewal">
-
-                <div class="icon">
-                    L
-                </div>
+                <div class="icon">L</div>
 
                 <div class="button-text">
-
                     <div class="button-title">
                         Motor Vehicle License Renewal
                     </div>
-
                     <div class="button-note">
                         Touch here to receive your queue number
                     </div>
-
                 </div>
 
             </button>
 
+            <button class="service-button"
+                    data-prefix="F"
+                    data-service="Motor Vehicle Fitness Examination">
 
-            <button
-                class="service-button"
-                data-prefix="F"
-                data-service="Motor Vehicle Fitness Examination">
-
-                <div class="icon">
-                    F
-                </div>
+                <div class="icon">F</div>
 
                 <div class="button-text">
-
                     <div class="button-title">
                         Motor Vehicle Fitness Examination
                     </div>
-
                     <div class="button-note">
                         Touch here to receive your queue number
                     </div>
-
                 </div>
 
             </button>
 
         </div>
-
     </div>
 
-
     <div class="info">
-
         <div class="info-inner">
 
             <div class="info-title">
@@ -767,9 +599,7 @@ html,body{
             </div>
 
         </div>
-
     </div>
-
 
     <div class="footer">
         Thank you for visiting Tax Administration Jamaica
@@ -778,15 +608,9 @@ html,body{
 </div>
 
 
-
-<!-- =====================================================
-     TICKET CONFIRMATION
-===================================================== -->
-
 <div id="ticketScreen">
 
     <div class="ticket-header">
-
         <div class="small">
             TAX ADMINISTRATION JAMAICA
         </div>
@@ -794,9 +618,7 @@ html,body{
         <div class="big">
             THANK YOU
         </div>
-
     </div>
-
 
     <div class="ticket-body">
 
@@ -820,12 +642,10 @@ html,body{
 
     </div>
 
-
     <div class="ticket-footer">
 
-        <button
-            id="doneButton"
-            class="done-button">
+        <button id="doneButton"
+                class="done-button">
             DONE
         </button>
 
@@ -838,15 +658,9 @@ html,body{
 </div>
 
 
-
-<!-- =====================================================
-     PROCESSING
-===================================================== -->
-
 <div id="processingOverlay">
 
     <div class="processing-box">
-
         <div class="spinner"></div>
 
         <div class="processing-title">
@@ -856,16 +670,10 @@ html,body{
         <div class="processing-text">
             Creating your queue number...
         </div>
-
     </div>
 
 </div>
 
-
-
-<!-- =====================================================
-     CONNECTION LOST
-===================================================== -->
 
 <div id="offlineOverlay">
 
@@ -894,16 +702,13 @@ html,body{
 </div>
 
 
-
 <div id="errorMessage">
     We were unable to create your queue number.
     Please try again or see a staff member for assistance.
 </div>
 
-
 </div>
 </div>
-
 
 
 <script type="module">
@@ -912,7 +717,6 @@ import {
     initializeApp
 }
 from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-
 
 import {
     getDatabase,
@@ -924,11 +728,6 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
-
-
-/* =====================================================
-   FIREBASE
-===================================================== */
 
 const firebaseConfig = {
 
@@ -961,11 +760,6 @@ const app =
 const db =
     getDatabase(app);
 
-
-
-/* =====================================================
-   ELEMENTS
-===================================================== */
 
 const portraitCanvas =
     document.getElementById("portraitCanvas");
@@ -1004,10 +798,7 @@ let returnTimer = null;
 let errorTimer = null;
 
 
-
-/* =====================================================
-   PORTRAIT SCALING
-===================================================== */
+/* PORTRAIT SCALING */
 
 function scalePortraitCanvas(){
 
@@ -1023,29 +814,21 @@ function scalePortraitCanvas(){
     const scaleY =
         screenHeight / 1920;
 
-
     portraitCanvas.style.transform =
         "translate(-50%, -50%) scale(" +
-        scaleX +
-        "," +
-        scaleY +
-        ")";
+        scaleX + "," + scaleY + ")";
 }
 
-
 scalePortraitCanvas();
-
 
 window.addEventListener(
     "load",
     scalePortraitCanvas
 );
 
-
 window.addEventListener(
     "resize",
     function(){
-
         setTimeout(
             scalePortraitCanvas,
             150
@@ -1054,10 +837,7 @@ window.addEventListener(
 );
 
 
-
-/* =====================================================
-   CONNECTION STATUS
-===================================================== */
+/* CONNECTION STATUS */
 
 onValue(
     ref(db,".info/connected"),
@@ -1065,7 +845,6 @@ onValue(
 
         connected =
             snapshot.val() === true;
-
 
         if(connected){
 
@@ -1075,28 +854,19 @@ onValue(
 
             serviceButtons.forEach(
                 function(button){
-
                     button.disabled = false;
                 }
             );
 
         }else{
 
-            /*
-               Never allow a new ticket to be started
-               while Firebase is disconnected.
-            */
-
             serviceButtons.forEach(
                 function(button){
-
                     button.disabled = true;
                 }
             );
 
-
             if(!processing){
-
                 offlineOverlay.classList.add(
                     "show"
                 );
@@ -1106,10 +876,7 @@ onValue(
 );
 
 
-
-/* =====================================================
-   FORMAT TICKET NUMBER
-===================================================== */
+/* FORMAT TICKET */
 
 function formatTicket(
     prefix,
@@ -1126,20 +893,12 @@ function formatTicket(
 }
 
 
-
-/* =====================================================
-   CREATE TICKET
-===================================================== */
+/* CREATE TICKET */
 
 async function createTicket(
     prefix,
     service
 ){
-
-    /*
-       A customer must not receive a number unless
-       the kiosk currently has a Firebase connection.
-    */
 
     if(
         !connected ||
@@ -1147,7 +906,6 @@ async function createTicket(
     ){
         return;
     }
-
 
     processing = true;
 
@@ -1159,15 +917,7 @@ async function createTicket(
         "show"
     );
 
-
     try{
-
-        /*
-           Shared counter transaction.
-
-           Multiple kiosks can request tickets at the
-           same time without receiving the same number.
-        */
 
         const counterRef =
             ref(
@@ -1176,14 +926,38 @@ async function createTicket(
             );
 
 
+        /*
+        =================================================
+        SAFE 999 ROLLOVER
+
+        997 -> 998
+        998 -> 999
+        999 -> 001
+
+        This changes ONLY this service's counter.
+
+        It DOES NOT delete:
+        - queue
+        - tellers
+        - display
+        - history
+        - other service counters
+        =================================================
+        */
+
         const transactionResult =
             await runTransaction(
                 counterRef,
                 function(currentValue){
 
-                    return (
-                        currentValue || 0
-                    ) + 1;
+                    const current =
+                        Number(currentValue) || 0;
+
+                    if(current >= 999){
+                        return 1;
+                    }
+
+                    return current + 1;
                 },
                 {
                     applyLocally:false
@@ -1201,15 +975,6 @@ async function createTicket(
             );
         }
 
-
-        /*
-           IMPORTANT:
-
-           We do not show the customer their number yet.
-
-           First we must successfully create the actual
-           waiting queue record.
-        */
 
         const number =
             transactionResult.snapshot.val();
@@ -1250,40 +1015,27 @@ async function createTicket(
         };
 
 
-        /*
-           Wait for Firebase to confirm the queue record.
-        */
-
         await set(
             newTicketRef,
             ticketData
         );
 
 
-        /*
-           ONLY NOW is the customer shown the number.
-        */
-
         ticketNumber.textContent =
             formattedNumber;
 
-
         ticketService.textContent =
             service;
-
 
         processingOverlay.classList.remove(
             "show"
         );
 
-
         homeScreen.style.display =
             "none";
 
-
         ticketScreen.style.display =
             "block";
-
 
         startReturnTimer();
 
@@ -1295,23 +1047,15 @@ async function createTicket(
             error
         );
 
-
         processingOverlay.classList.remove(
             "show"
         );
-
-
-        /*
-           Do not show a queue number when Firebase
-           did not successfully create the queue record.
-        */
 
         ticketScreen.style.display =
             "none";
 
         homeScreen.style.display =
             "grid";
-
 
         if(!connected){
 
@@ -1327,7 +1071,6 @@ async function createTicket(
     finally{
 
         processing = false;
-
 
         if(connected){
 
@@ -1345,10 +1088,7 @@ async function createTicket(
 }
 
 
-
-/* =====================================================
-   SERVICE BUTTONS
-===================================================== */
+/* SERVICE BUTTONS */
 
 serviceButtons.forEach(
     function(button){
@@ -1359,7 +1099,6 @@ serviceButtons.forEach(
 
                 event.preventDefault();
 
-
                 if(
                     processing ||
                     !connected ||
@@ -1368,14 +1107,11 @@ serviceButtons.forEach(
                     return;
                 }
 
-
                 const prefix =
                     button.dataset.prefix;
 
-
                 const service =
                     button.dataset.service;
-
 
                 createTicket(
                     prefix,
@@ -1390,10 +1126,7 @@ serviceButtons.forEach(
 );
 
 
-
-/* =====================================================
-   BUTTON CONTROL
-===================================================== */
+/* BUTTON CONTROL */
 
 function setButtonsDisabled(
     disabled
@@ -1409,10 +1142,7 @@ function setButtonsDisabled(
 }
 
 
-
-/* =====================================================
-   RETURN HOME
-===================================================== */
+/* RETURN HOME */
 
 function returnHome(){
 
@@ -1425,17 +1155,13 @@ function returnHome(){
         returnTimer = null;
     }
 
-
     ticketScreen.style.display =
         "none";
-
 
     homeScreen.style.display =
         "grid";
 
-
     hideError();
-
 
     if(connected){
 
@@ -1456,7 +1182,6 @@ function returnHome(){
 }
 
 
-
 function startReturnTimer(){
 
     if(returnTimer){
@@ -1466,7 +1191,6 @@ function startReturnTimer(){
         );
     }
 
-
     returnTimer =
         setTimeout(
             returnHome,
@@ -1475,10 +1199,7 @@ function startReturnTimer(){
 }
 
 
-
-/* =====================================================
-   DONE BUTTON
-===================================================== */
+/* DONE BUTTON */
 
 doneButton.addEventListener(
     "pointerdown",
@@ -1494,10 +1215,7 @@ doneButton.addEventListener(
 );
 
 
-
-/* =====================================================
-   ERROR MESSAGE
-===================================================== */
+/* ERROR */
 
 function showError(){
 
@@ -1505,14 +1223,12 @@ function showError(){
         "show"
     );
 
-
     if(errorTimer){
 
         clearTimeout(
             errorTimer
         );
     }
-
 
     errorTimer =
         setTimeout(
@@ -1528,7 +1244,6 @@ function hideError(){
         "show"
     );
 
-
     if(errorTimer){
 
         clearTimeout(
@@ -1540,33 +1255,25 @@ function hideError(){
 }
 
 
-
-/* =====================================================
-   BLOCK LONG PRESS / COPY / DRAG
-===================================================== */
+/* BLOCK LONG PRESS / COPY / DRAG */
 
 document.addEventListener(
     "contextmenu",
     function(event){
-
         event.preventDefault();
     }
 );
-
 
 document.addEventListener(
     "selectstart",
     function(event){
-
         event.preventDefault();
     }
 );
 
-
 document.addEventListener(
     "dragstart",
     function(event){
-
         event.preventDefault();
     }
 );
