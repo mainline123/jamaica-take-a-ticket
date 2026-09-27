@@ -405,9 +405,7 @@ body{color:#fff;}
 
     <div id="nowCard" class="now-card">
 
-        <div class="now-title">
-            NOW SERVING
-        </div>
+        <div class="now-title">NOW SERVING</div>
 
         <div class="number-row">
             <div class="speaker">🔊</div>
@@ -435,9 +433,7 @@ body{color:#fff;}
 
     <div class="recent-panel">
 
-        <div class="recent-title">
-            RECENTLY CALLED
-        </div>
+        <div class="recent-title">RECENTLY CALLED</div>
 
         <div class="column-headings">
             <div>NUMBER</div>
@@ -486,9 +482,7 @@ body{color:#fff;}
 
 </footer>
 
-<div id="connection">
-    Connecting to live queue...
-</div>
+<div id="connection">Connecting to live queue...</div>
 
 </div>
 
@@ -506,7 +500,6 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
-
 const firebaseConfig = {
     apiKey:"AIzaSyCJAEZ-MD-W6SQZfUS5BkD-4NpT11vItHE",
     authDomain:"jamaica-take-a-ticket.firebaseapp.com",
@@ -516,7 +509,6 @@ const firebaseConfig = {
     messagingSenderId:"1093598545752",
     appId:"1:1093598545752:web:7fa81726e2bcc5fdfb072d"
 };
-
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
@@ -537,21 +529,16 @@ const connection =
     document.getElementById("connection");
 
 
-/* ================================================
-   FIREBASE CONNECTION
-================================================ */
+/* FIREBASE CONNECTION */
 
 onValue(
     ref(db,".info/connected"),
     function(snapshot){
 
         if(snapshot.val() === true){
-
             connection.classList.remove("offline");
             connection.textContent = "Live queue connected";
-
         }else{
-
             connection.classList.add("offline");
             connection.textContent = "Connecting to live queue...";
         }
@@ -559,9 +546,7 @@ onValue(
 );
 
 
-/* ================================================
-   BONG
-================================================ */
+/* TWO-TONE BONG */
 
 let audioContext = null;
 
@@ -570,7 +555,6 @@ function playBong(){
     try{
 
         if(!audioContext){
-
             audioContext =
                 new (
                     window.AudioContext ||
@@ -632,22 +616,17 @@ function playBong(){
         createTone(659.25,.95,1.0,.7);
         createTone(987.77,.95,1.0,.20);
 
-    }
-    catch(error){
-
+    }catch(error){
         console.log("Audio unavailable:",error);
     }
 }
 
 
-/* ================================================
-   NATURAL VOICE SYSTEM
-   Uses audio_natural/0.wav through 100.wav
-   plus T.wav, L.wav, F.wav, now-serving.wav,
-   and please-proceed-to-teller.wav
-================================================ */
+/* NATURAL ALAYNA VOICE */
 
 let announcementToken = 0;
+
+const AUDIO_FOLDER = "audio_natural/";
 
 const voiceCache = {};
 
@@ -655,177 +634,212 @@ function getVoiceAudio(name){
 
     if(!voiceCache[name]){
 
-        const audio = new Audio(
-            "audio_natural/" +
-            name +
-            ".wav"
-        );
+        const audio =
+            new Audio(
+                AUDIO_FOLDER +
+                name +
+                ".wav"
+            );
 
         audio.preload = "auto";
+
         voiceCache[name] = audio;
     }
 
     return voiceCache[name];
 }
 
-/* Preload the clips used on every announcement. */
+/* Load the important clips immediately. */
+
 [
     "now-serving",
     "please-proceed-to-teller",
-    "T",
+    "F",
     "L",
-    "F"
+    "T",
+    "0",
+    "1",
+    "2",
+    "3"
 ].forEach(getVoiceAudio);
+
 
 function pause(ms){
 
-    return new Promise(
-        function(resolve){
-            setTimeout(resolve,ms);
-        }
-    );
+    return new Promise(function(resolve){
+        setTimeout(resolve,ms);
+    });
 }
+
 
 function playVoiceClip(name,token){
 
-    return new Promise(
-        function(resolve){
+    return new Promise(function(resolve){
 
-            if(token !== announcementToken){
-                resolve();
+        if(token !== announcementToken){
+            resolve();
+            return;
+        }
+
+        const source =
+            getVoiceAudio(name);
+
+        const audio =
+            source.cloneNode(true);
+
+        audio.volume = 1;
+        audio.currentTime = 0;
+
+        let finished = false;
+
+        function finish(){
+
+            if(finished){
                 return;
             }
 
-            const original = getVoiceAudio(name);
-            const audio = original.cloneNode(true);
-
-            audio.volume = 1;
-
-            let finished = false;
-
-            function finish(){
-
-                if(finished){
-                    return;
-                }
-
-                finished = true;
-                resolve();
-            }
-
-            audio.addEventListener(
-                "ended",
-                finish,
-                {once:true}
-            );
-
-            audio.addEventListener(
-                "error",
-                finish,
-                {once:true}
-            );
-
-            const result = audio.play();
-
-            if(
-                result &&
-                typeof result.catch === "function"
-            ){
-                result.catch(
-                    function(error){
-                        console.log(
-                            "Voice playback blocked:",
-                            name,
-                            error
-                        );
-                        finish();
-                    }
-                );
-            }
-
-            setTimeout(finish,5000);
+            finished = true;
+            resolve();
         }
-    );
+
+        audio.addEventListener(
+            "ended",
+            finish,
+            {once:true}
+        );
+
+        audio.addEventListener(
+            "error",
+            function(){
+                console.log(
+                    "Could not play audio file:",
+                    AUDIO_FOLDER + name + ".wav"
+                );
+                finish();
+            },
+            {once:true}
+        );
+
+        const result = audio.play();
+
+        if(
+            result &&
+            typeof result.catch === "function"
+        ){
+            result.catch(function(error){
+                console.log(
+                    "Playback error:",
+                    name,
+                    error
+                );
+                finish();
+            });
+        }
+
+        setTimeout(finish,5000);
+    });
 }
 
-/*
-   Convert a three-digit ticket number into the new
-   natural recordings.
 
-   001 -> 0, 0, 1
-   014 -> 0, 14
-   061 -> 0, 61
-   099 -> 0, 99
-   100 -> 100
-   125 -> 1, hundred, 25
-   999 -> 9, hundred, 99
+/*
+001 = zero zero one
+009 = zero zero nine
+010 = zero ten
+018 = zero eighteen
+019 = zero nineteen
+061 = zero sixty-one
+099 = zero ninety-nine
+100 = one hundred
+125 = one hundred twenty-five
 */
+
 function naturalNumberParts(ticketDigits){
 
-    let clean = String(ticketDigits).replace(/\D/g,"");
+    let clean =
+        String(ticketDigits)
+        .replace(/\D/g,"");
 
     if(!clean){
         return [];
     }
 
-    if(clean.length < 3){
-        clean = clean.padStart(3,"0");
-    }
+    clean =
+        clean.padStart(3,"0");
 
     if(clean.length === 3){
 
-        const number = parseInt(clean,10);
+        const number =
+            parseInt(clean,10);
 
-        if(number <= 100){
+        if(number < 10){
 
-            if(number < 10){
-                return ["0","0",String(number)];
-            }
+            return [
+                "0",
+                "0",
+                String(number)
+            ];
+        }
 
-            if(number < 100){
-                return ["0",String(number)];
-            }
+        if(number < 100){
+
+            return [
+                "0",
+                String(number)
+            ];
+        }
+
+        if(number === 100){
 
             return ["100"];
         }
 
-        const hundreds = Math.floor(number / 100);
-        const remainder = number % 100;
-        const parts = [String(hundreds),"hundred"];
+        const hundreds =
+            Math.floor(number / 100);
+
+        const remainder =
+            number % 100;
+
+        const parts = [
+            String(hundreds),
+            "hundred"
+        ];
 
         if(remainder > 0){
-            parts.push(String(remainder));
+            parts.push(
+                String(remainder)
+            );
         }
 
         return parts;
     }
 
-    const number = parseInt(clean,10);
-
-    if(number >= 0 && number <= 100){
-        return [String(number)];
-    }
-
     return clean.split("");
 }
 
-/* Teller numbers are spoken naturally without leading zeros. */
+
 function tellerNumberParts(teller){
 
-    const clean = String(teller).replace(/\D/g,"");
+    const clean =
+        String(teller)
+        .replace(/\D/g,"");
 
     if(!clean){
         return [];
     }
 
-    const number = parseInt(clean,10);
+    const number =
+        parseInt(clean,10);
 
-    if(number >= 0 && number <= 100){
+    if(
+        number >= 0 &&
+        number <= 100
+    ){
         return [String(number)];
     }
 
     return clean.split("");
 }
+
 
 async function playAnnouncement(number,teller){
 
@@ -835,67 +849,149 @@ async function playAnnouncement(number,teller){
 
     announcementToken++;
 
-    const token = announcementToken;
+    const token =
+        announcementToken;
 
-    /* Let the two-tone bong finish. */
+    /* Wait for bong-bong to finish. */
     await pause(2050);
 
     if(token !== announcementToken){
         return;
     }
 
-    const ticket = String(number)
+    const ticket =
+        String(number)
         .trim()
         .toUpperCase();
 
-    const prefix = ticket.charAt(0);
-    const digits = ticket.substring(1);
+    /*
+       Extract prefix separately.
+       This handles F019, T019, L019 reliably.
+    */
 
-    const clips = ["now-serving"];
+    const match =
+        ticket.match(
+            /^([TLF])\s*[- ]?\s*(\d+)$/
+        );
 
-    if(
-        prefix === "T" ||
-        prefix === "L" ||
-        prefix === "F"
-    ){
-        clips.push(prefix);
+    let prefix = "";
+    let digits = "";
+
+    if(match){
+
+        prefix = match[1];
+        digits = match[2];
+
+    }else{
+
+        prefix =
+            ticket.charAt(0);
+
+        digits =
+            ticket.replace(
+                /\D/g,
+                ""
+            );
     }
 
-    naturalNumberParts(digits).forEach(
-        function(part){
-            clips.push(part);
-        }
+
+    /* NOW SERVING */
+
+    await playVoiceClip(
+        "now-serving",
+        token
     );
 
-    clips.push("please-proceed-to-teller");
+    await pause(80);
 
-    tellerNumberParts(teller).forEach(
-        function(part){
-            clips.push(part);
-        }
-    );
 
-    for(let i = 0; i < clips.length; i++){
+    /* F / L / T */
+
+    if(
+        prefix === "F" ||
+        prefix === "L" ||
+        prefix === "T"
+    ){
+
+        await playVoiceClip(
+            prefix,
+            token
+        );
+
+        /*
+          Small separation makes sure Android/NoviSign
+          does not swallow the short letter clip.
+        */
+
+        await pause(180);
+    }
+
+
+    /* TICKET NUMBER */
+
+    const ticketParts =
+        naturalNumberParts(digits);
+
+    for(
+        let i = 0;
+        i < ticketParts.length;
+        i++
+    ){
 
         if(token !== announcementToken){
             return;
         }
 
-        await playVoiceClip(clips[i],token);
+        await playVoiceClip(
+            ticketParts[i],
+            token
+        );
 
-        /* Tiny transition only; the natural WAV controls cadence. */
-        await pause(10);
+        await pause(25);
+    }
+
+
+    /* PLEASE PROCEED TO TELLER */
+
+    await pause(100);
+
+    await playVoiceClip(
+        "please-proceed-to-teller",
+        token
+    );
+
+    await pause(60);
+
+
+    /* TELLER NUMBER */
+
+    const tellerParts =
+        tellerNumberParts(teller);
+
+    for(
+        let i = 0;
+        i < tellerParts.length;
+        i++
+    ){
+
+        if(token !== announcementToken){
+            return;
+        }
+
+        await playVoiceClip(
+            tellerParts[i],
+            token
+        );
+
+        await pause(25);
     }
 }
 
 
-/* ================================================
-   CURRENT CALL
-================================================ */
+/* CURRENT CALL */
 
 let firstCurrentLoad = true;
 let lastCallSignature = "";
-
 
 onValue(
     ref(db,"display/current"),
@@ -903,7 +999,6 @@ onValue(
 
         const data =
             snapshot.val();
-
 
         if(
             !data ||
@@ -916,21 +1011,17 @@ onValue(
             currentTeller.textContent =
                 "WAITING";
 
-            firstCurrentLoad =
-                false;
+            firstCurrentLoad = false;
 
             return;
         }
 
-
         currentNumber.textContent =
             data.number;
-
 
         currentTeller.textContent =
             "TELLER " +
             data.teller;
-
 
         const signature =
             data.number +
@@ -943,7 +1034,6 @@ onValue(
                 ""
             );
 
-
         if(firstCurrentLoad){
 
             lastCallSignature =
@@ -954,7 +1044,6 @@ onValue(
 
             return;
         }
-
 
         if(
             signature !==
@@ -973,14 +1062,11 @@ onValue(
                 data.teller
             );
         }
-
     }
 );
 
 
-/* ================================================
-   RECENTLY CALLED
-================================================ */
+/* RECENTLY CALLED */
 
 const historyRef =
     query(
@@ -991,13 +1077,11 @@ const historyRef =
         limitToLast(6)
     );
 
-
 onValue(
     historyRef,
     function(snapshot){
 
         const calls = [];
-
 
         snapshot.forEach(
             function(child){
@@ -1011,10 +1095,8 @@ onValue(
                 ){
                     calls.push(data);
                 }
-
             }
         );
-
 
         calls.sort(
             function(a,b){
@@ -1033,7 +1115,6 @@ onValue(
             }
         );
 
-
         renderHistory(calls);
     }
 );
@@ -1042,7 +1123,6 @@ onValue(
 function renderHistory(calls){
 
     historyElement.innerHTML = "";
-
 
     for(
         let i = 0;
@@ -1058,7 +1138,6 @@ function renderHistory(calls){
         row.className =
             "history-row";
 
-
         const number =
             document.createElement(
                 "div"
@@ -1067,7 +1146,6 @@ function renderHistory(calls){
         number.className =
             "history-number";
 
-
         const teller =
             document.createElement(
                 "div"
@@ -1075,7 +1153,6 @@ function renderHistory(calls){
 
         teller.className =
             "history-teller";
-
 
         if(calls[i]){
 
@@ -1088,10 +1165,12 @@ function renderHistory(calls){
 
         }else{
 
-            number.textContent = "---";
-            teller.textContent = "---";
-        }
+            number.textContent =
+                "---";
 
+            teller.textContent =
+                "---";
+        }
 
         row.appendChild(number);
         row.appendChild(teller);
@@ -1101,9 +1180,7 @@ function renderHistory(calls){
 }
 
 
-/* ================================================
-   FLASH
-================================================ */
+/* FLASH */
 
 function flashCurrentCall(){
 
@@ -1116,7 +1193,6 @@ function flashCurrentCall(){
     nowCard.classList.add(
         "flash"
     );
-
 
     setTimeout(
         function(){
@@ -1131,15 +1207,12 @@ function flashCurrentCall(){
 }
 
 
-/* ================================================
-   CLOCK
-================================================ */
+/* CLOCK */
 
 function updateClock(){
 
     const now =
         new Date();
-
 
     document
     .getElementById("date")
@@ -1154,7 +1227,6 @@ function updateClock(){
             }
         );
 
-
     document
     .getElementById("time")
     .textContent =
@@ -1167,7 +1239,6 @@ function updateClock(){
         );
 }
 
-
 updateClock();
 
 setInterval(
@@ -1176,9 +1247,7 @@ setInterval(
 );
 
 
-/* ================================================
-   PREVENT LONG PRESS
-================================================ */
+/* PREVENT LONG PRESS */
 
 document.addEventListener(
     "contextmenu",
@@ -1186,7 +1255,6 @@ document.addEventListener(
         event.preventDefault();
     }
 );
-
 
 document.addEventListener(
     "selectstart",
