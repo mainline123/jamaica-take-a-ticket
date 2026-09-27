@@ -420,9 +420,7 @@ body{color:#fff;}
 
         <div class="number-row">
 
-            <div class="speaker">
-                🔊
-            </div>
+            <div class="speaker">🔊</div>
 
             <div id="currentNumber">
                 ---
@@ -461,39 +459,7 @@ body{color:#fff;}
             <div>TELLER</div>
         </div>
 
-        <div id="history" class="history">
-
-            <div class="history-row">
-                <div class="history-number">---</div>
-                <div class="history-teller">---</div>
-            </div>
-
-            <div class="history-row">
-                <div class="history-number">---</div>
-                <div class="history-teller">---</div>
-            </div>
-
-            <div class="history-row">
-                <div class="history-number">---</div>
-                <div class="history-teller">---</div>
-            </div>
-
-            <div class="history-row">
-                <div class="history-number">---</div>
-                <div class="history-teller">---</div>
-            </div>
-
-            <div class="history-row">
-                <div class="history-number">---</div>
-                <div class="history-teller">---</div>
-            </div>
-
-            <div class="history-row">
-                <div class="history-number">---</div>
-                <div class="history-teller">---</div>
-            </div>
-
-        </div>
+        <div id="history" class="history"></div>
 
     </div>
 
@@ -663,14 +629,12 @@ function playBong(){
             const gain =
                 audioContext.createGain();
 
-
             oscillator.type = "sine";
 
             oscillator.frequency.setValueAtTime(
                 frequency,
                 now + start
             );
-
 
             gain.gain.setValueAtTime(
                 0.0001,
@@ -687,18 +651,11 @@ function playBong(){
                 now + start + duration
             );
 
-
             oscillator.connect(gain);
             gain.connect(audioContext.destination);
 
-
-            oscillator.start(
-                now + start
-            );
-
-            oscillator.stop(
-                now + start + duration
-            );
+            oscillator.start(now + start);
+            oscillator.stop(now + start + duration);
         }
 
 
@@ -715,7 +672,6 @@ function playBong(){
             .85,
             .20
         );
-
 
         createTone(
             659.25,
@@ -743,97 +699,331 @@ function playBong(){
 
 
 /* =====================================================
-   VOICE ANNOUNCEMENT
+   RECORDED VOICE ANNOUNCEMENT
 ===================================================== */
 
-let speechTimer = null;
+let announcementToken = 0;
 
-function speakAnnouncement(number,teller){
+
+/*
+   Preload all voice clips.
+*/
+
+const voiceFiles = [
+    "now-serving",
+    "please-proceed-to-teller",
+    "T",
+    "L",
+    "F",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9"
+];
+
+
+const voiceCache = {};
+
+
+voiceFiles.forEach(
+    function(name){
+
+        const audio =
+            new Audio(
+                "audio/" +
+                name +
+                ".wav"
+            );
+
+        audio.preload = "auto";
+
+        voiceCache[name] = audio;
+    }
+);
+
+
+/*
+   Play one clip and wait until
+   it has finished.
+*/
+
+function playVoiceClip(name,token){
+
+    return new Promise(
+        function(resolve){
+
+            if(token !== announcementToken){
+                resolve();
+                return;
+            }
+
+
+            const original =
+                voiceCache[name];
+
+
+            if(!original){
+
+                console.log(
+                    "Missing voice clip:",
+                    name
+                );
+
+                resolve();
+                return;
+            }
+
+
+            /*
+               Clone the preloaded audio element so
+               a new announcement cannot interfere
+               with the cached copy.
+            */
+
+            const audio =
+                original.cloneNode(true);
+
+
+            audio.volume = 1;
+
+
+            let finished = false;
+
+
+            function finish(){
+
+                if(finished){
+                    return;
+                }
+
+                finished = true;
+
+                resolve();
+            }
+
+
+            audio.addEventListener(
+                "ended",
+                finish,
+                {once:true}
+            );
+
+
+            audio.addEventListener(
+                "error",
+                function(){
+
+                    console.log(
+                        "Could not play:",
+                        name
+                    );
+
+                    finish();
+                },
+                {once:true}
+            );
+
+
+            const playPromise =
+                audio.play();
+
+
+            if(
+                playPromise &&
+                typeof playPromise.catch === "function"
+            ){
+
+                playPromise.catch(
+                    function(error){
+
+                        console.log(
+                            "Voice playback blocked:",
+                            name,
+                            error
+                        );
+
+                        finish();
+                    }
+                );
+            }
+
+
+            /*
+               Safety timeout so one damaged clip
+               cannot stop the entire announcement.
+            */
+
+            setTimeout(
+                finish,
+                5000
+            );
+        }
+    );
+}
+
+
+/*
+   Small pause between voice clips.
+*/
+
+function pause(milliseconds){
+
+    return new Promise(
+        function(resolve){
+
+            setTimeout(
+                resolve,
+                milliseconds
+            );
+        }
+    );
+}
+
+
+/*
+   Build announcement from ticket number.
+
+   Example:
+
+   T061
+
+   becomes:
+
+   now-serving.wav
+   T.wav
+   0.wav
+   6.wav
+   1.wav
+   please-proceed-to-teller.wav
+   2.wav
+*/
+
+async function playAnnouncement(
+    number,
+    teller
+){
 
     if(!number || !teller){
         return;
     }
 
 
-    if(speechTimer){
-        clearTimeout(speechTimer);
-    }
+    announcementToken++;
 
-
-    if(
-        "speechSynthesis" in window
-    ){
-        window.speechSynthesis.cancel();
-    }
+    const token =
+        announcementToken;
 
 
     /*
-       Turn T061 into:
-       T zero six one
+       Allow the two-tone bong to finish.
     */
 
-    const ticketText =
+    await pause(2200);
+
+
+    if(token !== announcementToken){
+        return;
+    }
+
+
+    const ticket =
         String(number)
-        .split("")
-        .join(" ");
+        .trim()
+        .toUpperCase();
 
 
-    speechTimer =
-        setTimeout(
-            function(){
-
-                try{
-
-                    if(
-                        !(
-                            "speechSynthesis" in window
-                        )
-                    ){
-
-                        console.log(
-                            "Speech synthesis unavailable."
-                        );
-
-                        return;
-                    }
+    const prefix =
+        ticket.charAt(0);
 
 
-                    const announcement =
-                        "Now serving " +
-                        ticketText +
-                        ". Please proceed to Teller " +
-                        teller +
-                        ".";
+    const digits =
+        ticket.substring(1)
+        .split("");
 
 
-                    const speech =
-                        new SpeechSynthesisUtterance(
-                            announcement
-                        );
+    const clips = [
+        "now-serving"
+    ];
 
 
-                    speech.lang = "en-US";
-                    speech.rate = 0.85;
-                    speech.pitch = 1;
-                    speech.volume = 1;
+    if(
+        prefix === "T" ||
+        prefix === "L" ||
+        prefix === "F"
+    ){
+
+        clips.push(prefix);
+    }
 
 
-                    window.speechSynthesis.speak(
-                        speech
-                    );
+    digits.forEach(
+        function(digit){
 
-                }
-                catch(error){
+            if(
+                digit >= "0" &&
+                digit <= "9"
+            ){
+                clips.push(digit);
+            }
+        }
+    );
 
-                    console.log(
-                        "Voice announcement unavailable:",
-                        error
-                    );
-                }
 
-            },
-            2200
+    clips.push(
+        "please-proceed-to-teller"
+    );
+
+
+    const tellerNumber =
+        String(teller)
+        .trim();
+
+
+    tellerNumber
+    .split("")
+    .forEach(
+        function(digit){
+
+            if(
+                digit >= "0" &&
+                digit <= "9"
+            ){
+                clips.push(digit);
+            }
+        }
+    );
+
+
+    for(
+        let i = 0;
+        i < clips.length;
+        i++
+    ){
+
+        if(token !== announcementToken){
+            return;
+        }
+
+
+        await playVoiceClip(
+            clips[i],
+            token
         );
+
+
+        if(token !== announcementToken){
+            return;
+        }
+
+
+        await pause(90);
+    }
 }
 
 
@@ -849,15 +1039,23 @@ onValue(
     ref(db,"display/current"),
     function(snapshot){
 
-        const data = snapshot.val();
+        const data =
+            snapshot.val();
 
 
-        if(!data || !data.number){
+        if(
+            !data ||
+            !data.number
+        ){
 
-            currentNumber.textContent = "---";
-            currentTeller.textContent = "WAITING";
+            currentNumber.textContent =
+                "---";
 
-            firstCurrentLoad = false;
+            currentTeller.textContent =
+                "WAITING";
+
+            firstCurrentLoad =
+                false;
 
             return;
         }
@@ -868,7 +1066,8 @@ onValue(
 
 
         currentTeller.textContent =
-            "TELLER " + data.teller;
+            "TELLER " +
+            data.teller;
 
 
         const signature =
@@ -884,7 +1083,7 @@ onValue(
 
 
         /*
-           Don't bong or speak simply because
+           Don't announce merely because
            the TV page has reloaded.
         */
 
@@ -900,16 +1099,30 @@ onValue(
         }
 
 
-        if(signature !== lastCallSignature){
+        if(
+            signature !==
+            lastCallSignature
+        ){
 
             lastCallSignature =
                 signature;
 
+
             flashCurrentCall();
+
+
+            /*
+               Existing working NoviSign bong.
+            */
 
             playBong();
 
-            speakAnnouncement(
+
+            /*
+               Recorded voice follows bong.
+            */
+
+            playAnnouncement(
                 data.number,
                 data.teller
             );
@@ -925,7 +1138,10 @@ onValue(
 
 const historyRef =
     query(
-        ref(db,"display/history"),
+        ref(
+            db,
+            "display/history"
+        ),
         limitToLast(6)
     );
 
@@ -943,7 +1159,10 @@ onValue(
                 const data =
                     child.val();
 
-                if(data && data.number){
+                if(
+                    data &&
+                    data.number
+                ){
                     calls.push(data);
                 }
 
@@ -976,27 +1195,38 @@ onValue(
 
 function renderHistory(calls){
 
-    historyElement.innerHTML = "";
+    historyElement.innerHTML =
+        "";
 
 
-    for(let i=0;i<6;i++){
+    for(
+        let i = 0;
+        i < 6;
+        i++
+    ){
 
         const row =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         row.className =
             "history-row";
 
 
         const number =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         number.className =
             "history-number";
 
 
         const teller =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         teller.className =
             "history-teller";
@@ -1013,15 +1243,25 @@ function renderHistory(calls){
 
         }else{
 
-            number.textContent = "---";
-            teller.textContent = "---";
+            number.textContent =
+                "---";
+
+            teller.textContent =
+                "---";
         }
 
 
-        row.appendChild(number);
-        row.appendChild(teller);
+        row.appendChild(
+            number
+        );
 
-        historyElement.appendChild(row);
+        row.appendChild(
+            teller
+        );
+
+        historyElement.appendChild(
+            row
+        );
     }
 }
 
@@ -1032,17 +1272,23 @@ function renderHistory(calls){
 
 function flashCurrentCall(){
 
-    nowCard.classList.remove("flash");
+    nowCard.classList.remove(
+        "flash"
+    );
 
     void nowCard.offsetWidth;
 
-    nowCard.classList.add("flash");
+    nowCard.classList.add(
+        "flash"
+    );
 
 
     setTimeout(
         function(){
 
-            nowCard.classList.remove("flash");
+            nowCard.classList.remove(
+                "flash"
+            );
 
         },
         2100
@@ -1056,10 +1302,12 @@ function flashCurrentCall(){
 
 function updateClock(){
 
-    const now = new Date();
+    const now =
+        new Date();
 
 
-    document.getElementById("date")
+    document
+    .getElementById("date")
     .textContent =
         now.toLocaleDateString(
             "en-US",
@@ -1072,7 +1320,8 @@ function updateClock(){
         );
 
 
-    document.getElementById("time")
+    document
+    .getElementById("time")
     .textContent =
         now.toLocaleTimeString(
             "en-US",
@@ -1085,6 +1334,7 @@ function updateClock(){
 
 
 updateClock();
+
 
 setInterval(
     updateClock,
