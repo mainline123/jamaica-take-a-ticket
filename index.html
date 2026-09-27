@@ -728,6 +728,13 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
+import {
+    getAuth,
+    onAuthStateChanged,
+    signInAnonymously
+}
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
 
 const firebaseConfig = {
 
@@ -759,6 +766,9 @@ const app =
 
 const db =
     getDatabase(app);
+
+const auth =
+    getAuth(app);
 
 
 const portraitCanvas =
@@ -793,6 +803,8 @@ const serviceButtons =
 
 
 let connected = false;
+let authenticated = false;
+let authAttemptStarted = false;
 let processing = false;
 let returnTimer = null;
 let errorTimer = null;
@@ -837,7 +849,78 @@ window.addEventListener(
 );
 
 
-/* CONNECTION STATUS */
+/* CONNECTION + AUTHENTICATION STATUS */
+
+function updateAvailability(){
+
+    const available =
+        connected &&
+        authenticated &&
+        !processing;
+
+    setButtonsDisabled(!available);
+
+    if(connected && authenticated){
+
+        offlineOverlay.classList.remove(
+            "show"
+        );
+
+    }else if(!processing){
+
+        offlineOverlay.classList.add(
+            "show"
+        );
+    }
+}
+
+
+onAuthStateChanged(
+    auth,
+    async function(user){
+
+        if(user){
+
+            authenticated = true;
+
+            console.log(
+                "Firebase authenticated:",
+                user.uid
+            );
+
+            updateAvailability();
+
+            return;
+        }
+
+        authenticated = false;
+
+        updateAvailability();
+
+        if(authAttemptStarted){
+            return;
+        }
+
+        authAttemptStarted = true;
+
+        try{
+
+            await signInAnonymously(auth);
+
+        }catch(error){
+
+            console.error(
+                "Firebase authentication error:",
+                error
+            );
+
+            authenticated = false;
+
+            updateAvailability();
+        }
+    }
+);
+
 
 onValue(
     ref(db,".info/connected"),
@@ -846,32 +929,7 @@ onValue(
         connected =
             snapshot.val() === true;
 
-        if(connected){
-
-            offlineOverlay.classList.remove(
-                "show"
-            );
-
-            serviceButtons.forEach(
-                function(button){
-                    button.disabled = false;
-                }
-            );
-
-        }else{
-
-            serviceButtons.forEach(
-                function(button){
-                    button.disabled = true;
-                }
-            );
-
-            if(!processing){
-                offlineOverlay.classList.add(
-                    "show"
-                );
-            }
-        }
+        updateAvailability();
     }
 );
 
@@ -902,6 +960,7 @@ async function createTicket(
 
     if(
         !connected ||
+        !authenticated ||
         processing
     ){
         return;
@@ -1057,7 +1116,10 @@ async function createTicket(
         homeScreen.style.display =
             "grid";
 
-        if(!connected){
+        if(
+            !connected ||
+            !authenticated
+        ){
 
             offlineOverlay.classList.add(
                 "show"
@@ -1072,18 +1134,7 @@ async function createTicket(
 
         processing = false;
 
-        if(connected){
-
-            setButtonsDisabled(false);
-
-        }else{
-
-            setButtonsDisabled(true);
-
-            offlineOverlay.classList.add(
-                "show"
-            );
-        }
+        updateAvailability();
     }
 }
 
@@ -1102,6 +1153,7 @@ serviceButtons.forEach(
                 if(
                     processing ||
                     !connected ||
+                    !authenticated ||
                     button.disabled
                 ){
                     return;
@@ -1163,22 +1215,7 @@ function returnHome(){
 
     hideError();
 
-    if(connected){
-
-        offlineOverlay.classList.remove(
-            "show"
-        );
-
-        setButtonsDisabled(false);
-
-    }else{
-
-        setButtonsDisabled(true);
-
-        offlineOverlay.classList.add(
-            "show"
-        );
-    }
+    updateAvailability();
 }
 
 
