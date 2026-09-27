@@ -46,8 +46,6 @@ body{color:#fff;}
     );
 }
 
-/* LEFT */
-
 .left{
     position:relative;
     padding:3.5vh 2.5vw;
@@ -125,8 +123,6 @@ body{color:#fff;}
     font-style:italic;
 }
 
-/* CENTER */
-
 .center{
     position:relative;
     display:flex;
@@ -202,8 +198,6 @@ body{color:#fff;}
     font-size:1.25vw;
     font-style:italic;
 }
-
-/* RIGHT */
 
 .right{
     padding:2.2vh 1.3vw 2.2vh 0;
@@ -300,8 +294,6 @@ body{color:#fff;}
     font-size:1.45vw;
     font-weight:900;
 }
-
-/* BOTTOM */
 
 .bottom{
     grid-column:1 / 4;
@@ -409,7 +401,6 @@ body{color:#fff;}
 
 </section>
 
-
 <main class="center">
 
     <div id="nowCard" class="now-card">
@@ -419,13 +410,8 @@ body{color:#fff;}
         </div>
 
         <div class="number-row">
-
             <div class="speaker">🔊</div>
-
-            <div id="currentNumber">
-                ---
-            </div>
-
+            <div id="currentNumber">---</div>
         </div>
 
         <div id="currentTeller" class="teller-box">
@@ -439,7 +425,6 @@ body{color:#fff;}
     </div>
 
 </main>
-
 
 <aside class="right">
 
@@ -465,46 +450,37 @@ body{color:#fff;}
 
 </aside>
 
-
 <footer class="bottom">
 
     <div class="step">
         <div class="step-icon">👥</div>
-        <div class="step-text">
+        <div>
             <div class="step-title">TAKE A TICKET</div>
-            <div class="step-sub">
-                Use one of our self-service kiosks
-            </div>
+            <div class="step-sub">Use one of our self-service kiosks</div>
         </div>
     </div>
 
     <div class="step">
         <div class="step-icon">🪑</div>
-        <div class="step-text">
+        <div>
             <div class="step-title">WATCH THE DISPLAY</div>
-            <div class="step-sub">
-                Your number will be called
-            </div>
+            <div class="step-sub">Your number will be called</div>
         </div>
     </div>
 
     <div class="step">
         <div class="step-icon">👤</div>
-        <div class="step-text">
+        <div>
             <div class="step-title">GO TO YOUR TELLER</div>
-            <div class="step-sub">
-                Proceed to the indicated teller
-            </div>
+            <div class="step-sub">Proceed to the indicated teller</div>
         </div>
     </div>
 
     <div class="step">
         <div class="step-icon">✓</div>
-        <div class="step-text">
+        <div>
             <div class="step-title">WE'RE HERE TO HELP</div>
-            <div class="step-sub">
-                Thank you for your patience
-            </div>
+            <div class="step-sub">Thank you for your patience</div>
         </div>
     </div>
 
@@ -515,7 +491,6 @@ body{color:#fff;}
 </div>
 
 </div>
-
 
 <script type="module">
 
@@ -546,7 +521,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-
 const currentNumber =
     document.getElementById("currentNumber");
 
@@ -563,9 +537,9 @@ const connection =
     document.getElementById("connection");
 
 
-/* =====================================================
-   CONNECTION
-===================================================== */
+/* ================================================
+   FIREBASE CONNECTION
+================================================ */
 
 onValue(
     ref(db,".info/connected"),
@@ -574,24 +548,20 @@ onValue(
         if(snapshot.val() === true){
 
             connection.classList.remove("offline");
-
-            connection.textContent =
-                "Live queue connected";
+            connection.textContent = "Live queue connected";
 
         }else{
 
             connection.classList.add("offline");
-
-            connection.textContent =
-                "Connecting to live queue...";
+            connection.textContent = "Connecting to live queue...";
         }
     }
 );
 
 
-/* =====================================================
-   TWO-TONE BONG
-===================================================== */
+/* ================================================
+   BONG
+================================================ */
 
 let audioContext = null;
 
@@ -612,9 +582,7 @@ function playBong(){
             audioContext.resume();
         }
 
-
         const now = audioContext.currentTime;
-
 
         function createTone(
             frequency,
@@ -658,100 +626,64 @@ function playBong(){
             oscillator.stop(now + start + duration);
         }
 
+        createTone(523.25,0,.85,.7);
+        createTone(783.99,0,.85,.20);
 
-        createTone(
-            523.25,
-            0,
-            .85,
-            .7
-        );
-
-        createTone(
-            783.99,
-            0,
-            .85,
-            .20
-        );
-
-        createTone(
-            659.25,
-            .95,
-            1.0,
-            .7
-        );
-
-        createTone(
-            987.77,
-            .95,
-            1.0,
-            .20
-        );
+        createTone(659.25,.95,1.0,.7);
+        createTone(987.77,.95,1.0,.20);
 
     }
     catch(error){
 
-        console.log(
-            "Audio unavailable:",
-            error
-        );
+        console.log("Audio unavailable:",error);
     }
 }
 
 
-/* =====================================================
-   RECORDED VOICE ANNOUNCEMENT
-===================================================== */
+/* ================================================
+   COMPACT VOICE SYSTEM
+================================================ */
 
 let announcementToken = 0;
 
-
-/*
-   Preload all voice clips.
-*/
-
-const voiceFiles = [
+const voiceNames = [
     "now-serving",
     "please-proceed-to-teller",
     "T",
     "L",
     "F",
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9"
+    "hundred",
+    "0","1","2","3","4","5","6","7","8","9",
+    "10","11","12","13","14","15","16","17","18","19",
+    "20","30","40","50","60","70","80","90"
 ];
-
 
 const voiceCache = {};
 
+voiceNames.forEach(function(name){
 
-voiceFiles.forEach(
-    function(name){
+    const audio =
+        new Audio(
+            "audio_compact/" +
+            name +
+            ".wav"
+        );
 
-        const audio =
-            new Audio(
-                "audio/" +
-                name +
-                ".wav"
-            );
+    audio.preload = "auto";
 
-        audio.preload = "auto";
-
-        voiceCache[name] = audio;
-    }
-);
+    voiceCache[name] = audio;
+});
 
 
-/*
-   Play one clip and wait until
-   it has finished.
-*/
+function pause(ms){
+
+    return new Promise(
+        function(resolve){
+            setTimeout(resolve,ms);
+        }
+    );
+}
+
 
 function playVoiceClip(name,token){
 
@@ -763,10 +695,8 @@ function playVoiceClip(name,token){
                 return;
             }
 
-
             const original =
                 voiceCache[name];
-
 
             if(!original){
 
@@ -779,22 +709,12 @@ function playVoiceClip(name,token){
                 return;
             }
 
-
-            /*
-               Clone the preloaded audio element so
-               a new announcement cannot interfere
-               with the cached copy.
-            */
-
             const audio =
                 original.cloneNode(true);
 
-
             audio.volume = 1;
 
-
             let finished = false;
-
 
             function finish(){
 
@@ -803,10 +723,8 @@ function playVoiceClip(name,token){
                 }
 
                 finished = true;
-
                 resolve();
             }
-
 
             audio.addEventListener(
                 "ended",
@@ -814,32 +732,21 @@ function playVoiceClip(name,token){
                 {once:true}
             );
 
-
             audio.addEventListener(
                 "error",
-                function(){
-
-                    console.log(
-                        "Could not play:",
-                        name
-                    );
-
-                    finish();
-                },
+                finish,
                 {once:true}
             );
 
-
-            const playPromise =
+            const result =
                 audio.play();
 
-
             if(
-                playPromise &&
-                typeof playPromise.catch === "function"
+                result &&
+                typeof result.catch === "function"
             ){
 
-                playPromise.catch(
+                result.catch(
                     function(error){
 
                         console.log(
@@ -853,56 +760,185 @@ function playVoiceClip(name,token){
                 );
             }
 
-
-            /*
-               Safety timeout so one damaged clip
-               cannot stop the entire announcement.
-            */
-
             setTimeout(
                 finish,
-                5000
+                4000
             );
         }
     );
 }
 
 
-/*
-   Small pause between voice clips.
-*/
+/* ================================================
+   CONVERT NUMBER TO NATURAL AUDIO PARTS
 
-function pause(milliseconds){
+   061 -> 0, 60, 1
+   014 -> 0, 14
+   125 -> 1, hundred, 20, 5
+================================================ */
 
-    return new Promise(
-        function(resolve){
+function numberParts(ticketDigits){
 
-            setTimeout(
-                resolve,
-                milliseconds
+    const clean =
+        String(ticketDigits)
+        .replace(/\D/g,"");
+
+    if(!clean){
+        return [];
+    }
+
+    const parts = [];
+
+    /*
+       Preserve leading zero for three-digit
+       ticket numbers such as 061 and 014.
+    */
+
+    if(
+        clean.length === 3 &&
+        clean.charAt(0) === "0"
+    ){
+
+        parts.push("0");
+
+        const remaining =
+            parseInt(
+                clean.substring(1),
+                10
+            );
+
+        if(remaining === 0){
+
+            parts.push("0");
+            parts.push("0");
+
+            return parts;
+        }
+
+        addUnder100(
+            remaining,
+            parts
+        );
+
+        return parts;
+    }
+
+
+    const number =
+        parseInt(clean,10);
+
+
+    if(number < 100){
+
+        addUnder100(
+            number,
+            parts
+        );
+
+        return parts;
+    }
+
+
+    if(number <= 999){
+
+        const hundreds =
+            Math.floor(
+                number / 100
+            );
+
+        parts.push(
+            String(hundreds)
+        );
+
+        parts.push(
+            "hundred"
+        );
+
+
+        const remainder =
+            number % 100;
+
+
+        if(remainder > 0){
+
+            addUnder100(
+                remainder,
+                parts
             );
         }
+
+        return parts;
+    }
+
+
+    /*
+       Safety fallback if ticket numbers
+       ever exceed 999.
+    */
+
+    clean
+    .split("")
+    .forEach(
+        function(digit){
+            parts.push(digit);
+        }
     );
+
+
+    return parts;
 }
 
 
-/*
-   Build announcement from ticket number.
+function addUnder100(number,parts){
+
+    if(number < 20){
+
+        parts.push(
+            String(number)
+        );
+
+        return;
+    }
+
+
+    const tens =
+        Math.floor(
+            number / 10
+        ) * 10;
+
+
+    const ones =
+        number % 10;
+
+
+    parts.push(
+        String(tens)
+    );
+
+
+    if(ones > 0){
+
+        parts.push(
+            String(ones)
+        );
+    }
+}
+
+
+/* ================================================
+   ANNOUNCEMENT
 
    Example:
-
    T061
 
-   becomes:
-
-   now-serving.wav
-   T.wav
-   0.wav
-   6.wav
-   1.wav
-   please-proceed-to-teller.wav
-   2.wav
-*/
+   now serving
+   T
+   zero
+   sixty
+   one
+   please proceed to teller
+   two
+================================================ */
 
 async function playAnnouncement(
     number,
@@ -921,10 +957,10 @@ async function playAnnouncement(
 
 
     /*
-       Allow the two-tone bong to finish.
+       Let the bong finish.
     */
 
-    await pause(2200);
+    await pause(2050);
 
 
     if(token !== announcementToken){
@@ -943,8 +979,7 @@ async function playAnnouncement(
 
 
     const digits =
-        ticket.substring(1)
-        .split("");
+        ticket.substring(1);
 
 
     const clips = [
@@ -957,20 +992,17 @@ async function playAnnouncement(
         prefix === "L" ||
         prefix === "F"
     ){
-
         clips.push(prefix);
     }
 
 
-    digits.forEach(
-        function(digit){
+    const ticketNumberParts =
+        numberParts(digits);
 
-            if(
-                digit >= "0" &&
-                digit <= "9"
-            ){
-                clips.push(digit);
-            }
+
+    ticketNumberParts.forEach(
+        function(part){
+            clips.push(part);
         }
     );
 
@@ -980,22 +1012,15 @@ async function playAnnouncement(
     );
 
 
-    const tellerNumber =
-        String(teller)
-        .trim();
+    const tellerParts =
+        numberParts(
+            String(teller)
+        );
 
 
-    tellerNumber
-    .split("")
-    .forEach(
-        function(digit){
-
-            if(
-                digit >= "0" &&
-                digit <= "9"
-            ){
-                clips.push(digit);
-            }
+    tellerParts.forEach(
+        function(part){
+            clips.push(part);
         }
     );
 
@@ -1017,19 +1042,18 @@ async function playAnnouncement(
         );
 
 
-        if(token !== announcementToken){
-            return;
-        }
+        /*
+           Very short transition between clips.
+        */
 
-
-        await pause(90);
+        await pause(20);
     }
 }
 
 
-/* =====================================================
+/* ================================================
    CURRENT CALL
-===================================================== */
+================================================ */
 
 let firstCurrentLoad = true;
 let lastCallSignature = "";
@@ -1082,11 +1106,6 @@ onValue(
             );
 
 
-        /*
-           Don't announce merely because
-           the TV page has reloaded.
-        */
-
         if(firstCurrentLoad){
 
             lastCallSignature =
@@ -1107,20 +1126,9 @@ onValue(
             lastCallSignature =
                 signature;
 
-
             flashCurrentCall();
 
-
-            /*
-               Existing working NoviSign bong.
-            */
-
             playBong();
-
-
-            /*
-               Recorded voice follows bong.
-            */
 
             playAnnouncement(
                 data.number,
@@ -1132,9 +1140,9 @@ onValue(
 );
 
 
-/* =====================================================
-   HISTORY
-===================================================== */
+/* ================================================
+   RECENTLY CALLED
+================================================ */
 
 const historyRef =
     query(
@@ -1195,8 +1203,7 @@ onValue(
 
 function renderHistory(calls){
 
-    historyElement.innerHTML =
-        "";
+    historyElement.innerHTML = "";
 
 
     for(
@@ -1243,32 +1250,22 @@ function renderHistory(calls){
 
         }else{
 
-            number.textContent =
-                "---";
-
-            teller.textContent =
-                "---";
+            number.textContent = "---";
+            teller.textContent = "---";
         }
 
 
-        row.appendChild(
-            number
-        );
+        row.appendChild(number);
+        row.appendChild(teller);
 
-        row.appendChild(
-            teller
-        );
-
-        historyElement.appendChild(
-            row
-        );
+        historyElement.appendChild(row);
     }
 }
 
 
-/* =====================================================
+/* ================================================
    FLASH
-===================================================== */
+================================================ */
 
 function flashCurrentCall(){
 
@@ -1296,9 +1293,9 @@ function flashCurrentCall(){
 }
 
 
-/* =====================================================
+/* ================================================
    CLOCK
-===================================================== */
+================================================ */
 
 function updateClock(){
 
@@ -1335,21 +1332,19 @@ function updateClock(){
 
 updateClock();
 
-
 setInterval(
     updateClock,
     1000
 );
 
 
-/* =====================================================
+/* ================================================
    PREVENT LONG PRESS
-===================================================== */
+================================================ */
 
 document.addEventListener(
     "contextmenu",
     function(event){
-
         event.preventDefault();
     }
 );
@@ -1358,7 +1353,6 @@ document.addEventListener(
 document.addEventListener(
     "selectstart",
     function(event){
-
         event.preventDefault();
     }
 );
