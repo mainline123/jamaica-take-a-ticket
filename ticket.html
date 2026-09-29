@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TAJ - My Queue Ticket</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    background:#eef3f6;
+    font-family:Arial,Helvetica,sans-serif;
+    color:#003b73;
+}
+
+.header{
+    background:#003b73;
+    color:white;
+    text-align:center;
+    padding:35px 20px 28px;
+    border-bottom:10px solid #fed100;
+}
+
+.taj{
+    font-size:64px;
+    font-weight:900;
+    line-height:1;
+}
+
+.tax-name{
+    margin-top:10px;
+    font-size:19px;
+    font-weight:900;
+}
+
+.tagline{
+    margin-top:8px;
+    color:#fed100;
+    font-size:15px;
+    font-weight:700;
+}
+
+.main{
+    max-width:600px;
+    margin:0 auto;
+    padding:28px 18px 40px;
+}
+
+.card{
+    background:white;
+    border-radius:24px;
+    padding:34px 24px;
+    text-align:center;
+    box-shadow:0 8px 28px rgba(0,0,0,.12);
+}
+
+.label{
+    color:#5c7182;
+    font-size:18px;
+    font-weight:800;
+}
+
+.number{
+    margin-top:8px;
+    font-size:88px;
+    line-height:1;
+    font-weight:900;
+    color:#003b73;
+}
+
+.service{
+    margin-top:22px;
+    font-size:24px;
+    line-height:1.25;
+    font-weight:900;
+}
+
+.status-box{
+    margin-top:30px;
+    padding:20px;
+    border-radius:16px;
+    background:#e8f5ec;
+    border:2px solid #009b3a;
+}
+
+.status-title{
+    color:#557064;
+    font-size:14px;
+    font-weight:800;
+}
+
+.status{
+    margin-top:6px;
+    color:#009b3a;
+    font-size:28px;
+    font-weight:900;
+}
+
+.message{
+    margin-top:28px;
+    color:#50677a;
+    font-size:17px;
+    line-height:1.5;
+    font-weight:600;
+}
+
+.live{
+    margin-top:22px;
+    color:#009b3a;
+    font-size:14px;
+    font-weight:900;
+}
+
+.error{
+    display:none;
+    background:#fff;
+    border:3px solid #c62828;
+    color:#8d1111;
+    border-radius:18px;
+    padding:28px 20px;
+    text-align:center;
+    font-size:18px;
+    line-height:1.5;
+    font-weight:800;
+}
+
+.footer{
+    text-align:center;
+    margin-top:25px;
+    color:#708391;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.loading{
+    text-align:center;
+    padding:70px 20px;
+    font-size:20px;
+    font-weight:800;
+    color:#50677a;
+}
+
+.spinner{
+    width:55px;
+    height:55px;
+    margin:0 auto 25px;
+    border:7px solid #d8e1e7;
+    border-top-color:#009b3a;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+    <div class="taj">
+        TAJ
+    </div>
+
+    <div class="tax-name">
+        TAX ADMINISTRATION JAMAICA
+    </div>
+
+    <div class="tagline">
+        Serving You. Building Jamaica.
+    </div>
+
+</div>
+
+
+<div class="main">
+
+    <div id="loading" class="loading">
+
+        <div class="spinner"></div>
+
+        Loading your queue ticket...
+
+    </div>
+
+
+    <div id="ticketCard"
+         class="card"
+         style="display:none;">
+
+        <div class="label">
+            YOUR QUEUE NUMBER
+        </div>
+
+        <div id="ticketNumber"
+             class="number">
+            ---
+        </div>
+
+        <div id="ticketService"
+             class="service">
+        </div>
+
+
+        <div class="status-box">
+
+            <div class="status-title">
+                CURRENT STATUS
+            </div>
+
+            <div id="ticketStatus"
+                 class="status">
+                WAITING
+            </div>
+
+        </div>
+
+
+        <div id="message"
+             class="message">
+
+            Your ticket is active.<br>
+            Please keep this page open and watch
+            for updates.
+
+        </div>
+
+
+        <div class="live">
+            ● LIVE QUEUE CONNECTION
+        </div>
+
+    </div>
+
+
+    <div id="errorBox"
+         class="error">
+
+        We could not locate this queue ticket.<br><br>
+
+        Please check with a Tax Administration
+        Jamaica staff member for assistance.
+
+    </div>
+
+
+    <div class="footer">
+
+        Tax Administration Jamaica<br>
+        Digital Queue Service
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+import {
+    initializeApp
+}
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+
+import {
+    getDatabase,
+    ref,
+    onValue
+}
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+
+
+import {
+    getAuth,
+    onAuthStateChanged,
+    signInAnonymously
+}
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyCJAEZ-MD-W6SQZfUS5BkD-4NpT11vItHE",
+
+    authDomain:
+        "jamaica-take-a-ticket.firebaseapp.com",
+
+    databaseURL:
+        "https://jamaica-take-a-ticket-default-rtdb.firebaseio.com",
+
+    projectId:
+        "jamaica-take-a-ticket",
+
+    storageBucket:
+        "jamaica-take-a-ticket.firebasestorage.app",
+
+    messagingSenderId:
+        "1093598545752",
+
+    appId:
+        "1:1093598545752:web:7fa81726e2bcc5fdfb072d"
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+const db =
+    getDatabase(app);
+
+const auth =
+    getAuth(app);
+
+
+const loading =
+    document.getElementById("loading");
+
+const ticketCard =
+    document.getElementById("ticketCard");
+
+const errorBox =
+    document.getElementById("errorBox");
+
+const ticketNumber =
+    document.getElementById("ticketNumber");
+
+const ticketService =
+    document.getElementById("ticketService");
+
+const ticketStatus =
+    document.getElementById("ticketStatus");
+
+const message =
+    document.getElementById("message");
+
+
+const parameters =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const ticketId =
+    parameters.get("id");
+
+
+let listenerStarted = false;
+
+
+function showError(){
+
+    loading.style.display =
+        "none";
+
+    ticketCard.style.display =
+        "none";
+
+    errorBox.style.display =
+        "block";
+}
+
+
+function formatStatus(status){
+
+    if(status === "waiting"){
+        return "WAITING";
+    }
+
+    if(status === "called"){
+        return "PLEASE PROCEED";
+    }
+
+    if(status === "serving"){
+        return "NOW SERVING";
+    }
+
+    if(status === "completed"){
+        return "COMPLETED";
+    }
+
+    return String(status || "WAITING")
+        .toUpperCase();
+}
+
+
+function updateMessage(status){
+
+    if(status === "waiting"){
+
+        message.innerHTML =
+            "Your ticket is active.<br>" +
+            "Please keep this page open and " +
+            "watch for updates.";
+
+        return;
+    }
+
+
+    if(
+        status === "called" ||
+        status === "serving"
+    ){
+
+        message.innerHTML =
+            "<strong>Your number has been called.</strong><br>" +
+            "Please check the waiting-area display " +
+            "for your teller assignment.";
+
+        return;
+    }
+
+
+    if(status === "completed"){
+
+        message.innerHTML =
+            "Your transaction has been completed.<br>" +
+            "Thank you for visiting Tax Administration Jamaica.";
+
+        return;
+    }
+
+
+    message.innerHTML =
+        "Please watch this page for queue updates.";
+}
+
+
+function startTicketListener(){
+
+    if(listenerStarted){
+        return;
+    }
+
+    listenerStarted = true;
+
+
+    if(!ticketId){
+
+        showError();
+        return;
+    }
+
+
+    const ticketRef =
+        ref(
+            db,
+            "queue/" + ticketId
+        );
+
+
+    onValue(
+        ticketRef,
+        function(snapshot){
+
+            if(!snapshot.exists()){
+
+                showError();
+                return;
+            }
+
+
+            const ticket =
+                snapshot.val();
+
+
+            ticketNumber.textContent =
+                ticket.number || "---";
+
+
+            ticketService.textContent =
+                ticket.service || "";
+
+
+            ticketStatus.textContent =
+                formatStatus(
+                    ticket.status
+                );
+
+
+            updateMessage(
+                ticket.status
+            );
+
+
+            loading.style.display =
+                "none";
+
+            errorBox.style.display =
+                "none";
+
+            ticketCard.style.display =
+                "block";
+        },
+        function(error){
+
+            console.error(
+                "Ticket listener error:",
+                error
+            );
+
+            showError();
+        }
+    );
+}
+
+
+onAuthStateChanged(
+    auth,
+    async function(user){
+
+        if(user){
+
+            startTicketListener();
+            return;
+        }
+
+
+        try{
+
+            await signInAnonymously(auth);
+
+        }
+        catch(error){
+
+            console.error(
+                "Authentication error:",
+                error
+            );
+
+            showError();
+        }
+    }
+);
+
+</script>
+
+</body>
+</html>
