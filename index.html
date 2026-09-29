@@ -419,26 +419,26 @@ html,body{
 #ticketNumber{
     margin-top:25px;
     color:#003b73;
-    font-size:235px;
+    font-size:190px;
     line-height:1;
     font-weight:900;
     letter-spacing:-8px;
 }
 
 #ticketService{
-    margin-top:45px;
+    margin-top:30px;
     color:#003b73;
-    font-size:43px;
+    font-size:40px;
     line-height:1.2;
     font-weight:900;
 }
 
 .wait-message{
-    margin-top:70px;
+    margin-top:32px;
     max-width:850px;
     color:#4e6679;
-    font-size:33px;
-    line-height:1.45;
+    font-size:27px;
+    line-height:1.35;
     font-weight:700;
 }
 
@@ -469,6 +469,50 @@ html,body{
     color:#6a7e8d;
     font-size:22px;
     font-weight:600;
+}
+
+
+/* QR TICKET */
+
+.qr-section{
+    margin-top:42px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.qr-title{
+    color:#003b73;
+    font-size:30px;
+    font-weight:900;
+}
+
+#qrCode{
+    margin-top:22px;
+    width:250px;
+    height:250px;
+    padding:14px;
+    background:#fff;
+    border:5px solid #003b73;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+#qrCode img,
+#qrCode canvas{
+    width:220px !important;
+    height:220px !important;
+}
+
+.qr-note{
+    margin-top:18px;
+    max-width:760px;
+    color:#50677a;
+    font-size:23px;
+    line-height:1.3;
+    font-weight:700;
 }
 
 /* ERROR */
@@ -635,9 +679,21 @@ html,body{
         </div>
 
         <div class="wait-message">
-            Please remember your number and take a seat.
-            Watch the waiting-area display for your number
-            and teller assignment.
+            Keep this number with you and watch the waiting-area
+            display for your number and teller assignment.
+        </div>
+
+        <div class="qr-section">
+            <div class="qr-title">
+                SCAN TO TAKE YOUR NUMBER WITH YOU
+            </div>
+
+            <div id="qrCode"></div>
+
+            <div class="qr-note">
+                Scan with your phone to open your personal queue-status page.
+                The QR code is optional.
+            </div>
         </div>
 
     </div>
@@ -710,6 +766,8 @@ html,body{
 </div>
 </div>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <script type="module">
 
@@ -785,6 +843,9 @@ const ticketNumber =
 
 const ticketService =
     document.getElementById("ticketService");
+
+const qrCode =
+    document.getElementById("qrCode");
 
 const doneButton =
     document.getElementById("doneButton");
@@ -951,6 +1012,41 @@ function formatTicket(
 }
 
 
+
+/* CREATE QR CODE */
+
+function createTicketQr(ticketId){
+
+    qrCode.innerHTML = "";
+
+    const ticketUrl =
+        new URL(
+            "ticket.html",
+            window.location.href
+        );
+
+    ticketUrl.searchParams.set(
+        "id",
+        ticketId
+    );
+
+    new QRCode(
+        qrCode,
+        {
+            text:ticketUrl.toString(),
+            width:220,
+            height:220,
+            correctLevel:QRCode.CorrectLevel.H
+        }
+    );
+
+    console.log(
+        "Ticket QR URL:",
+        ticketUrl.toString()
+    );
+}
+
+
 /* CREATE TICKET */
 
 async function createTicket(
@@ -1086,6 +1182,10 @@ async function createTicket(
         ticketService.textContent =
             service;
 
+        createTicketQr(
+            newTicketRef.key
+        );
+
         processingOverlay.classList.remove(
             "show"
         );
@@ -1209,6 +1309,8 @@ function returnHome(){
 
     ticketScreen.style.display =
         "none";
+
+    qrCode.innerHTML = "";
 
     homeScreen.style.display =
         "grid";
