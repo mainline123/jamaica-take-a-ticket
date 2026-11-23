@@ -515,6 +515,23 @@ html,body{
     font-weight:700;
 }
 
+/* PRINTED TICKET — hidden except during printing */
+#printReceipt{display:none;}
+.ticket-actions{display:flex;gap:24px;align-items:center;justify-content:center;}
+.ticket-actions .done-button{width:420px;}
+.print-button{width:420px;height:110px;border:none;border-radius:55px;background:#003b73;color:#fff;font-size:34px;font-weight:900;cursor:pointer;touch-action:manipulation;}
+@media print{
+  @page{size:auto;margin:12mm;}
+  html,body{width:auto!important;height:auto!important;overflow:visible!important;background:white!important;}
+  #stage{display:none!important;}
+  #printReceipt{display:block!important;color:#000!important;background:#fff!important;text-align:center;font-family:Arial,Helvetica,sans-serif;width:100%;max-width:90mm;margin:0 auto;padding:10mm 3mm;}
+  #printReceipt h1{font-size:18pt;margin:0 0 7mm;}
+  #printReceipt .receipt-number{font-size:48pt;font-weight:900;margin:5mm 0;}
+  #printReceipt .receipt-service{font-size:14pt;font-weight:bold;margin-bottom:6mm;}
+  #printReceipt img{width:46mm;height:46mm;display:block;margin:0 auto 5mm;image-rendering:pixelated;}
+  #printReceipt p{font-size:11pt;margin:3mm 0;}
+}
+
 /* ERROR */
 
 #errorMessage{
@@ -700,10 +717,10 @@ html,body{
 
     <div class="ticket-footer">
 
-        <button id="doneButton"
-                class="done-button">
-            DONE
-        </button>
+        <div class="ticket-actions">
+            <button id="printButton" class="print-button" type="button">PRINT TICKET</button>
+            <button id="doneButton" class="done-button" type="button">DONE</button>
+        </div>
 
         <div class="return-text">
             This screen will return automatically
@@ -766,6 +783,16 @@ html,body{
 </div>
 </div>
 
+<!-- Only this receipt is visible on paper; the kiosk remains unchanged. -->
+<div id="printReceipt" aria-hidden="true">
+  <h1>TAX ADMINISTRATION JAMAICA</h1>
+  <p>YOUR QUEUE NUMBER</p>
+  <div class="receipt-number" id="receiptNumber"></div>
+  <div class="receipt-service" id="receiptService"></div>
+  <img id="receiptQr" alt="Ticket tracking QR code">
+  <p>Scan to check your place in line.</p>
+  <p>Please watch the waiting-area display.</p>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
@@ -849,6 +876,11 @@ const qrCode =
 
 const doneButton =
     document.getElementById("doneButton");
+
+const printButton = document.getElementById("printButton");
+const receiptNumber = document.getElementById("receiptNumber");
+const receiptService = document.getElementById("receiptService");
+const receiptQr = document.getElementById("receiptQr");
 
 const offlineOverlay =
     document.getElementById("offlineOverlay");
@@ -1083,11 +1115,11 @@ async function createTicket(
 
         /*
         =================================================
-        SAFE 999 ROLLOVER
+        199 ROLLOVER (DEMO ONLY)
 
-        997 -> 998
-        998 -> 999
-        999 -> 001
+        197 -> 198
+        198 -> 199
+        199 -> 001
 
         This changes ONLY this service's counter.
 
@@ -1108,7 +1140,7 @@ async function createTicket(
                     const current =
                         Number(currentValue) || 0;
 
-                    if(current >= 999){
+                    if(current >= 199){
                         return 1;
                     }
 
@@ -1185,6 +1217,9 @@ async function createTicket(
         createTicketQr(
             newTicketRef.key
         );
+
+        receiptNumber.textContent = formattedNumber;
+        receiptService.textContent = service;
 
         processingOverlay.classList.remove(
             "show"
@@ -1337,6 +1372,37 @@ function startReturnTimer(){
         );
 }
 
+
+/* PRINT BUTTON — uses Android/browser printing */
+function preparePrintQr(){
+    const canvas = qrCode.querySelector("canvas");
+    const img = qrCode.querySelector("img");
+    if(canvas){
+        receiptQr.src = canvas.toDataURL("image/png");
+    }else if(img && img.src){
+        receiptQr.src = img.src;
+    }else{
+        throw new Error("QR code is not ready for printing.");
+    }
+}
+
+printButton.addEventListener("pointerdown",function(event){
+    event.preventDefault();
+    if(ticketScreen.style.display !== "block") return;
+    try{
+        preparePrintQr();
+        if(returnTimer){clearTimeout(returnTimer);returnTimer=null;}
+        window.print();
+    }catch(error){
+        console.error("Printing error:",error);
+        alert("The QR code is not ready. Please try printing again.");
+        startReturnTimer();
+    }
+},{passive:false});
+
+window.addEventListener("afterprint",function(){
+    if(ticketScreen.style.display === "block") startReturnTimer();
+});
 
 /* DONE BUTTON */
 
