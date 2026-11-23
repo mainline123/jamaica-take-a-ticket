@@ -430,9 +430,11 @@ function naturalNumberParts(ticketDigits){
             ];
         }
 
-        if(number === 100){
-
-            return ["100"];
+        // Use the existing complete "100" voice clip for 100–199.
+        // Avoid playing "1" followed by a missing/incorrect "hundred" clip.
+        if(number >= 100 && number < 200){
+            const remainder = number - 100;
+            return remainder === 0 ? ["100"] : ["100", String(remainder)];
         }
 
         const hundreds =
